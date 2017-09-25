@@ -14,7 +14,7 @@ public class NameTest {
 		testGetFirstName();
 		testGetLastName();
 		testGetFullName();
-
+		testToString();
 	}
 
 	private static void testTwoParameterConstructor() {
@@ -106,6 +106,24 @@ public class NameTest {
 			System.out.print("  Error! Expected Invalid. ==== FAILED TEST ====");
 		}
 		System.out.print("\n");
+	}
+	
+	private static void testToString() {
+		System.out.println("\n\nTesting the toString method.");
+		testToString("Case 1: name without leading/trailing space (Yanik, Kolomatski)", "Yanik", "Kolomatski", "Yanik*Kolomatski");
+		testToString("Case 2: name with leading/trailing spaces (  Yanik,   Kolomatski    )", "  Yanik", "  Kolomatski    ", "Yanik*Kolomatski");
+	}
+	
+	private static void testToString(String testCase, String firstName, String lastName, String expectedString) {
+		System.out.println("   " + testCase);
+		
+		Name name = new Name(firstName, lastName);
+		System.out.print("\tThe Name instance was created: " + name);
+		
+		if (!name.toString().equals(expectedString))
+			System.out.print("  Error! Inserted Value Should Have Been Valid. ==== FAILED TEST ====");
+		
+		System.out.println("\n");
 	}
 
 }
