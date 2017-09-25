@@ -1,10 +1,7 @@
-/**
- * 
- */
 package lib;
 
 /**
- * @author katsuragi
+ * @author Yanik Kolomatski
  *
  */
 public class NameTest {
@@ -15,9 +12,7 @@ public class NameTest {
 	public static void main(String[] args) {
 		testTwoParameterConstructor();
 		testGetFirstName();
-		testSetFirstName();
 		testGetLastName();
-		testSetLastName();
 		testGetFullName();
 
 	}
@@ -57,7 +52,7 @@ public class NameTest {
 				System.out.println("Expected Valid");
 			}
 		}
-		System.out.println("\n");
+		System.out.print("\n");
 	}
 
 	private static void testGetFirstName() {
@@ -74,40 +69,7 @@ public class NameTest {
 		if (!newName.getFirstName().equals(expectedFirstName)) {
 			System.out.print("  Error! Expected Invalid. ==== FAILED TEST ====");
 		}
-		System.out.println("\n");
-	}
-
-	private static void testSetFirstName() {
-		System.out.println("\n\nTesting the setFirstName method.");
-		testSetFirstName("Case 1: Valid - Adam without leading/trailing spaces", "Adam", "Adam", true);
-		testSetFirstName("Case 2: Valid - Adam with leading/trailing spaces", "  Adam  ", "Adam", true);
-		testSetFirstName("Case 3: Invalid null first name", null, "", false);
-		testSetFirstName("Case 4 Empty String as a first name", "", "", false);
-		testSetFirstName("Case 5 all spaces as a first name", "        ", "      ", false);
-	}
-
-	private static void testSetFirstName(String testCase, String firstName, String expectedFirstName,
-			boolean expectedValue) {
-		System.out.println("   " + testCase);
-		Name name = new Name("Sammy", "Chaouki");
-		try {
-			name.setFirstName(firstName);
-			System.out.print("\tThe Name instance was created: " + name);
-
-			if (!name.getFirstName().equals(expectedFirstName))
-				System.out.print("  Error! Expected Invalid. ==== FAILED TEST ====");
-		} catch (IllegalArgumentException iae) {
-			System.out.print("\t" + iae.getMessage());
-			if (expectedValue)
-				System.out.print("  Error! Expected Valid. ==== FAILED TEST ====");
-		} catch (Exception e) {
-			System.out.print(
-					"\tUNEXPECTED EXCEPTION TYPE! " + e.getClass() + " " + e.getMessage() + " ==== FAILED TEST ====");
-			if (expectedValue)
-				System.out.print(" Expected Valid.");
-		}
-
-		System.out.println("\n");
+		System.out.print("\n");
 	}
 
 	private static void testGetLastName() {
@@ -124,42 +86,8 @@ public class NameTest {
 		if (!newName.getLastName().equals(expectedLastName)) {
 			System.out.print("  Error! Expected Invalid. ==== FAILED TEST ====");
 		}
-		System.out.println("\n");
+		System.out.print("\n");
 	}
-
-	private static void testSetLastName() {
-		System.out.println("\n\nTesting the setLastName method.");
-		testSetLastName("Case 1: Valid - Oumbarek without leading/trailing spaces", "Oumbarek", "Oumbarek", true);
-		testSetLastName("Case 2: Valid - Oumbarek with leading/trailing spaces", "  Oumbarek  ", "Oumbarek", true);
-		testSetLastName("Case 3: Invalid null last name", null, "", false);
-		testSetLastName("Case 4 Empty String as a last name", "", "", false);
-		testSetLastName("Case 5 all spaces as a last name", "        ", "      ", false);
-	}
-
-	private static void testSetLastName(String testCase, String lastName, String expectedLastName,
-			boolean expectedValue) {
-		System.out.println("   " + testCase);
-		Name name = new Name("Sammy", "Chaouki");
-		try {
-			name.setLastName(lastName);
-			System.out.print("\tThe Name instance was created: " + name);
-
-			if (!name.getLastName().equals(expectedLastName))
-				System.out.print("  Error! Expected Invalid. ==== FAILED TEST ====");
-		} catch (IllegalArgumentException iae) {
-			System.out.print("\t" + iae.getMessage());
-			if (expectedValue)
-				System.out.print("  Error! Expected Valid. ==== FAILED TEST ====");
-		} catch (Exception e) {
-			System.out.print(
-					"\tUNEXPECTED EXCEPTION TYPE! " + e.getClass() + " " + e.getMessage() + " ==== FAILED TEST ====");
-			if (expectedValue)
-				System.out.print(" Expected Valid.");
-		}
-
-		System.out.println("\n");
-	}
-
 	private static void testGetFullName() {
 		System.out.println("\n\nTesting the getFullName method.");
 		testGetFullName("Case 1: full name without leading/trailing space (Sammy Chaouki)", "Sammy", "Chaouki",
@@ -177,7 +105,7 @@ public class NameTest {
 		if (!newName.getFullName().equals(expectedFullName)) {
 			System.out.print("  Error! Expected Invalid. ==== FAILED TEST ====");
 		}
-		System.out.println("\n");
+		System.out.print("\n");
 	}
 
 }
