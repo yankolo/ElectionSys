@@ -15,6 +15,7 @@ public class NameTest {
 		testGetLastName();
 		testGetFullName();
 		testToString();
+		testCompareTo();
 	}
 
 	private static void testTwoParameterConstructor() {
@@ -64,11 +65,13 @@ public class NameTest {
 	private static void testGetFirstName(String testCase, String firstName, String expectedFirstName) {
 		System.out.println("    " + testCase);
 		Name newName = new Name(firstName, "Chaouki");
-		System.out.println("\tThe Name instace was created: " + newName);
+		System.out.print("\tThe Name instace was created: " + newName);
 
 		if (!newName.getFirstName().equals(expectedFirstName)) {
 			System.out.print("  Error! Expected Invalid. ==== FAILED TEST ====");
 		}
+		System.out.print("\tReturn: " + newName.getFirstName());
+		
 		System.out.print("\n");
 	}
 
@@ -81,11 +84,13 @@ public class NameTest {
 	private static void testGetLastName(String testCase, String lastName, String expectedLastName) {
 		System.out.println("    " + testCase);
 		Name newName = new Name("Sammy", lastName);
-		System.out.println("\tThe Name instace was created: " + newName);
+		System.out.print("\tThe Name instace was created: " + newName);
 
 		if (!newName.getLastName().equals(expectedLastName)) {
 			System.out.print("  Error! Expected Invalid. ==== FAILED TEST ====");
 		}
+		System.out.print("\tReturn: " + newName.getLastName());
+		
 		System.out.print("\n");
 	}
 	private static void testGetFullName() {
@@ -100,11 +105,13 @@ public class NameTest {
 	private static void testGetFullName(String testCase, String firstName, String lastName, String expectedFullName) {
 		System.out.println("    " + testCase);
 		Name newName = new Name(firstName, lastName);
-		System.out.println("\tThe Name instace was created: " + newName);
-
+		System.out.print("\tThe Name instace was created: " + newName);
+		
 		if (!newName.getFullName().equals(expectedFullName)) {
 			System.out.print("  Error! Expected Invalid. ==== FAILED TEST ====");
 		}
+		System.out.print("\tReturn: " + newName.getFullName());
+		
 		System.out.print("\n");
 	}
 	
@@ -121,6 +128,40 @@ public class NameTest {
 		System.out.print("\tThe Name instance was created: " + name);
 		
 		if (!name.toString().equals(expectedString))
+			System.out.print("  Error! Inserted Value Should Have Been Valid. ==== FAILED TEST ====");
+		
+		System.out.println("\n");
+	}
+	
+	private static void testCompareTo() {
+		System.out.println("\n\nTesting the compareTo method.");
+		testCompareTo("Case 1: Sammy Chaouki compare to Yanik Kolomatski", "Sammy", "Chaouki", "Yanik", "Kolomatski", "negative");
+		testCompareTo("Case 2: Nikita Slavin compare to Yanik Kolomatski", "Nikita", "Slavin", "Yanik", "Kolomatski", "positive");
+		testCompareTo("Case 3: Mohamed Hamza compare to Sammy Hamza", "Mohamed", "Hamza", "Sammy", "Hamza", "negative");
+		testCompareTo("Case 4: Mohamed Hamza compare to Mohamed Hamza", "Mohamed", "Hamza", "Mohamed", "Hamza", "zero");
+	}
+	
+	private static void testCompareTo(String testCase, String firstName1, String lastName1, String firstName2, String lastName2, String expectedResult) {
+		System.out.println("   " + testCase);
+		
+		Name name1 = new Name(firstName1, lastName1);
+		Name name2 = new Name(firstName2, lastName2);
+		
+		System.out.print("\tThe Name instance was created: " + name1);
+		System.out.print("\tThe Name instance was created: " + name2);
+		
+		int comparison = name1.compareTo(name2);
+		System.out.print("\tReturn: " + comparison);
+		
+		String realResult = null;
+		if (comparison < 0)
+			realResult = "negative";
+		else if (comparison > 0)
+			realResult = "positive";
+		else if (comparison == 0)
+			realResult = "zero";
+		
+		if (!(realResult.equals(expectedResult)))
 			System.out.print("  Error! Inserted Value Should Have Been Valid. ==== FAILED TEST ====");
 		
 		System.out.println("\n");

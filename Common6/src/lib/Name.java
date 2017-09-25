@@ -6,7 +6,7 @@ import java.io.Serializable;
  * @author Yanik Kolomatski
  *
  */
-public final class Name implements Serializable{
+public final class Name implements Serializable, Comparable<Name>{
 	private static final long serialVersionUID = 42031768871L;
 	private final String firstName;
 	private final String lastName;
@@ -47,24 +47,14 @@ public final class Name implements Serializable{
 		return (firstName + "*" + lastName);
 	}
 	public int compareTo(Name name) {
-		if(this.lastName.compareToIgnoreCase(name.lastName) == 0) {
-			if(this.firstName.compareToIgnoreCase(name.firstName) == 0) {
-				return 0;
-			}
-			else if(this.firstName.compareToIgnoreCase(name.firstName) < 0) {
-				return -1;
-			}
-			else {
-				return 1;
-			}
-		}else {
-			if(this.firstName.compareToIgnoreCase(name.firstName) < 0) {
-				return -1;
-			}
-			else {
-				return 1;
-			}
-		}
+		if (name == null)
+			throw new IllegalArgumentException("Name Error - Name parameter null");
+		
+		// If the last names are equal, the first names will be compared
+		if (this.lastName.compareToIgnoreCase(name.lastName) == 0)
+			return this.firstName.compareToIgnoreCase(name.firstName);
+		
+		return this.lastName.compareToIgnoreCase(name.lastName);
 	}
 
 	private String validNameString(String fieldName, String name) {
