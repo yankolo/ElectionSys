@@ -16,6 +16,8 @@ public class NameTest {
 		testGetFullName();
 		testToString();
 		testCompareTo();
+		testEquals();
+		testHashCode();
 	}
 
 	private static void testTwoParameterConstructor() {
@@ -72,7 +74,7 @@ public class NameTest {
 		}
 		System.out.print("\tReturn: " + newName.getFirstName());
 		
-		System.out.print("\n");
+		System.out.println("\n");
 	}
 
 	private static void testGetLastName() {
@@ -91,7 +93,7 @@ public class NameTest {
 		}
 		System.out.print("\tReturn: " + newName.getLastName());
 		
-		System.out.print("\n");
+		System.out.println("\n");
 	}
 	private static void testGetFullName() {
 		System.out.println("\n\nTesting the getFullName method.");
@@ -112,7 +114,7 @@ public class NameTest {
 		}
 		System.out.print("\tReturn: " + newName.getFullName());
 		
-		System.out.print("\n");
+		System.out.println("\n");
 	}
 	
 	private static void testToString() {
@@ -128,7 +130,7 @@ public class NameTest {
 		System.out.print("\tThe Name instance was created: " + name);
 		
 		if (!name.toString().equals(expectedString))
-			System.out.print("  Error! Inserted Value Should Have Been Valid. ==== FAILED TEST ====");
+			System.out.print("  Error! Expected Invalid. ==== FAILED TEST ====");
 		
 		System.out.println("\n");
 	}
@@ -162,9 +164,64 @@ public class NameTest {
 			realResult = "zero";
 		
 		if (!(realResult.equals(expectedResult)))
-			System.out.print("  Error! Inserted Value Should Have Been Valid. ==== FAILED TEST ====");
+			System.out.print("  Error! Expected Invalid. ==== FAILED TEST ====");
 		
 		System.out.println("\n");
 	}
+	
+	private static void testEquals() {
+		System.out.println("\n\nTesting the equals method.");
+		testEquals("Case 1: Mohamed Hamza compare to Sammy Hamza", "Mohamed", "Hamza", "Sammy", "Hamza", false);
+		testEquals("Case 2: Mohamed Hamza compare to Mohamed Hamza", "Mohamed", "Hamza", "Mohamed", "Hamza", true);
+	}
+	
+	private static void testEquals(String testCase, String firstName1, String lastName1, String firstName2, String lastName2, boolean expectedResult) {
+		System.out.println("   " + testCase);
+		
+		Name name1 = new Name(firstName1, lastName1);
+		Name name2 = new Name(firstName2, lastName2);
+		
+		System.out.print("\tThe Name instance was created: " + name1);
+		System.out.print("\tThe Name instance was created: " + name2);
+		
+		if (name1.equals(name2))
+			if (expectedResult == false)
+				System.out.print("  Error! Expected Invalid. ==== FAILED TEST ====");
+		if (!name1.equals(name2))
+			if (expectedResult == true)
+				System.out.print("  Error! Expected Invalid. ==== FAILED TEST ====");
+		
+		System.out.print("\tReturn: " + name1.equals(name2));
+		
+		System.out.println("\n");
+	}
+	
+	private static void testHashCode() {
+		System.out.println("\n\nTesting hashCode method.");
+		testHashCode("Case 1: Mohamed Hamza compare hashcode to Sammy Hamza", "Mohamed", "Hamza", "Sammy", "Hamza", false);
+		testHashCode("Case 2: Mohamed Hamza compare hashcode to  Mohamed Hamza", "Mohamed", "Hamza", "Mohamed", "Hamza", true);
+	}
+	
+	private static void testHashCode(String testCase, String firstName1, String lastName1, String firstName2, String lastName2, boolean expectedResult) {
+		System.out.println("   " + testCase);
+		
+		Name name1 = new Name(firstName1, lastName1);
+		Name name2 = new Name(firstName2, lastName2);
+		
+		System.out.print("\tThe Name instance was created: " + name1);
+		System.out.print("\tReturn: " + name1.hashCode());
+		System.out.print("\tThe Name instance was created: " + name2);
+		System.out.print("\tReturn: " + name2.hashCode());
+		
+		if (name1.hashCode() == name2.hashCode())
+			if (expectedResult == false)
+				System.out.print("  Error! Expected Invalid. ==== FAILED TEST ====");
+		if (name1.hashCode() != name2.hashCode())
+			if (expectedResult == true)
+				System.out.print("  Error! Expected Invalid. ==== FAILED TEST ====");
+		
+		System.out.println("\n");
+	}
+	
 
 }
