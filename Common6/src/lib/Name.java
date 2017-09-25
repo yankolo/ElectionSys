@@ -1,10 +1,13 @@
 package lib;
 
+import java.io.Serializable;
+
 /**
  * @author Yanik Kolomatski
  *
  */
-public class Name {
+public class Name implements Serializable{
+	private static final long serialVersionUID = 42031768871L;
 	private String firstName;
 	private String lastName;
 
