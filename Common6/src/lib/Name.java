@@ -6,10 +6,10 @@ import java.io.Serializable;
  * @author Yanik Kolomatski
  *
  */
-public class Name implements Serializable{
+public final class Name implements Serializable{
 	private static final long serialVersionUID = 42031768871L;
-	private String firstName;
-	private String lastName;
+	private final String firstName;
+	private final String lastName;
 
 	public Name(String firstName, String lastName) {
 		this.firstName = validNameString("first name", firstName);
