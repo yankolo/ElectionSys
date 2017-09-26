@@ -12,8 +12,8 @@ public final class Name implements Serializable, Comparable<Name>{
 	private final String lastName;
 
 	public Name(String firstName, String lastName) {
-		this.firstName = validNameString("first name", firstName);
-		this.lastName = validNameString("last Name", lastName);
+		this.firstName = validate(firstName);
+		this.lastName = validate(lastName);
 	}
 
 	/**
@@ -88,15 +88,16 @@ public final class Name implements Serializable, Comparable<Name>{
 		return true;
 	}
 
-	private String validNameString(String fieldName, String name) {
+	private String validate(String name) {
 		if (name == null) {
-			throw new IllegalArgumentException("Address Error - " + fieldName + " must exist. Invalid value = " + name);
+			throw new IllegalArgumentException("Address Error - Invalid value = " + name);
 		}
+		
 		String valid = name.trim();
-		if(valid.isEmpty()) {
-			throw new IllegalArgumentException("Address Error - " + fieldName + " must exist. Invalid value = " + name);
-		}
+		
+		if(!valid.matches("^[a-zA-Z](?:[a-zA-Z]|(?:([ '-])(?![ '-])))*[a-zA-Z]$")) 
+			throw new IllegalArgumentException("Address Error - Invalid value = " + name);
+		
 		return valid;
 	}
-
 }

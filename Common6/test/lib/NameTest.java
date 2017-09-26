@@ -31,6 +31,14 @@ public class NameTest {
 		testTwoParameterConstructor("Case 6 - Invalid data - all spaces last name (Sammy      )", "Sammy", "     ",
 				false);
 		testTwoParameterConstructor("Case 7 - Invalid data - null last name (Sammy null)", "Sammy", null, false);
+		testTwoParameterConstructor("Case 8 - Valid data - non letter characters (S'am-my Chao uki)", "S'am-my", "Chao uki", true);
+		testTwoParameterConstructor("Case 8 - Invalid data - illegal characters (Sammy- Chaouki)", "Sammy-", "Chaouki", false);
+		testTwoParameterConstructor("Case 9 - Invalid data - illegal characters (Sammy' Chaouki)", "Sammy'", "Chaouki", false);
+		testTwoParameterConstructor("Case 10 - Invalid data - illegal characters (Sa  mmy Chaouki)", "Sa  mmy", "Chaouki", false);
+		testTwoParameterConstructor("Case 11 - Invalid data - illegal characters (Sammy -Chaouki)", "Sammy", "-Chaouki", false);
+		testTwoParameterConstructor("Case 12 - Invalid data - illegal characters (Sammy 'Chaouki)", "Sammy", "'Chaouki", false);
+		testTwoParameterConstructor("Case 13 - Invalid data - illegal characters (Sammy 'Cha  ouki)", "Sammy", "Cha  ouki", false);
+		testTwoParameterConstructor("Case 14 - Valid data with leading/trailing spaces (  Sammy   Chaouki)", "   Sammy   ", "Chaouki", true);
 	}
 
 	private static void testTwoParameterConstructor(String testCase, String firstName, String lastName,
