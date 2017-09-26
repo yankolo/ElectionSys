@@ -11,6 +11,7 @@ public class PostalCodeTest {
 	public static void main(String[] args)
 	{
 		testOneParameterConstructor();
+		testCompareTo();
 	}
 	
 	private static void testOneParameterConstructor() {
@@ -57,6 +58,55 @@ public class PostalCodeTest {
 			}
 		}
 		System.out.print("\n");
+	}
+	
+	private static void testCompareTo() {
+		System.out.println("\n\nTesting the compareTo method.");
+		testCompareTo("Case 1: J4W 2Y9 compare to j4w2y9", "J4W 2Y9", "j4w2y9", "zero");
+		testCompareTo("Case 2: j4w2y9 compare to h4w2y9", "j4w2y9", "h4w2y9", "positive");
+		testCompareTo("Case 3: h4w2y9 compare to j4w2y9", "h4w2y9", "j4w2y9", "negative");
+		testCompareTo("Case 4: null compare to j4w2y9", "null", "j4w2y9", "null");
+		
+	}
+	
+	private static void testCompareTo(String testCase, String code1, String code2, String expectedResult) {
+		System.out.println("   " + testCase);
+		
+		try {
+		PostalCode potalCode1 = new PostalCode(code1);
+		PostalCode potalCode2 = new PostalCode(code2);
+		
+		System.out.print("\tThe Name instance was created: " + potalCode1);
+		System.out.print("\tThe Name instance was created: " + potalCode2);
+		
+		int comparison = potalCode1.compareTo(potalCode2);
+		System.out.print("\tReturn: " + comparison);
+		
+		String realResult = null;
+		if (comparison < 0)
+			realResult = "negative";
+		else if (comparison > 0)
+			realResult = "positive";
+		else if (comparison == 0)
+			realResult = "zero";
+		
+		if (!(realResult.equals(expectedResult)))
+			System.out.print("  Error! Expected Invalid. ==== FAILED TEST ====");
+		
+		} catch (IllegalArgumentException iae) {
+			System.out.println("\t" + iae.getMessage());
+			if (expectedResult != "null") {
+				System.out.println("  Error! Expected Invalid. ==== FAILED TEST ====");
+			}
+		} catch (Exception e) {
+			System.out.println(
+					"\tUNEXPECTED EXCEPTION TYPE!" + e.getClass() + " " + e.getMessage() + "====FAILED TEST====");
+			if (expectedResult != "null") {
+				System.out.println("Expected Valid");
+			}
+		}
+		
+		System.out.println("\n");
 	}
 
 	

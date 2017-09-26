@@ -7,12 +7,20 @@ package lib;
  * @author Yanik Kolomatski
  *
  */
-public final class PostalCode {
+public final class PostalCode implements Comparable<PostalCode>{
 	private final String code;
 	
 	public PostalCode (String code) throws IllegalArgumentException
 	{
 		this.code = validate(code);
+	}
+	
+	public int compareTo(PostalCode postalCode)
+	{
+		if (postalCode == null)
+			throw new IllegalArgumentException("PostalCode Error - PostalCode parameter null");
+		
+		return this.code.compareToIgnoreCase(postalCode.code);
 	}
 	
 	private String validate(String code)
