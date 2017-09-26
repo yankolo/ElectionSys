@@ -12,6 +12,8 @@ public class PostalCodeTest {
 	{
 		testOneParameterConstructor();
 		testCompareTo();
+		testEquals();
+		testHashCode();
 	}
 	
 	private static void testOneParameterConstructor() {
@@ -108,6 +110,62 @@ public class PostalCodeTest {
 		
 		System.out.println("\n");
 	}
+	
+	private static void testEquals() {
+		System.out.println("\n\nTesting the equals method.");
+		testEquals("Case 1: J4W2Y9 compare to J4W2Y9", "J4W2Y9", "J4W2Y9", true);
+		testEquals("Case 2: J4W2Y9 compare to H4W2Y9", "J4W2Y9", "H4W2Y9", false);
+	}
+	
+	private static void testEquals(String testCase, String code1, String code2, boolean expectedResult) {
+		System.out.println("   " + testCase);
+		
+		PostalCode potalCode1 = new PostalCode(code1);
+		PostalCode potalCode2 = new PostalCode(code2);
+		
+		System.out.print("\tThe Name instance was created: " + potalCode1);
+		System.out.print("\tThe Name instance was created: " + potalCode2);
+		
+		if (potalCode1.equals(potalCode2))
+			if (expectedResult == false)
+				System.out.print("  Error! Expected Invalid. ==== FAILED TEST ====");
+		if (!potalCode1.equals(potalCode2))
+			if (expectedResult == true)
+				System.out.print("  Error! Expected Invalid. ==== FAILED TEST ====");
+		
+		System.out.print("\tReturn: " + potalCode1.equals(potalCode2));
+		
+		System.out.println("\n");
+	}
+	
+	private static void testHashCode() {
+		System.out.println("\n\nTesting hashCode method.");
+		testHashCode("Case 1: J4W2Y9 compare to J4W2Y9", "J4W2Y9", "J4W2Y9", true);
+		testHashCode("Case 2: J4W2Y9 compare to H4W2Y9", "J4W2Y9", "H4W2Y9", false);
+	}
+	
+	private static void testHashCode(String testCase, String code1, String code2, boolean expectedResult) {
+		System.out.println("   " + testCase);
+		
+		PostalCode potalCode1 = new PostalCode(code1);
+		PostalCode potalCode2 = new PostalCode(code2);
+		
+		System.out.print("\tThe Name instance was created: " + potalCode1);
+		System.out.print("\tReturn: " + potalCode1.hashCode());
+		System.out.print("\tThe Name instance was created: " + potalCode2);
+		System.out.print("\tReturn: " + potalCode2.hashCode());
+
+		
+		if (potalCode1.hashCode() == potalCode2.hashCode())
+			if (expectedResult == false)
+				System.out.print("  Error! Expected Invalid. ==== FAILED TEST ====");
+		if (potalCode1.hashCode() != potalCode2.hashCode())
+			if (expectedResult == true)
+				System.out.print("  Error! Expected Invalid. ==== FAILED TEST ====");
+		
+		System.out.println("\n");
+	}
+	
 
 	
 }
