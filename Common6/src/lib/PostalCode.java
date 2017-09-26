@@ -23,6 +23,11 @@ public final class PostalCode implements Comparable<PostalCode>{
 		return this.code.compareToIgnoreCase(postalCode.code);
 	}
 	
+	public String getCode()
+	{
+		return code;
+	}
+	
 	@Override
 	public int hashCode() {
 		final int prime = 31;

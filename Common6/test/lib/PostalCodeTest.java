@@ -15,6 +15,7 @@ public class PostalCodeTest {
 		testEquals();
 		testHashCode();
 		testToString();
+		testGetCode();
 	}
 	
 	private static void testOneParameterConstructor() {
@@ -183,6 +184,26 @@ public class PostalCodeTest {
 		
 		if (!postalCode.toString().equals(expectedString))
 			System.out.print("  Error! Expected Invalid. ==== FAILED TEST ====");
+		
+		System.out.println("\n");
+	}
+	
+	private static void testGetCode() {
+		System.out.println("\n\nTesting the getFirstName method.");
+		testGetCode("Case 1: postal code without leading/trailing space (J4W2Y9)", "J4W2Y9", "J4W2Y9");
+		testGetCode("Case 2: postal code with leading/trailing spaces (   J4W2Y9  )", "   J4W2Y9  ", "J4W2Y9");
+	}
+
+	private static void testGetCode(String testCase, String code, String expectedCode) {
+		System.out.println("    " + testCase);
+		
+		PostalCode postalCode = new PostalCode(code);
+		System.out.print("\tThe Name instace was created: " + postalCode);
+
+		if (!postalCode.getCode().equals(expectedCode)) {
+			System.out.print("  Error! Expected Invalid. ==== FAILED TEST ====");
+		}
+		System.out.print("\tReturn: " + postalCode.getCode());
 		
 		System.out.println("\n");
 	}
