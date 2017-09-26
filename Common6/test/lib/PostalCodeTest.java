@@ -16,6 +16,7 @@ public class PostalCodeTest {
 		testHashCode();
 		testToString();
 		testGetCode();
+		testInRange();
 	}
 	
 	private static void testOneParameterConstructor() {
@@ -189,7 +190,7 @@ public class PostalCodeTest {
 	}
 	
 	private static void testGetCode() {
-		System.out.println("\n\nTesting the getFirstName method.");
+		System.out.println("\n\nTesting the getCode method.");
 		testGetCode("Case 1: postal code without leading/trailing space (J4W2Y9)", "J4W2Y9", "J4W2Y9");
 		testGetCode("Case 2: postal code with leading/trailing spaces (   J4W2Y9  )", "   J4W2Y9  ", "J4W2Y9");
 	}
@@ -207,7 +208,43 @@ public class PostalCodeTest {
 		
 		System.out.println("\n");
 	}
-
-
 	
+	private static void testInRange() {
+		System.out.println("\n\nTesting the inRange method.");
+		testInRange("Case 1: postal code in range (J4W2Y9 between B2 and M)", "J4W2Y9", "B2", "M", true);
+		testInRange("Case 2: postal code not in range (J4W2Y9 not between H2 and H7)", "J4W2Y9", "H2", "H7", false);
+		testInRange("Case 3: start range null reference (J4W2Y9 not between null and H7)", "J4W2Y9", null, "H7", false);
+	}
+	
+	private static void testInRange(String testCase, String code, String range1, String range2, boolean expectedResult) {
+		System.out.println("    " + testCase);
+		
+		try {
+		PostalCode postalCode = new PostalCode(code);
+		System.out.print("\tThe Name instace was created: " + postalCode);
+		
+		if (postalCode.inRange(range1, range2))
+			if (expectedResult == false)
+				System.out.print("  Error! Expected Invalid. ==== FAILED TEST ====");
+		
+		if (!postalCode.inRange(range1, range2))
+			if (expectedResult == true)
+				System.out.print("  Error! Expected Invalid. ==== FAILED TEST ====");
+
+		System.out.print("\tReturn: " + postalCode.inRange(range1, range2));
+		} catch (IllegalArgumentException iae) {
+			System.out.println("\t" + iae.getMessage());
+			if (expectedResult) {
+				System.out.println("  Error! Expected Invalid. ==== FAILED TEST ====");
+			}
+		} catch (Exception e) {
+			System.out.println(
+					"\tUNEXPECTED EXCEPTION TYPE!" + e.getClass() + " " + e.getMessage() + "====FAILED TEST====");
+			if (expectedResult) {
+				System.out.println("Expected Valid");
+			}
+		}
+		
+		System.out.println("\n");
+	}
 }

@@ -28,6 +28,36 @@ public final class PostalCode implements Comparable<PostalCode>{
 		return code;
 	}
 	
+	public boolean inRange(String lowerBoundry, String upperBoundry)
+	{
+		if (lowerBoundry == null || upperBoundry == null)
+			throw new IllegalArgumentException("Error - inRange() params are null");
+		
+		lowerBoundry = lowerBoundry.trim();
+		upperBoundry = upperBoundry.trim();
+		
+		// Validates that lowerBoundry and upperBoundry are in the format ANANAN or ANA ANA with regex
+		// Doesn't have to be a full postal code (ex: can be AN, ANA, or A)
+		// Doesn't have the same character restrictions as a real postal code
+		if (!lowerBoundry.matches("(?i)^[a-z](?:[0-9](?:[a-z](?: ?[0-9](?:[a-z](?:[0-9])?)?)?)?)?$"))
+			throw new IllegalArgumentException("Error - inRange() params are"
+					+ " not valid. Value = " + lowerBoundry);
+		if (!upperBoundry.matches("(?i)^[a-z](?:[0-9](?:[a-z](?: ?[0-9](?:[a-z](?:[0-9])?)?)?)?)?$"))
+			throw new IllegalArgumentException("Error - inRange() params are"
+					+ " not valid. Value = " + upperBoundry);
+		
+		// Remove space in the middle of the code if there is one and put code in all uppercase
+		// That way the comparison of the two strings (this.code and lowerBoundry/upperBoundry
+		// will be more accurate)
+		lowerBoundry = lowerBoundry.replaceAll(" ", "").toUpperCase();
+		upperBoundry = upperBoundry.replaceAll(" ", "").toUpperCase();
+		
+		// Checks if this.code is between lowerBoundry and upperBoundry inclusively
+		if (lowerBoundry.compareToIgnoreCase(this.code) <= 0 && upperBoundry.compareToIgnoreCase(this.code) >= 0)
+			return true;
+		return false;
+	}
+	
 	@Override
 	public int hashCode() {
 		final int prime = 31;
