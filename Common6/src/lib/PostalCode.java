@@ -48,6 +48,11 @@ public final class PostalCode implements Comparable<PostalCode>{
 			return false;
 		return true;
 	}
+	
+	@Override
+	public String toString() {
+		return code;
+	}
 
 	private String validate(String code)
 	{

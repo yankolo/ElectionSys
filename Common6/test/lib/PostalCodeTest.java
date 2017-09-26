@@ -14,6 +14,7 @@ public class PostalCodeTest {
 		testCompareTo();
 		testEquals();
 		testHashCode();
+		testToString();
 	}
 	
 	private static void testOneParameterConstructor() {
@@ -166,6 +167,26 @@ public class PostalCodeTest {
 		System.out.println("\n");
 	}
 	
+	private static void testToString() {
+		System.out.println("\n\nTesting the toString method.");
+		testToString("Case 1: postal code without spaces (J4W2Y9)", "J4W2Y9", "J4W2Y9");
+		testToString("Case 2: postal code with space (J4W 2Y9)", "J4W 2Y9", "J4W2Y9");
+		testToString("Case 3: postal code with leading/trailing spaces (   J4W2Y9   )", "   J4W2Y9   ", "J4W2Y9");
+		testToString("Case 4: postal code in lowercase (j4w2y9)", "j4w2y9", "J4W2Y9");
+	}
+	
+	private static void testToString(String testCase, String code, String expectedString) {
+		System.out.println("   " + testCase);
+		
+		PostalCode postalCode = new PostalCode(code);
+		System.out.print("\tThe Name instance was created: " + postalCode);
+		
+		if (!postalCode.toString().equals(expectedString))
+			System.out.print("  Error! Expected Invalid. ==== FAILED TEST ====");
+		
+		System.out.println("\n");
+	}
+
 
 	
 }
