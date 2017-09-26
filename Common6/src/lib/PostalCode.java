@@ -3,11 +3,14 @@
  */
 package lib;
 
+import java.io.Serializable;
+
 /**
  * @author Yanik Kolomatski
  *
  */
-public final class PostalCode implements Comparable<PostalCode>{
+public final class PostalCode implements Serializable, Comparable<PostalCode>{
+	private static final long serialVersionUID = 4203172017L;
 	private final String code;
 	
 	public PostalCode (String code) throws IllegalArgumentException
