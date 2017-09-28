@@ -123,6 +123,8 @@ public class PostalCodeTest {
 	private static void testEquals(String testCase, String code1, String code2, boolean expectedResult) {
 		System.out.println("   " + testCase);
 		
+		try {
+		
 		PostalCode potalCode1 = new PostalCode(code1);
 		PostalCode potalCode2 = new PostalCode(code2);
 		
@@ -138,6 +140,14 @@ public class PostalCodeTest {
 		
 		System.out.print("\tReturn: " + potalCode1.equals(potalCode2));
 		
+		} catch (IllegalArgumentException iae) {
+			System.out.println("\t" + iae.getMessage());
+			System.out.println("  Error! Expected Invalid. ==== FAILED TEST ====");
+		} catch (Exception e) {
+			System.out.println(
+					"\tUNEXPECTED EXCEPTION TYPE!" + e.getClass() + " " + e.getMessage() + "====FAILED TEST====");
+		}
+		
 		System.out.println("\n");
 	}
 	
@@ -150,6 +160,7 @@ public class PostalCodeTest {
 	private static void testHashCode(String testCase, String code1, String code2, boolean expectedResult) {
 		System.out.println("   " + testCase);
 		
+		try {
 		PostalCode potalCode1 = new PostalCode(code1);
 		PostalCode potalCode2 = new PostalCode(code2);
 		
@@ -166,6 +177,14 @@ public class PostalCodeTest {
 			if (expectedResult == true)
 				System.out.print("  Error! Expected Invalid. ==== FAILED TEST ====");
 		
+		} catch (IllegalArgumentException iae) {
+			System.out.println("\t" + iae.getMessage());
+			System.out.println("  Error! Expected Invalid. ==== FAILED TEST ====");
+		} catch (Exception e) {
+			System.out.println(
+					"\tUNEXPECTED EXCEPTION TYPE!" + e.getClass() + " " + e.getMessage() + "====FAILED TEST====");
+		}
+		
 		System.out.println("\n");
 	}
 	
@@ -180,12 +199,20 @@ public class PostalCodeTest {
 	private static void testToString(String testCase, String code, String expectedString) {
 		System.out.println("   " + testCase);
 		
+		try {
 		PostalCode postalCode = new PostalCode(code);
 		System.out.print("\tThe Name instance was created: " + postalCode);
 		
 		if (!postalCode.toString().equals(expectedString))
 			System.out.print("  Error! Expected Invalid. ==== FAILED TEST ====");
 		
+		} catch (IllegalArgumentException iae) {
+			System.out.println("\t" + iae.getMessage());
+			System.out.println("  Error! Expected Invalid. ==== FAILED TEST ====");
+		} catch (Exception e) {
+			System.out.println(
+					"\tUNEXPECTED EXCEPTION TYPE!" + e.getClass() + " " + e.getMessage() + "====FAILED TEST====");
+		}
 		System.out.println("\n");
 	}
 	
@@ -198,6 +225,7 @@ public class PostalCodeTest {
 	private static void testGetCode(String testCase, String code, String expectedCode) {
 		System.out.println("    " + testCase);
 		
+		try {
 		PostalCode postalCode = new PostalCode(code);
 		System.out.print("\tThe Name instace was created: " + postalCode);
 
@@ -206,6 +234,13 @@ public class PostalCodeTest {
 		}
 		System.out.print("\tReturn: " + postalCode.getCode());
 		
+		} catch (IllegalArgumentException iae) {
+			System.out.println("\t" + iae.getMessage());
+			System.out.println("  Error! Expected Invalid. ==== FAILED TEST ====");
+		} catch (Exception e) {
+			System.out.println(
+					"\tUNEXPECTED EXCEPTION TYPE!" + e.getClass() + " " + e.getMessage() + "====FAILED TEST====");
+		}
 		System.out.println("\n");
 	}
 	

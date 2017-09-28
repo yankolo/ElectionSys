@@ -74,6 +74,8 @@ public class NameTest {
 
 	private static void testGetFirstName(String testCase, String firstName, String expectedFirstName) {
 		System.out.println("    " + testCase);
+		
+		try {
 		Name newName = new Name(firstName, "Chaouki");
 		System.out.print("\tThe Name instace was created: " + newName);
 
@@ -82,6 +84,13 @@ public class NameTest {
 		}
 		System.out.print("\tReturn: " + newName.getFirstName());
 		
+		} catch (IllegalArgumentException iae) {
+			System.out.println("\t" + iae.getMessage());
+			System.out.println("  Error! Expected Invalid. ==== FAILED TEST ====");
+		} catch (Exception e) {
+			System.out.println(
+					"\tUNEXPECTED EXCEPTION TYPE!" + e.getClass() + " " + e.getMessage() + "====FAILED TEST====");
+		}
 		System.out.println("\n");
 	}
 
@@ -93,6 +102,8 @@ public class NameTest {
 
 	private static void testGetLastName(String testCase, String lastName, String expectedLastName) {
 		System.out.println("    " + testCase);
+		
+		try {
 		Name newName = new Name("Sammy", lastName);
 		System.out.print("\tThe Name instace was created: " + newName);
 
@@ -100,6 +111,14 @@ public class NameTest {
 			System.out.print("  Error! Expected Invalid. ==== FAILED TEST ====");
 		}
 		System.out.print("\tReturn: " + newName.getLastName());
+		
+		} catch (IllegalArgumentException iae) {
+			System.out.println("\t" + iae.getMessage());
+			System.out.println("  Error! Expected Invalid. ==== FAILED TEST ====");
+		} catch (Exception e) {
+			System.out.println(
+					"\tUNEXPECTED EXCEPTION TYPE!" + e.getClass() + " " + e.getMessage() + "====FAILED TEST====");
+		}
 		
 		System.out.println("\n");
 	}
@@ -114,6 +133,8 @@ public class NameTest {
 
 	private static void testGetFullName(String testCase, String firstName, String lastName, String expectedFullName) {
 		System.out.println("    " + testCase);
+		
+		try {
 		Name newName = new Name(firstName, lastName);
 		System.out.print("\tThe Name instace was created: " + newName);
 		
@@ -122,6 +143,13 @@ public class NameTest {
 		}
 		System.out.print("\tReturn: " + newName.getFullName());
 		
+		} catch (IllegalArgumentException iae) {
+			System.out.println("\t" + iae.getMessage());
+			System.out.println("  Error! Expected Invalid. ==== FAILED TEST ====");
+		} catch (Exception e) {
+			System.out.println(
+					"\tUNEXPECTED EXCEPTION TYPE!" + e.getClass() + " " + e.getMessage() + "====FAILED TEST====");
+		}
 		System.out.println("\n");
 	}
 	
@@ -134,11 +162,21 @@ public class NameTest {
 	private static void testToString(String testCase, String firstName, String lastName, String expectedString) {
 		System.out.println("   " + testCase);
 		
+		try {
+		
 		Name name = new Name(firstName, lastName);
 		System.out.print("\tThe Name instance was created: " + name);
 		
 		if (!name.toString().equals(expectedString))
 			System.out.print("  Error! Expected Invalid. ==== FAILED TEST ====");
+		
+		} catch (IllegalArgumentException iae) {
+			System.out.println("\t" + iae.getMessage());
+			System.out.println("  Error! Expected Invalid. ==== FAILED TEST ====");
+		} catch (Exception e) {
+			System.out.println(
+					"\tUNEXPECTED EXCEPTION TYPE!" + e.getClass() + " " + e.getMessage() + "====FAILED TEST====");
+		}
 		
 		System.out.println("\n");
 	}
@@ -153,6 +191,8 @@ public class NameTest {
 	
 	private static void testCompareTo(String testCase, String firstName1, String lastName1, String firstName2, String lastName2, String expectedResult) {
 		System.out.println("   " + testCase);
+		
+		try {
 		
 		Name name1 = new Name(firstName1, lastName1);
 		Name name2 = new Name(firstName2, lastName2);
@@ -174,6 +214,14 @@ public class NameTest {
 		if (!(realResult.equals(expectedResult)))
 			System.out.print("  Error! Expected Invalid. ==== FAILED TEST ====");
 		
+		} catch (IllegalArgumentException iae) {
+			System.out.println("\t" + iae.getMessage());
+			System.out.println("  Error! Expected Invalid. ==== FAILED TEST ====");
+		} catch (Exception e) {
+			System.out.println(
+					"\tUNEXPECTED EXCEPTION TYPE!" + e.getClass() + " " + e.getMessage() + "====FAILED TEST====");
+		}
+		
 		System.out.println("\n");
 	}
 	
@@ -185,6 +233,8 @@ public class NameTest {
 	
 	private static void testEquals(String testCase, String firstName1, String lastName1, String firstName2, String lastName2, boolean expectedResult) {
 		System.out.println("   " + testCase);
+		
+		try {
 		
 		Name name1 = new Name(firstName1, lastName1);
 		Name name2 = new Name(firstName2, lastName2);
@@ -201,6 +251,14 @@ public class NameTest {
 		
 		System.out.print("\tReturn: " + name1.equals(name2));
 		
+		} catch (IllegalArgumentException iae) {
+			System.out.println("\t" + iae.getMessage());
+			System.out.println("  Error! Expected Invalid. ==== FAILED TEST ====");
+		} catch (Exception e) {
+			System.out.println(
+					"\tUNEXPECTED EXCEPTION TYPE!" + e.getClass() + " " + e.getMessage() + "====FAILED TEST====");
+		}
+		
 		System.out.println("\n");
 	}
 	
@@ -212,6 +270,8 @@ public class NameTest {
 	
 	private static void testHashCode(String testCase, String firstName1, String lastName1, String firstName2, String lastName2, boolean expectedResult) {
 		System.out.println("   " + testCase);
+		
+		try {
 		
 		Name name1 = new Name(firstName1, lastName1);
 		Name name2 = new Name(firstName2, lastName2);
@@ -227,6 +287,14 @@ public class NameTest {
 		if (name1.hashCode() != name2.hashCode())
 			if (expectedResult == true)
 				System.out.print("  Error! Expected Invalid. ==== FAILED TEST ====");
+		
+		} catch (IllegalArgumentException iae) {
+			System.out.println("\t" + iae.getMessage());
+			System.out.println("  Error! Expected Invalid. ==== FAILED TEST ====");
+		} catch (Exception e) {
+			System.out.println(
+					"\tUNEXPECTED EXCEPTION TYPE!" + e.getClass() + " " + e.getMessage() + "====FAILED TEST====");
+		}
 		
 		System.out.println("\n");
 	}
