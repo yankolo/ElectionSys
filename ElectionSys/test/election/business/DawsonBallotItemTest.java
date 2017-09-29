@@ -5,6 +5,7 @@ package election.business;
 
 import election.business.interfaces.BallotItem;
 import lib.Address;
+import lib.Email;
 
 /**
  * @author moham
@@ -25,6 +26,7 @@ public class DawsonBallotItemTest {
 		testSetValue();
 		testEquals();
 		testToString();
+		testHashCode();
 
 	}
 	
@@ -279,6 +281,34 @@ public class DawsonBallotItemTest {
 		System.out.println();
 	}
 
-
+	private static void testHashCode() {
+		testHashCode("Case 1: choice=Mohamed choice2=mohamed maxValue=10, maxValue2=20", "Mohamed", "mohamed", 10,20,true);
+		testHashCode("Case 2: choice=Mohamed choice2=yanik maxValue=10, maxValue2=20", "Mohamed", "yanik", 10,20,false);
+		
+	}
+	
+	private static void testHashCode(String testCase, String choice, String choice2, int maxValue, int maxValue2, boolean expectedValid) {
+		System.out.println("   " + testCase);
+		DawsonBallotItem item1 = new DawsonBallotItem(choice, maxValue);
+		System.out.println("\tThe DawsonBallotItem instance1 was created: " + item1);
+		System.out.println("\tThe hashCode is: " + item1.hashCode());
+		System.out.println();
+		DawsonBallotItem item2 = new DawsonBallotItem(choice2, maxValue2);
+		System.out.println("\tThe DawsonBallotItem instance2 was created: " + item2);
+		System.out.println("\tThe hashCode is: " + item2.hashCode());
+		
+		if(item1.hashCode() == item2.hashCode()) {
+			if(expectedValid == false) {
+				System.out.println("  Error! Expected Invalid. === FAILED TEST ===");
+			}
+		}
+		
+		if(item1.hashCode() != item2.hashCode()) {
+			if(expectedValid == true) {
+				System.out.println("  Error! Expected Invalid. === FAILED TEST ===");
+			}
+		}
+		System.out.println();
+	}
 
 }
