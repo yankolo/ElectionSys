@@ -40,6 +40,7 @@ public class DawsonElectionTest {
 		testGetName();
 		testGetTally();
 		testSetTally();
+
 		testGetBallot();
 	}
 
