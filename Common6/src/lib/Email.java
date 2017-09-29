@@ -61,6 +61,12 @@ public class Email implements Serializable, Comparable<Email> {
 		return address.toUpperCase().hashCode();
 	}
 
+	/**
+	 * The equals method validates first if the object passed is null or an instance of 
+	 * Email. It then compares both Email ignoring cases.
+	 * @param obj
+	 * @return a boolean of the 2 compared emails
+	 */
 	@Override
 	public final boolean equals(Object obj) {
 		if (this == obj) {
@@ -111,6 +117,12 @@ public class Email implements Serializable, Comparable<Email> {
 		}
 	}
 
+	/**
+	 * Overridden the compareTo method checks the hosts, if the hosts are the same it will check the userIds.
+	 * 
+	 * @param Email o - an Email Object
+	 * @return int - returns a int value of the comparTo method from the String class
+	 */
 	@Override
 	public int compareTo(Email o) {
 		if (o == null) {
