@@ -20,6 +20,7 @@ public class EmailTest {
 		testEquals();
 		testToString();
 		testCompareTo();
+		testHashCode();
 
 	}
 	
@@ -226,6 +227,36 @@ public class EmailTest {
 			System.out.println(
 					"\tUNEXPECTED EXCEPTION TYPE!" + e.getClass() + " " + e.getMessage() + "====FAILED TEST====");
 			
+		}
+		System.out.println();
+	}
+	
+	private static void testHashCode() {
+		testHashCode("Case 1: email1 = (moe@gmail) and email2 = (moe@gmail) should have the same hashCode", "moe@gmail", "moe@gmail", true);
+		testHashCode("Case 2: email1 = (moe@gmail) and email2 (MOe@gMail) should return the same hashCode", "moe@gmail", "MOe@gMail", true);
+		testHashCode("Case 3: email1 = (yanik@niki) and email2 = (sammy@niki) should return different hashCode", "yanik@niki", "sammy@niki", false);
+	}
+	
+	private static void testHashCode(String testCase, String address1, String address2, boolean expectedValid) {
+		System.out.println("   " + testCase);
+		Email addressObj1 = new Email (address1);
+		System.out.println("\tThe Email instance1 was created: " + addressObj1);
+		System.out.println("\tThe hashCode is: " + addressObj1.hashCode());
+		System.out.println();
+		Email addressObj2 = new Email (address2);
+		System.out.println("\tThe Email instance2 was created: " + addressObj2);
+		System.out.println("\tThe hashCode is: " + addressObj2.hashCode());
+		
+		if(address1.hashCode() == address2.hashCode()) {
+			if(expectedValid == false) {
+				System.out.println("  Error! Expected Invalid. === FAILED TEST ===");
+			}
+		}
+		
+		if(addressObj1.hashCode() != addressObj2.hashCode()) {
+			if(expectedValid == true) {
+				System.out.println("  Error! Expected Invalid. === FAILED TEST ===");
+			}
 		}
 		System.out.println();
 	}
