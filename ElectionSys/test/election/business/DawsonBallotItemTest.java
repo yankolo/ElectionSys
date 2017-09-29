@@ -4,6 +4,7 @@
 package election.business;
 
 import election.business.interfaces.BallotItem;
+import lib.Address;
 
 /**
  * @author moham
@@ -22,6 +23,7 @@ public class DawsonBallotItemTest {
 		testGetMaxValue();
 		testGetValue();
 		testSetValue();
+		testEquals();
 
 	}
 	
@@ -227,6 +229,32 @@ public class DawsonBallotItemTest {
 					"\tUNEXPECTED EXCEPTION TYPE!" + e.getClass() + " " + e.getMessage() + "====FAILED TEST====");
 
 		}
+
+		System.out.println();
+	}
+	
+	private static void testEquals() {
+		System.out.println("\n\nTesting the equals method.");
+		DawsonBallotItem item1 = new DawsonBallotItem("Mohamed", 12);
+		DawsonBallotItem item2 = new DawsonBallotItem("sammy", 14);
+		DawsonBallotItem item3 = new DawsonBallotItem("Yanik", 14);
+		Address address = new Address("3040", "Sherbrook", "Westmount");
+		
+		testEquals("Case 1: Testing equality between 2 DawsonBallotItem objects (Mohamed,12) and (Mohamed,12) should return true", "Mohamed",12, item1, true);
+		testEquals("Case 2: Testing equality between 2 DawsonBallotItem objects (Sammy,13) and (sammy,14) should return true", "Sammy", 13, item2, true);
+		testEquals("Case 3: Testing equality between 2 diffrent DawsonBallotItem objects (Nikita,14) and (Yanik,14) should return false", "Nikita",14, item3, false);
+		testEquals("Case 4: Testing equality between a DawsonBallotItem object (Jaya,30) and a null object should return false", "Jaya",30, null, false);
+		testEquals("Case 5: Testing equality between a DawsonBallotItem object (Davis,40) and an Address object should return false", "Davis",40, address, false);
+	}
+	
+	private static void testEquals(String testCase, String choice, int maxValue, Object obj, boolean expectValid) {
+		System.out.println("   " + testCase);
+		DawsonBallotItem item = new DawsonBallotItem(choice, maxValue);
+		System.out.println("\tThe DawsonBallotItem instance was created: " + item);
+		System.out.println("\tThe equals method returns: " + item.equals(obj));
+		
+		if (item.equals(obj) != expectValid)
+			System.out.print("  Error! Expected Invalid. ==== FAILED TEST ====");
 
 		System.out.println();
 	}
