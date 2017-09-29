@@ -76,6 +76,11 @@ public class DawsonBallotItem implements BallotItem, Serializable, Comparable<Ba
 		return maxValue;
 	}
 
+	/**
+	 * Compare to method compares the choices of 2 BallotItems Ignoring cases.
+	 * @param o
+	 * @return an int
+	 */
 	@Override
 	public int compareTo(BallotItem o) {
 		if (o == null) {
@@ -100,6 +105,12 @@ public class DawsonBallotItem implements BallotItem, Serializable, Comparable<Ba
 		return this.value;
 	}
 
+	/**
+	 * The setValue method sets the value if it's bigger of equal to 0 and smaller
+	 * or equal to maxValue
+	 * @param value
+	 * @return void
+	 */
 	@Override
 	public void setValue(int value) {
 		if (!(value >= 0 && value <= this.maxValue)) {
@@ -110,6 +121,11 @@ public class DawsonBallotItem implements BallotItem, Serializable, Comparable<Ba
 
 	}
 
+	/**
+	 * The equals method validates first if the object passed is an instance of DawsonBallotItem or a null object.
+	 * @param obj
+	 * @return boolean by comparing 2 DawsonBallotItems
+	 */
 	@Override
 	public final boolean equals(Object obj) {
 		if (this == obj) {
