@@ -21,7 +21,7 @@ public class DawsonElectionTest {
 	 */
 	public static void main(String[] args) {
 		testTheTweelveParameterConstructor();
-		
+		compareToTest();
 
 	}
 
@@ -120,6 +120,55 @@ public class DawsonElectionTest {
 			}
 		}
 		System.out.println("\n");
+
+	}private static void compareToTest() {
+		StubTally st = new StubTally();
+		String s1 = "Dawson";
+		String s2 = "hello world";
+		String s3 = "zebra";
+		DawsonElection de1 = new DawsonElection(s1, "single", 1997, 02, 25, 1998, 05, 23, null, null, st, s2, s3);
+		System.out.println("\t------------------------------------------");
+		compareToTest("Case1 - valid DawsonElection Object - the name of the election of  ", de1, true);
+		de1 = new DawsonElection(s2, "single", 1997, 02, 25, 1998, 05, 23, null, null, st, s1, s3);
+		compareToTest("Case2 - valid DawsonElection Object - the name of the election   is hello world", de1, true);
+		de1 = new DawsonElection(s3, "single", 1997, 02, 25, 1998, 05, 23, null, null, st, s1, s2);
+		compareToTest("Case 3 - valid DawsonElection Object - the name of the election is zebra ", de1, true);
+		de1 = null;
+		compareToTest("Case 4 - invalid DawsonElection Object - the dawson election object is null", de1, false);
+	}
+
+	private static void compareToTest(String testCase, DawsonElection test, boolean expectValue) {
+		System.out.println("   " + testCase);
+		String s1 = "Brandon";
+		String s2 = "Bob";
+		String s3 = "Jordy";
+		StubTally st = new StubTally();
+		try {
+
+			DawsonElection d1 = new DawsonElection("Hello World", "single", 2017, 04, 22, 2018, 04, 22, null, null, st,
+					s1, s2, s3);
+			int compare = d1.compareTo(test);
+			System.out.println(
+					"The compare method has worked. The compareTo method return the following integer " + compare);
+			if (!expectValue)
+				System.out.print("  Error! Expected Invalid. ==== FAILED TEST ==== ");
+
+			System.out.println("\n");
+		} catch (IllegalArgumentException iae) {
+			System.out.println("\t" + iae.getMessage());
+			if (expectValue) {
+				System.out.println(" Error! Expected Valid. ====== FAILED TEST =====");
+			}
+		} catch (Exception e) {
+			System.out.println(
+					"\tUNEXPECTED EXCEPTION TYPE!" + e.getClass() + " " + e.getMessage() + "====FAILED TEST====");
+			if (expectValue) {
+				System.out.println("Expected Valid");
+			}
+
+			System.out.println("\n");
+
+		}
 
 	}
 
