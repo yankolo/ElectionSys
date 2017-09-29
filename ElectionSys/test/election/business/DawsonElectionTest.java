@@ -10,6 +10,7 @@ import election.business.interfaces.Tally;
 import election.business.interfaces.Voter;
 import lib.Address;
 
+
 /**
  * @author katsuragi
  *
@@ -22,7 +23,8 @@ public class DawsonElectionTest {
 	public static void main(String[] args) {
 		testTheTweelveParameterConstructor();
 		compareToTest();
-
+		testGetElectionType();
+		testGetElectionChoices();
 	}
 
 	private static void testTheTweelveParameterConstructor() {
@@ -217,4 +219,49 @@ public class DawsonElectionTest {
 		}
 
 	}
+	private static void testGetElectionChoices() {
+		System.out.println("\t------------------------------------------");
+		String s1 = "Brandon";
+		String s2 = "Bob";
+		String s3 = "Jordy";
+		testGetElectionChoices("Case 1 - Return a 3 different choices - Brandon, Bob, Jordy", true, s1, s2, s3);
+		s1 = "Sammy";
+		s2 = "Hello world";
+		s3 = "Mohammed";
+		testGetElectionChoices("Case 2 - Return a 3 different choices - Sammy, Hello World, Mohammed", true, s1, s2,
+				s3);
+
+	}
+
+	private static void testGetElectionChoices(String testCase, boolean expectValid, String... items) {
+
+		System.out.println("   " + testCase);
+		StubTally st = new StubTally();
+		try {
+
+			DawsonElection d1 = new DawsonElection("Hello World", "single", 2017, 04, 22, 2018, 04, 22, null, null, st,
+					items);
+			System.out.println("This array passed to this test method is a valid String array: " + d1.toString());
+			if (!expectValid)
+				System.out.print("  Error! Expected Invalid. ==== FAILED TEST ==== ");
+
+			System.out.println("\n");
+		} catch (IllegalArgumentException iae) {
+			System.out.println("\t" + iae.getMessage());
+			if (expectValid) {
+				System.out.println(" Error! Expected Valid. ====== FAILED TEST =====");
+			}
+		} catch (Exception e) {
+			System.out.println(
+					"\tUNEXPECTED EXCEPTION TYPE!" + e.getClass() + " " + e.getMessage() + "====FAILED TEST====");
+			if (expectValid) {
+				System.out.println("Expected Valid");
+			}
+
+			System.out.println("\n");
+
+		}
+
+	}
+
 }
