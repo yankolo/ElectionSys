@@ -738,7 +738,7 @@ public class DawsonElectionTest {
 		System.out.println("   " + testCase);
 		try {
 			
-			if(d1.equals(de) == expectValid) {
+			if(de.equals(d1) == expectValid) {
 				if(d1.equals(de)) {
 					System.out.println(" Passed test --- " + d1.getName() + " and " + de.getName() + " are equal");
 				}
@@ -818,6 +818,7 @@ public class DawsonElectionTest {
 		}
 	
 	}
+	
 	
 
 }
