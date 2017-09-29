@@ -19,6 +19,7 @@ public class EmailTest {
 		testGetHost();
 		testEquals();
 		testToString();
+		testCompareTo();
 
 	}
 	
@@ -187,6 +188,45 @@ public class EmailTest {
 		if (!emailObj.toString().equals(expectedAddress))
 			System.out.print("  Error! Expected Invalid. ==== FAILED TEST ====");
 
+		System.out.println();
+	}
+	
+	private static void testCompareTo() {
+		System.out.println("\n\nTesting the compareTo method.");
+		Email emailObj1 = null;
+		Email emailObj2 = new Email("dell@xps");
+		Email emailObj3 = new Email("hp@xps");
+		Email emailObj4 = new Email("M0hamed@Sammy");
+		Email emailObj5 = new Email("Apple@zx");
+		Email emailObj6 = new Email("Lg@ab");
+		
+		testCompareTo("Case 1: Comparing (dell@Inspiron) with a null Email object should return an exception", "dell@inspiron", emailObj1, 0);
+		testCompareTo("Case 2: Comparing (hp@xps) with (dell@xps) should return 1", "hp@xps", emailObj2, 1);
+		testCompareTo("Case 3: Comparing (dell@xps) with (hp@xps) should return -1", "dell@xps", emailObj3, -1);
+		testCompareTo("Case 4: Comparing (M0hamed@Sammy) with (M0hamed@Sammy) should return 0", "M0hamed@Sammy", emailObj4, 0);
+		testCompareTo("Case 5: Comparing (Lg@ab) with (Apple@zx) should return a negative number", "Lg@ab", emailObj5, -25);
+		testCompareTo("Case 6: Comparing (Apple@zx) with (Lg@ab) should return a positive number", "Apple@zx", emailObj6, 25);
+	}
+	
+	private static void testCompareTo(String testCase, String address, Email object, int expectValid) {
+		System.out.println("   " + testCase);
+		Email emailObj = new Email (address);
+		System.out.println("\tThe Email instance was created: " + emailObj);
+		
+		try {
+			System.out.println("\tThe compareTo method returns: " + emailObj.compareTo(object));
+			if (emailObj.compareTo(object) != expectValid) {
+				System.out.print("  Error! Expected Invalid. ==== FAILED TEST ====");
+			}
+		
+		} catch (IllegalArgumentException iae) {
+			System.out.println("\t" + iae.getMessage());
+			
+		} catch (Exception e) {
+			System.out.println(
+					"\tUNEXPECTED EXCEPTION TYPE!" + e.getClass() + " " + e.getMessage() + "====FAILED TEST====");
+			
+		}
 		System.out.println();
 	}
 
