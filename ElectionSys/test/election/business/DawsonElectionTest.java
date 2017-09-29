@@ -44,6 +44,7 @@ public class DawsonElectionTest {
 		testSetTally();
 		testGetBallot();
 		testEquals();
+		testHashCode();
 	}
 
 	private static void testTheTweelveParameterConstructor() {
@@ -747,6 +748,56 @@ public class DawsonElectionTest {
 			}
 			else {
 				System.out.print(" ==== FAILED TEST ==== ERROR OOCURED IN THE EQUALS METHOD  ");
+			}
+
+			System.out.println("\n");
+		} catch (IllegalArgumentException iae) {
+			System.out.println("\t" + iae.getMessage());
+			if (expectValid) {
+				System.out.println(" Error! Expected Valid. ====== FAILED TEST =====");
+			}
+		} catch (Exception e) {
+			System.out.println(
+					"\tUNEXPECTED EXCEPTION TYPE!" + e.getClass() + " " + e.getMessage() + "====FAILED TEST====");
+			if (expectValid) {
+				System.out.println("Expected Valid");
+			}
+
+			System.out.println("\n");
+
+		}
+	
+	}
+	private static void testHashCode() {
+		StubTally st = new StubTally();
+		String s1 = "Brandon";
+		String s2 = "Bob";
+		String s3 = "Jordy";
+
+		DawsonElection de = new DawsonElection("Hello World", "single", 2016, 12, 2, 2017, 04, 22, null, null, st,
+				s1, s2, s3);
+		DawsonElection de2 = new DawsonElection("Hek", "single", 2016, 12, 2, 2017, 04, 22, null, null, st,
+				s1, s2, s3);
+		DawsonElection de3 = de;
+		DawsonElection de4 = new DawsonElection("Hello World", "single", 2016, 11, 2, 2017, 04, 22, null, null, st,
+				s1, s2, s3);
+		testHashCode("Case 1 -- if both DawsonElection objects reference to the same object - hashCode should be the same ", de, de3, true);
+		testHashCode("Case 2 -- if both DawsonElection objects have the same Election name - hashCode should be the same ", de, de4, true);
+		testHashCode("Case 3 -- if both DawsonElection objects have the different Election name - hashCode should be different ", de, de2, false);
+
+
+	}
+	private static void testHashCode(String testCase, DawsonElection de ,DawsonElection d1 ,  boolean expectValid) {
+		System.out.println("   " + testCase);
+		try {
+			
+			if( (d1.hashCode() == de.hashCode() && expectValid )) {
+				
+					System.out.println(" Passed test ---  The hashCode of the first DawsonElection object is " + de.hashCode() + " and  the hash Code of the second DawsonElection Object is " + d1.hashCode() + " have  equal hashCode");
+
+			}
+			else {
+				System.out.println(" Passed test ---  The hashCode of the first DawsonElection object is " + de.hashCode() + " and  the hash Code of the second DawsonElection Object is " + d1.hashCode() + "  have  different hashCode");
 			}
 
 			System.out.println("\n");
