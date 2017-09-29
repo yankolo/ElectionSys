@@ -12,6 +12,7 @@ public class DawsonVoterTest {
 		testGetName();
 		testGetEmail();
 		testGetPostalCode();
+		testSetPostalCode();
 	}
 
 	private static void testGetName() {
@@ -82,6 +83,35 @@ public class DawsonVoterTest {
 			System.out.print("Error! Expected Invalid. ==== FAILED TEST ====");
 		}
 		System.out.print("\tReturn: " + dv.getPostalCode());
+		
+		} catch (IllegalArgumentException iae) {
+			System.out.println(iae.getMessage());
+			System.out.println("Error! Expected Invalid. ==== FAILED TEST ====");
+		} catch (Exception e) {
+			System.out.println("UNEXPECTED EXCEPTION TYPE!" + e.getClass() + " " + e.getMessage() + "====FAILED TEST====");
+		}
+		System.out.println("\n");
+	}
+	
+	private static void testSetPostalCode() {
+		System.out.println("\nTesting the setPostalCode method \n");
+		testSetPostalCode("Case 1: valid postal code (J4W2Y9)", "J4W2Y9", "J4W2Y9");
+	}
+	
+	private static void testSetPostalCode(String testCase, String postalCode, String expectedResult) {
+		System.out.println(testCase);
+		
+		try {
+		DawsonVoter dv = new DawsonVoter("Mo", "Hamza", "moe@gmail.com", "H4W2Y9");
+		DawsonVoter dv2 = new DawsonVoter("Mo", "Hamza", "moe@gmail.com", postalCode);
+		dv.setPostalCode(dv2.getPostalCode());
+		System.out.print("\tA DawsonVoter instance was created: " + dv);
+		System.out.print("\n\tA second DawsonVoter instance was created: " + dv);
+
+		if (!dv.getPostalCode().toString().equals(expectedResult)) {
+			System.out.print("Error! Expected Invalid. ==== FAILED TEST ====");
+		}
+		System.out.print("\tPostal code changed from H4W2Y9 to: " + dv.getPostalCode());
 		
 		} catch (IllegalArgumentException iae) {
 			System.out.println(iae.getMessage());
