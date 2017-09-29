@@ -19,6 +19,7 @@ public class DawsonBallotItemTest {
 		testTheCopyConstructor();
 		testCompareTo();
 		testGetChoice();
+		testGetMaxValue();
 
 	}
 	
@@ -154,6 +155,24 @@ public class DawsonBallotItemTest {
 		System.out.println("\tThe getChoice method returns: " + item.getChoice());
 
 		if (!item.getChoice().equals(expectedChoice))
+			System.out.print("  Error! Expected Invalid. ==== FAILED TEST ====");
+
+		System.out.println();
+	}
+	
+	private static void testGetMaxValue() {
+		System.out.println("\n\nTesting the getMaxValue method.");
+		testGetMaxValue("Case 1: Calling getMaxValue on this DawsonBallotItem (\"Mohamed\",\"18\") should return (18)",
+				"Mohamed", 18, 18);
+	}
+
+	private static void testGetMaxValue(String testCase, String choice, int maxValue, int expectedMaxValue) {
+		System.out.println("   " + testCase);
+		DawsonBallotItem item = new DawsonBallotItem(choice, maxValue);
+		System.out.println("\tThe Email instance was created: " + item);
+		System.out.println("\tThe getChoice method returns: " + item.getMaxValue());
+
+		if (item.getMaxValue() != expectedMaxValue)
 			System.out.print("  Error! Expected Invalid. ==== FAILED TEST ====");
 
 		System.out.println();
