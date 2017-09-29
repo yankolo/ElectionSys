@@ -14,6 +14,7 @@ import election.business.interfaces.Voter;
 
 
 
+
 /**
  * @author katsuragi
  *
@@ -33,6 +34,7 @@ public class DawsonElectionTest {
 		testGetPostalRangeEnd();
 		testGetPostalRangeStart();
 		testIsLimitedToPostalRange();
+		testGetName();
 	}
 
 	private static void testTheTweelveParameterConstructor() {
@@ -496,6 +498,53 @@ public class DawsonElectionTest {
 			} else {
 				System.out.println(
 						"The two strings passed to this test method tells that the postal ranges is not important for this election ");
+			}
+			if (!expectValid)
+				System.out.print("  Error! Expected Invalid. ==== FAILED TEST ==== ");
+
+			System.out.println("\n");
+		} catch (IllegalArgumentException iae) {
+			System.out.println("\t" + iae.getMessage());
+			if (expectValid) {
+				System.out.println(" Error! Expected Valid. ====== FAILED TEST =====");
+			}
+		} catch (Exception e) {
+			System.out.println(
+					"\tUNEXPECTED EXCEPTION TYPE!" + e.getClass() + " " + e.getMessage() + "====FAILED TEST====");
+			if (expectValid) {
+				System.out.println("Expected Valid");
+			}
+
+			System.out.println("\n");
+
+		}
+
+	}
+	private static void testGetName() {
+		System.out.println("\t------------------------------------------");
+		String s1 = "USA ELECTION";
+		String s2 = "CANADIAN ELECTION";
+		testGetName("Case 1 - The name of the election is USA ELECTION - getName should return that name", s1, true);
+		testGetName("Case 2 - The name of the election is CANADIAN ELECTION - getName should return that name", s2,
+				true);
+
+	}
+
+	private static void testGetName(String testCase, String name, boolean expectValid) {
+
+		System.out.println("   " + testCase);
+		StubTally st = new StubTally();
+		try {
+			String s1 = "Brandon";
+			String s2 = "Bob";
+			String s3 = "Jordy";
+
+			DawsonElection d1 = new DawsonElection(name, "single", 2016, 12, 2, 2017, 04, 22, null, null, st, s1, s2,
+					s3);
+			if (d1.getName().equalsIgnoreCase(name)) {
+				System.out.println("The getName returns the correct string which is " + d1.getName());
+			} else {
+				System.out.println(d1.getName() + " and " + name + " are equal ==== FAILED TEST ====  ");
 			}
 			if (!expectValid)
 				System.out.print("  Error! Expected Invalid. ==== FAILED TEST ==== ");
