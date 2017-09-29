@@ -121,7 +121,9 @@ public class DawsonElectionTest {
 		}
 		System.out.println("\n");
 
-	}private static void compareToTest() {
+	}
+
+	private static void compareToTest() {
 		StubTally st = new StubTally();
 		String s1 = "Dawson";
 		String s2 = "hello world";
@@ -172,6 +174,47 @@ public class DawsonElectionTest {
 
 	}
 
-	
+	private static void testGetElectionType() {
+		System.out.println("\t------------------------------------------");
+		testGetElectionType("Case 1 - Enter a valid Election type -- single election type", "single", true);
+		testGetElectionType("Case 2 - Enter a valid Election type -- ranked election type", "ranked", true);
+		// did not check if the type string was an empty string or a null referenced
+		// because it is tested in the constructor
 
+	}
+
+	private static void testGetElectionType(String testCase, String type, boolean expectValid) {
+
+		System.out.println("   " + testCase);
+		String s1 = "Brandon";
+		String s2 = "Bob";
+		String s3 = "Jordy";
+		StubTally st = new StubTally();
+		try {
+
+			DawsonElection d1 = new DawsonElection("Hello World", type, 2017, 04, 22, 2018, 04, 22, null, null, st, s1,
+					s2, s3);
+			System.out.println("This type passed to this test method is a valid Election type: "
+					+ d1.getElectionType().toString());
+			if (!expectValid)
+				System.out.print("  Error! Expected Invalid. ==== FAILED TEST ==== ");
+
+			System.out.println("\n");
+		} catch (IllegalArgumentException iae) {
+			System.out.println("\t" + iae.getMessage());
+			if (expectValid) {
+				System.out.println(" Error! Expected Valid. ====== FAILED TEST =====");
+			}
+		} catch (Exception e) {
+			System.out.println(
+					"\tUNEXPECTED EXCEPTION TYPE!" + e.getClass() + " " + e.getMessage() + "====FAILED TEST====");
+			if (expectValid) {
+				System.out.println("Expected Valid");
+			}
+
+			System.out.println("\n");
+
+		}
+
+	}
 }
