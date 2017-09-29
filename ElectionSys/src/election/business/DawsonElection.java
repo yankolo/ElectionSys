@@ -12,8 +12,8 @@ import election.business.interfaces.Tally;
 import election.business.interfaces.Voter;
 
 /**
- * This
  * 
+ * This class represents an Election
  * @author Sammy Chaouki
  *
  */
