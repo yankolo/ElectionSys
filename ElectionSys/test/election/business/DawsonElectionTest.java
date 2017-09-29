@@ -45,6 +45,7 @@ public class DawsonElectionTest {
 		testGetBallot();
 		testEquals();
 		testHashCode();
+		toStringTest();
 	}
 
 	private static void testTheTweelveParameterConstructor() {
@@ -818,7 +819,24 @@ public class DawsonElectionTest {
 		}
 	
 	}
-	
+	private static void toStringTest() {
+		StubTally st = new StubTally();
+		String s1 = "Brandon";
+		String s2 = "Bob";
+		String s3 = "Jordy";
+
+		DawsonElection de = new DawsonElection("Hello World", "single", 2016, 12, 2, 2017, 04, 22, null, null, st,
+				s1, s2, s3);
+		DawsonElection de1 = new DawsonElection("Hello World", "ranked", 2016, 12, 2, 2017, 04, 22, "G", "H", st,
+				s1, s2);
+		System.out.println(" \tCase 1 - A DawsonElection object that has no postal code range and has 3 ballot item choices");
+		System.out.println(de.toString());
+		System.out.println(" \tCase 2 - A DawsonElection object that has a postal code range and has 2 ballot item choices");
+		System.out.println(de1.toString());
+
+		
+		
+	}
 	
 
 }
