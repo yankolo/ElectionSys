@@ -11,6 +11,7 @@ public class DawsonVoterTest {
 		//validation is done in the other classes
 		testGetName();
 		testGetEmail();
+		testGetPostalCode();
 	}
 
 	private static void testGetName() {
@@ -23,7 +24,7 @@ public class DawsonVoterTest {
 		
 		try {
 		DawsonVoter dv = new DawsonVoter(fName, lName, "moe@gmail.com", "J4W2Y9");
-		System.out.print("\tThe Name instance was created: " + dv);
+		System.out.print("\tThe DawsonVoter instance was created: " + dv);
 
 		if (!dv.getName().toString().equals(expectedResult)) {
 			System.out.print("Error! Expected Invalid. ==== FAILED TEST ====");
@@ -49,12 +50,38 @@ public class DawsonVoterTest {
 		
 		try {
 		DawsonVoter dv = new DawsonVoter("Mo", "Hamza", email, "J4W2Y9");
-		System.out.print("\tThe Email instance was created: " + dv);
+		System.out.print("\tThe DawsonVoter instance was created: " + dv);
 
 		if (!dv.getEmail().toString().equals(expectedResult)) {
 			System.out.print("Error! Expected Invalid. ==== FAILED TEST ====");
 		}
 		System.out.print("\tReturn: " + dv.getEmail());
+		
+		} catch (IllegalArgumentException iae) {
+			System.out.println(iae.getMessage());
+			System.out.println("Error! Expected Invalid. ==== FAILED TEST ====");
+		} catch (Exception e) {
+			System.out.println("UNEXPECTED EXCEPTION TYPE!" + e.getClass() + " " + e.getMessage() + "====FAILED TEST====");
+		}
+		System.out.println("\n");
+	}
+	
+	private static void testGetPostalCode() {
+		System.out.println("\nTesting the getPostalCode method \n");
+		testGetPostalCode("Case 1: valid postal code (J4W2Y9)", "J4W2Y9", "J4W2Y9");
+	}
+	
+	private static void testGetPostalCode(String testCase, String postalCode, String expectedResult) {
+		System.out.println(testCase);
+		
+		try {
+		DawsonVoter dv = new DawsonVoter("Mo", "Hamza", "moe@gmail.com", postalCode);
+		System.out.print("\tThe DawsonVoter instance was created: " + dv);
+
+		if (!dv.getPostalCode().toString().equals(expectedResult)) {
+			System.out.print("Error! Expected Invalid. ==== FAILED TEST ====");
+		}
+		System.out.print("\tReturn: " + dv.getPostalCode());
 		
 		} catch (IllegalArgumentException iae) {
 			System.out.println(iae.getMessage());

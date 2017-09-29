@@ -34,9 +34,8 @@ import lib.*;
 	}
 
 	@Override
-	public PostalCode getPostalCode() {
-		// TODO Auto-generated method stub
-		return null;
+	public PostalCode getPostalCode(){
+		return postalCode;
 	}
 	
 	@Override
