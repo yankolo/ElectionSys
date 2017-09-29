@@ -4,9 +4,6 @@
 package election.business;
 
 import java.time.DateTimeException;
-
-import com.sun.org.apache.xalan.internal.extensions.ExpressionContext;
-
 import election.business.interfaces.Ballot;
 import election.business.interfaces.Tally;
 import election.business.interfaces.Voter;
@@ -56,6 +53,7 @@ public class DawsonElectionTest {
 		String[] s4 = null;
 		StubTally st = new StubTally();
 		StubTally st_Null = null;
+		System.out.println("---------- TESTING THE CONSTRUCTOR ----------");
 		testTheTweelveParameterConstructor(
 				"Case 1 - Enter All valid values through the constructor using the following (Dawson Election , the Type is single , start date: 2017- 10-20 , end date: 2018-02-24, startRange: , endRange:  , Tally  , expected Value : true , String...items)",
 				"Dawson Election", single, 2017, 10, 20, 2018, 02, 04, null, null, st, true, s1, s2, s3);
@@ -152,7 +150,7 @@ public class DawsonElectionTest {
 		String s2 = "hello world";
 		String s3 = "zebra";
 		DawsonElection de1 = new DawsonElection(s1, "single", 1997, 02, 25, 1998, 05, 23, null, null, st, s2, s3);
-		System.out.println("\t------------------------------------------");
+		System.out.println("---------- TESTING THE COMPARE TO METHOD ----------");
 		compareToTest("Case1 - valid DawsonElection Object - the name of the election of  ", de1, true);
 		de1 = new DawsonElection(s2, "single", 1997, 02, 25, 1998, 05, 23, null, null, st, s1, s3);
 		compareToTest("Case2 - valid DawsonElection Object - the name of the election   is hello world", de1, true);
@@ -198,7 +196,7 @@ public class DawsonElectionTest {
 	}
 
 	private static void testGetElectionType() {
-		System.out.println("\t------------------------------------------");
+		System.out.println("---------- TESTING THE GETELECTIONTYPE() ----------");
 		testGetElectionType("Case 1 - Enter a valid Election type -- single election type", "single", true);
 		testGetElectionType("Case 2 - Enter a valid Election type -- ranked election type", "ranked", true);
 		// did not check if the type string was an empty string or a null referenced
@@ -241,7 +239,7 @@ public class DawsonElectionTest {
 
 	}
 	private static void testGetElectionChoices() {
-		System.out.println("\t------------------------------------------");
+		System.out.println("---------- TESTING THE GETELECTIONCHOICES ----------");
 		String s1 = "Brandon";
 		String s2 = "Bob";
 		String s3 = "Jordy";
@@ -286,7 +284,7 @@ public class DawsonElectionTest {
 	}
 
 	private static void testGetEndDate() {
-		System.out.println("\t------------------------------------------");
+		System.out.println("---------- TESTING THE GETENDDATE ----------");
 		int year = 2017;
 		int month = 9;
 		int day = 28;
@@ -332,7 +330,7 @@ public class DawsonElectionTest {
 
 	}
 	private static void testGetStartDate() {
-		System.out.println("\t------------------------------------------");
+		System.out.println("---------- TESTING THE GETSTARTDATE ----------");
 		int year = 1994;
 		int month = 11;
 		int day = 05;
@@ -378,7 +376,7 @@ public class DawsonElectionTest {
 
 	}
 	private static void testGetPostalRangeEnd() {
-		System.out.println("\t------------------------------------------");
+		System.out.println("---------- TESTING THE GET_POSTALRANGE_END ----------");
 		testGetPostalRangeEnd(
 				"Case 1 - Pass a null referenced String while the PostalRangeEnd is null referenced and the PostalRangeStart is null as well ",
 				null, true);
@@ -429,7 +427,7 @@ public class DawsonElectionTest {
 
 	}
 	private static void testGetPostalRangeStart() {
-		System.out.println("\t------------------------------------------");
+		System.out.println("---------- TESTING THE GET_POSTAL_RANGE_START ----------");
 		testGetPostalRangeStart(
 				"Case 1 - Pass a null referenced String while the PostalRangeStart is null referenced and the PostalRangeEnd is null as well ",
 				null, true);
@@ -480,7 +478,7 @@ public class DawsonElectionTest {
 
 	}
 	private static void testIsLimitedToPostalRange() {
-		System.out.println("\t------------------------------------------");
+		System.out.println("---------- TESTING THE IS_LIMITED_TO_POSTAL_RANGE ----------");
 		String s1 = "H";
 		String s2 = "G";
 		testIsLimitedToPostalRange("Case 1 - both startRange and the endRange are null", null, null, true);
@@ -532,7 +530,7 @@ public class DawsonElectionTest {
 
 	}
 	private static void testGetName() {
-		System.out.println("\t------------------------------------------");
+		System.out.println("---------- TESTING THE GET_NAME  ---------");
 		String s1 = "USA ELECTION";
 		String s2 = "CANADIAN ELECTION";
 		testGetName("Case 1 - The name of the election is USA ELECTION - getName should return that name", s1, true);
@@ -579,7 +577,7 @@ public class DawsonElectionTest {
 
 	}
 	private static void testGetTally() {
-		System.out.println("\t------------------------------------------");
+		System.out.println("---------- TESTING THE GET_TALLY ----------");
 		StubTally tal = new StubTally();
 		testGetTally("Case 1 - Should return the same tally object since we are not deep copying it ", tal, true);
 	}
@@ -622,7 +620,7 @@ public class DawsonElectionTest {
 
 	}
 	private static void testSetTally() {
-		System.out.println("\t------------------------------------------");
+		System.out.println("---------- TESTING THE SET_METHOD ----------");
 		StubTally tal = new StubTally();
 		tal.setElectionName("Hi");
 		testSetTally(
@@ -677,7 +675,7 @@ public class DawsonElectionTest {
 
 	}
 	private static void testGetBallot() {
-		System.out.println("\t------------------------------------------");
+		System.out.println("---------- TESTING THE GET_BALLOT ----------");
 		Voter v = null;
 		testGetBallot("Case 1 -- Pass a null referenced voter object - should throw an exception", v, false);
 	}
@@ -719,6 +717,7 @@ public class DawsonElectionTest {
 		String s1 = "Brandon";
 		String s2 = "Bob";
 		String s3 = "Jordy";
+		System.out.println("---------- TESTING THE EQUALS  ----------");
 
 		DawsonElection de = new DawsonElection("Hello World", "single", 2016, 12, 2, 2017, 04, 22, null, null, st,
 				s1, s2, s3);
@@ -740,11 +739,11 @@ public class DawsonElectionTest {
 		try {
 			
 			if(de.equals(d1) == expectValid) {
-				if(d1.equals(de)) {
-					System.out.println(" Passed test --- " + d1.getName() + " and " + de.getName() + " are equal");
+				if(de.equals(d1)) {
+					System.out.println(" Passed test --- " + de.getName() + " and " + d1.getName() + " are equal");
 				}
 				else {
-					System.out.println(" Passed test --- " + d1.getName() + " and " + de.getName() + " are  not equal");
+					System.out.println(" Passed test --- " + d1 + " and " + de.getName() + " are  not equal");
 				}
 			}
 			else {
@@ -774,7 +773,7 @@ public class DawsonElectionTest {
 		String s1 = "Brandon";
 		String s2 = "Bob";
 		String s3 = "Jordy";
-
+		System.out.println("---------- TESTING THE HASH_CODE ----------");
 		DawsonElection de = new DawsonElection("Hello World", "single", 2016, 12, 2, 2017, 04, 22, null, null, st,
 				s1, s2, s3);
 		DawsonElection de2 = new DawsonElection("Hek", "single", 2016, 12, 2, 2017, 04, 22, null, null, st,
@@ -829,9 +828,10 @@ public class DawsonElectionTest {
 				s1, s2, s3);
 		DawsonElection de1 = new DawsonElection("Hello World", "ranked", 2016, 12, 2, 2017, 04, 22, "G", "H", st,
 				s1, s2);
-		System.out.println(" \tCase 1 - A DawsonElection object that has no postal code range and has 3 ballot item choices");
+		System.out.println("---------- TESTING THE TO_STRING ----------");
+		System.out.println("Case 1 - A DawsonElection object that has no postal code range and has 3 ballot item choices");
 		System.out.println(de.toString());
-		System.out.println(" \tCase 2 - A DawsonElection object that has a postal code range and has 2 ballot item choices");
+		System.out.println("Case 2 - A DawsonElection object that has a postal code range and has 2 ballot item choices");
 		System.out.println(de1.toString());
 
 		
