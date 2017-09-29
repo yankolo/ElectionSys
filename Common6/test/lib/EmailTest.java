@@ -17,6 +17,7 @@ public class EmailTest {
 		testGetAddress();
 		testGetUserId();
 		testGetHost();
+		testEquals();
 
 	}
 	
@@ -139,6 +140,32 @@ public class EmailTest {
 		System.out.println("\tThe getHost returns: " + emailObj.getHost());
 
 		if (!emailObj.getHost().equals(expectedHost))
+			System.out.print("  Error! Expected Invalid. ==== FAILED TEST ====");
+
+		System.out.println();
+	}
+	
+	private static void testEquals() {
+		System.out.println("\n\nTesting the equals method.");
+		Email emailObj1 = new Email("moe@dawson");
+		Email emailObj2 = new Email("Sammy@Mtl");
+		Email emailObj3 = new Email("yanik@com");
+		Address address = new Address("3040", "Sherbrook", "Westmount");
+		
+		testEquals("Case 1: Testing equality between 2 email objects (moe@dawson) and (moe@dawson) should return true", "moe@dawson", emailObj1, true);
+		testEquals("Case 2: Testing equality between 2 email objects (sammy@mtl) and (Sammy@Mtl) should return true", "sammy@mtl", emailObj2, true);
+		testEquals("Case 3: Testing equality between 2 diffrent email objects (nikita@ca) and (yanik@com) should return false", "nikita@ca", emailObj3, false);
+		testEquals("Case 4: Testing equality between an email object (Iam@Home) and a null object should return false", "Iam@Home", null, false);
+		testEquals("Case 5: Testing equality between an email object (callMe@514) and an Address object should return false", "callMe@514", address, false);
+	}
+	
+	private static void testEquals(String testCase, String address, Object obj, boolean expectValid) {
+		System.out.println("   " + testCase);
+		Email emailObj = new Email (address);
+		System.out.println("\tThe Email instance was created: " + emailObj);
+		System.out.println("\tThe equals method returns: " + emailObj.equals(obj));
+		
+		if (emailObj.equals(obj) != expectValid)
 			System.out.print("  Error! Expected Invalid. ==== FAILED TEST ====");
 
 		System.out.println();
