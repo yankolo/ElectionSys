@@ -5,6 +5,8 @@ package election.business;
 
 import java.time.DateTimeException;
 
+import com.sun.org.apache.xalan.internal.extensions.ExpressionContext;
+
 import election.business.interfaces.Ballot;
 import election.business.interfaces.Tally;
 import election.business.interfaces.Voter;
@@ -41,6 +43,7 @@ public class DawsonElectionTest {
 		testGetTally();
 		testSetTally();
 		testGetBallot();
+		testEquals();
 	}
 
 	private static void testTheTweelveParameterConstructor() {
@@ -630,7 +633,7 @@ public class DawsonElectionTest {
 				tal1, false);
 		testSetTally(
 				"Case 3 - Should throw an exception since the tally objec that is passed in the parameter is null referenced ",
-				null, true);
+				null, false);
 	}
 
 	private static void testSetTally(String testCase, Tally tal, boolean expectValid) {
@@ -708,6 +711,61 @@ public class DawsonElectionTest {
 
 		}
 	}
+	//has yet to fully test the castBallot 
+	private static void testEquals() {
+		StubTally st = new StubTally();
+		String s1 = "Brandon";
+		String s2 = "Bob";
+		String s3 = "Jordy";
 
+		DawsonElection de = new DawsonElection("Hello World", "single", 2016, 12, 2, 2017, 04, 22, null, null, st,
+				s1, s2, s3);
+		DawsonElection de1 = null;
+		DawsonElection de2 = new DawsonElection("Hek", "single", 2016, 12, 2, 2017, 04, 22, null, null, st,
+				s1, s2, s3);
+		DawsonElection de3 = de;
+		DawsonElection de4 = new DawsonElection("Hello World", "single", 2016, 11, 2, 2017, 04, 22, null, null, st,
+				s1, s2, s3);
+		testEquals("Case 1 -- if both DawsonElection objects reference to the same object - should return true ", de, de3, true);
+		testEquals("Case 2 -- if either DawsonElection object is null referenced  - should return false ", de, de1, false);
+		testEquals("Case 3 -- if both DawsonElection objects have the same Election name - should return true ", de, de4, true);
+		testEquals("Case 4 -- if both DawsonElection objects have the different Election name - should return true ", de, de2, true);
+
+
+	}
+	private static void testEquals(String testCase, DawsonElection de ,DawsonElection d1 ,  boolean expectValid) {
+		System.out.println("   " + testCase);
+		try {
+			
+			if(d1.equals(de) == expectValid) {
+				if(d1.equals(de)) {
+					System.out.println(" Passed test --- " + d1.getName() + " and " + de.getName() + " are equal");
+				}
+				else {
+					System.out.println(" Passed test --- " + d1.getName() + " and " + de.getName() + " are  not equal");
+				}
+			}
+			else {
+				System.out.print(" ==== FAILED TEST ==== ERROR OOCURED IN THE EQUALS METHOD  ");
+			}
+
+			System.out.println("\n");
+		} catch (IllegalArgumentException iae) {
+			System.out.println("\t" + iae.getMessage());
+			if (expectValid) {
+				System.out.println(" Error! Expected Valid. ====== FAILED TEST =====");
+			}
+		} catch (Exception e) {
+			System.out.println(
+					"\tUNEXPECTED EXCEPTION TYPE!" + e.getClass() + " " + e.getMessage() + "====FAILED TEST====");
+			if (expectValid) {
+				System.out.println("Expected Valid");
+			}
+
+			System.out.println("\n");
+
+		}
+	
+	}
 
 }
