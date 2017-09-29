@@ -24,6 +24,7 @@ public class DawsonBallotItemTest {
 		testGetValue();
 		testSetValue();
 		testEquals();
+		testToString();
 
 	}
 	
@@ -258,6 +259,26 @@ public class DawsonBallotItemTest {
 
 		System.out.println();
 	}
+	
+	private static void testToString() {
+		System.out.println("\n\nTesting the toString method.");
+		testToString("Case 1: Calling toString on choice=Dan, maxValue=100, value=80 should return (Dan*80)", "Dan", 100, 80,"Dan*80");
+		testToString("Case 2: Calling toString on a choice with leading/trailing spaces. choice=( Moe ), maxValue=50, value=20 should return (Moe*20)", " Moe ",50,20, "Moe*20");
+	}
+	
+	private static void testToString(String testCase, String choice, int maxValue, int value, String expectedBallot) {
+		System.out.println("   " + testCase);
+		DawsonBallotItem item = new DawsonBallotItem(choice, maxValue);
+		item.setValue(value);
+		System.out.println("\tThe DawsonBallotItem instance was created: " + item);
+		System.out.println("\tThe toString method returns: " + item.toString());
+
+		if (!item.toString().equals(expectedBallot))
+			System.out.print("  Error! Expected Invalid. ==== FAILED TEST ====");
+
+		System.out.println();
+	}
+
 
 
 }
