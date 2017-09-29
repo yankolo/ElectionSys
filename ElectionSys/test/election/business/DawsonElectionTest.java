@@ -17,6 +17,7 @@ import election.business.interfaces.Voter;
 
 
 
+
 /**
  * @author katsuragi
  *
@@ -39,6 +40,7 @@ public class DawsonElectionTest {
 		testGetName();
 		testGetTally();
 		testSetTally();
+		testGetBallot();
 	}
 
 	private static void testTheTweelveParameterConstructor() {
@@ -668,6 +670,43 @@ public class DawsonElectionTest {
 
 		}
 
+	}
+	private static void testGetBallot() {
+		System.out.println("\t------------------------------------------");
+		Voter v = null;
+		testGetBallot("Case 1 -- Pass a null referenced voter object - should throw an exception", v, false);
+	}
+	private static void testGetBallot (String testCase , Voter v , boolean expectValid) {
+		System.out.println("   " + testCase);
+		try {
+			StubTally st = new StubTally();
+			String s1 = "Brandon";
+			String s2 = "Bob";
+			String s3 = "Jordy";
+
+			DawsonElection d1 = new DawsonElection("Hello World", "single", 2016, 12, 2, 2017, 04, 22, null, null, st,
+					s1, s2, s3);
+			
+			Ballot sb = d1.getBallot(v);
+			if (!expectValid)
+				System.out.print("  Error! Expected Invalid. ==== FAILED TEST ==== ");
+
+			System.out.println("\n");
+		} catch (IllegalArgumentException iae) {
+			System.out.println("\t" + iae.getMessage());
+			if (expectValid) {
+				System.out.println(" Error! Expected Valid. ====== FAILED TEST =====");
+			}
+		} catch (Exception e) {
+			System.out.println(
+					"\tUNEXPECTED EXCEPTION TYPE!" + e.getClass() + " " + e.getMessage() + "====FAILED TEST====");
+			if (expectValid) {
+				System.out.println("Expected Valid");
+			}
+
+			System.out.println("\n");
+
+		}
 	}
 
 
