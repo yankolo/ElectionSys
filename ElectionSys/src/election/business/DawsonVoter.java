@@ -1,6 +1,10 @@
 package election.business;
  
- import java.io.Serializable;
+import java.io.Serializable;
+import election.business.interfaces.Election;
+import election.business.interfaces.Voter;
+import lib.*;
+
  /**
   * 
   * 
@@ -18,4 +22,39 @@ package election.business;
  		email = new Email(eAddress);
  		postalCode = new PostalCode(pCode);
  	}
+
+ 	@Override
+	public Name getName(){
+		return name;
+ 	}
+
+	@Override
+	public int compareTo(Voter o) {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+	@Override
+	public Email getEmail() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public PostalCode getPostalCode() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public boolean isEligible(Election election) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public void setPostalCode(PostalCode newCode) {
+		// TODO Auto-generated method stub
+		
+	}
  } 
