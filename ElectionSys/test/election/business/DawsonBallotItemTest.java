@@ -18,6 +18,7 @@ public class DawsonBallotItemTest {
 		testTheTwoParametersConstructor();
 		testTheCopyConstructor();
 		testCompareTo();
+		testGetChoice();
 
 	}
 	
@@ -135,6 +136,27 @@ public class DawsonBallotItemTest {
 		}
 		System.out.println();
 
+	}
+	
+	private static void testGetChoice() {
+		System.out.println("\n\nTesting the getChoice method.");
+		testGetChoice("Case 1: Calling getChoice on this DawsonBallotItem (\"Mohamed\",\"18\") should return (Mohamed)",
+				"Mohamed", 18, "Mohamed");
+		testGetChoice(
+				"Case 2: Calling getChoice on this DawsonBallotItem in which choice contain leading/trailing spaces (\" Moe \",\"18\") should return (Mohamed)",
+				"Mohamed", 18, "Mohamed");
+	}
+
+	private static void testGetChoice(String testCase, String choice, int maxValue, String expectedChoice) {
+		System.out.println("   " + testCase);
+		DawsonBallotItem item = new DawsonBallotItem(choice, maxValue);
+		System.out.println("\tThe Email instance was created: " + item);
+		System.out.println("\tThe getChoice method returns: " + item.getChoice());
+
+		if (!item.getChoice().equals(expectedChoice))
+			System.out.print("  Error! Expected Invalid. ==== FAILED TEST ====");
+
+		System.out.println();
 	}
 
 }
