@@ -16,6 +16,7 @@ public class EmailTest {
 		testTheConstructor();
 		testGetAddress();
 		testGetUserId();
+		testGetHost();
 
 	}
 	
@@ -119,6 +120,25 @@ public class EmailTest {
 		System.out.println("\tThe getUserId returns: " + emailObj.getUserId());
 
 		if (!emailObj.getUserId().equals(expectedUserId))
+			System.out.print("  Error! Expected Invalid. ==== FAILED TEST ====");
+
+		System.out.println();
+	}
+	
+	private static void testGetHost() {
+		System.out.println("\n\nTesting the getHost method.");
+		testGetHost("Case 1: Calling getHost on this email (sam_my@m-e) should return (m-e)", "sam_my@m-e", "m-e");
+		testGetHost("Case 2: Calling getHost on this email with 2 segments (nikita@yanik.ca) should return (yanik.ca)", "nikita@yanik.ca", "yanik.ca");
+		testGetHost("Case 3: Calling getHost on this email with leading/trailing spaces ( miss@Jaya ) should return (Jaya)", " miss@Jaya ", "Jaya");
+	}
+	
+	private static void testGetHost(String testCase, String address, String expectedHost) {
+		System.out.println("   " + testCase);
+		Email emailObj = new Email (address);
+		System.out.println("\tThe Email instance was created: " + emailObj);
+		System.out.println("\tThe getHost returns: " + emailObj.getHost());
+
+		if (!emailObj.getHost().equals(expectedHost))
 			System.out.print("  Error! Expected Invalid. ==== FAILED TEST ====");
 
 		System.out.println();
