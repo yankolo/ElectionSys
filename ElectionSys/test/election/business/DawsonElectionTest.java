@@ -9,6 +9,8 @@ import election.business.interfaces.Ballot;
 import election.business.interfaces.Tally;
 import election.business.interfaces.Voter;
 import lib.Address;
+import review.DawsonElection;
+import review.StubTally;
 
 
 
@@ -29,6 +31,7 @@ public class DawsonElectionTest {
 		testGetElectionChoices();
 		testGetEndDate();
 		testGetStartDate();
+		testGetPostalRangeEnd();
 	}
 
 	private static void testTheTweelveParameterConstructor() {
@@ -339,6 +342,57 @@ public class DawsonElectionTest {
 			DawsonElection d1 = new DawsonElection("Hello World", "single", year, month, day, 2017, 04, 22, null, null,
 					st, s1, s2, s3);
 			System.out.println("The integers passed to this test method is a date : " + d1.getStartDate().toString());
+			if (!expectValid)
+				System.out.print("  Error! Expected Invalid. ==== FAILED TEST ==== ");
+
+			System.out.println("\n");
+		} catch (IllegalArgumentException iae) {
+			System.out.println("\t" + iae.getMessage());
+			if (expectValid) {
+				System.out.println(" Error! Expected Valid. ====== FAILED TEST =====");
+			}
+		} catch (Exception e) {
+			System.out.println(
+					"\tUNEXPECTED EXCEPTION TYPE!" + e.getClass() + " " + e.getMessage() + "====FAILED TEST====");
+			if (expectValid) {
+				System.out.println("Expected Valid");
+			}
+
+			System.out.println("\n");
+
+		}
+
+	}
+	private static void testGetPostalRangeEnd() {
+		System.out.println("\t------------------------------------------");
+		testGetPostalRangeEnd(
+				"Case 1 - Pass a null referenced String while the PostalRangeEnd is null referenced and the PostalRangeStart is null as well ",
+				null, true);
+		testGetPostalRangeEnd(
+				"Case 2 - Pass a valid  String while the PostalRangeStart is not null and the PostalRangeEnd is not null",
+				"G", true);
+
+	}
+
+	private static void testGetPostalRangeEnd(String testCase, String postalRangeEnd, boolean expectValid) {
+
+		System.out.println("   " + testCase);
+		StubTally st = new StubTally();
+		try {
+			String s1 = "Brandon";
+			String s2 = "Bob";
+			String s3 = "Jordy";
+			if (postalRangeEnd == null) {
+				DawsonElection d1 = new DawsonElection("Hello World", "single", 2016, 12, 2, 2017, 04, 22, null,
+						postalRangeEnd, st, s1, s2, s3);
+				System.out.println(
+						"The string passed to this test method is a valid postal range : " + d1.getPostalRangeEnd());
+			} else {
+				DawsonElection d1 = new DawsonElection("Hello World", "single", 2016, 12, 2, 2017, 04, 22, "F",
+						postalRangeEnd, st, s1, s2, s3);
+				System.out.println(
+						"The string passed to this test method is a valid postal range : " + d1.getPostalRangeEnd());
+			}
 			if (!expectValid)
 				System.out.print("  Error! Expected Invalid. ==== FAILED TEST ==== ");
 
