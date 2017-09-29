@@ -18,6 +18,7 @@ public class EmailTest {
 		testGetUserId();
 		testGetHost();
 		testEquals();
+		testToString();
 
 	}
 	
@@ -170,5 +171,24 @@ public class EmailTest {
 
 		System.out.println();
 	}
+	
+	private static void testToString() {
+		System.out.println("\n\nTesting the toString method.");
+		testToString("Case 1: Calling toString on (da-ws_on@qc) should return (da-ws_on@qc)", "da-ws_on@qc", "da-ws_on@qc");
+		testToString("Case 2: Calling toString on an email with leading/trailing spaces ( pc@local ) should return (pc@local)", " pc@local ", "pc@local");
+	}
+	
+	private static void testToString(String testCase, String address, String expectedAddress) {
+		System.out.println("   " + testCase);
+		Email emailObj = new Email (address);
+		System.out.println("\tThe Email instance was created: " + emailObj);
+		System.out.println("\tThe toString method returns: " + emailObj.toString());
+
+		if (!emailObj.toString().equals(expectedAddress))
+			System.out.print("  Error! Expected Invalid. ==== FAILED TEST ====");
+
+		System.out.println();
+	}
+
 
 }
