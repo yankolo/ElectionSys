@@ -14,6 +14,7 @@ public class EmailTest {
 	 */
 	public static void main(String[] args) {
 		testTheConstructor();
+		testGetAddress();
 
 	}
 	
@@ -84,5 +85,24 @@ public class EmailTest {
 		}
 		System.out.println();
 		}
+	
+	private static void testGetAddress() {
+		System.out.println("\n\nTesting the getAddress method.");
+		testGetAddress("Case 1: getting the following email (moe@gmail.com)", "moe@gmail.com", "moe@gmail.com");
+		testGetAddress("Case 2: getting the following email with leading/trailing spaces ( moe@gmail.com )", " moe@gmail.com ", "moe@gmail.com");
+		
+	}
+	
+	private static void testGetAddress(String testCase, String address, String expectedAddress) {
+		System.out.println("   " + testCase);
+		Email emailObj = new Email (address);
+		System.out.println("\tThe Email instance was created: " + emailObj);
+		System.out.println("\tThe getAddress returns: " + emailObj.getAddress());
+
+		if (!emailObj.getAddress().equals(expectedAddress))
+			System.out.print("  Error! Expected Invalid. ==== FAILED TEST ====");
+
+		System.out.println();
+	}
 
 }
