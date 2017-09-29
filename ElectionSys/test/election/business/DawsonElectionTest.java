@@ -730,7 +730,7 @@ public class DawsonElectionTest {
 		testEquals("Case 1 -- if both DawsonElection objects reference to the same object - should return true ", de, de3, true);
 		testEquals("Case 2 -- if either DawsonElection object is null referenced  - should return false ", de, de1, false);
 		testEquals("Case 3 -- if both DawsonElection objects have the same Election name - should return true ", de, de4, true);
-		testEquals("Case 4 -- if both DawsonElection objects have the different Election name - should return true ", de, de2, true);
+		testEquals("Case 4 -- if both DawsonElection objects have the different Election name - should return true ", de, de2, false);
 
 
 	}
@@ -818,5 +818,6 @@ public class DawsonElectionTest {
 		}
 	
 	}
+	
 
 }
