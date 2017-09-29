@@ -15,6 +15,8 @@ import election.business.interfaces.Voter;
 
 
 
+
+
 /**
  * @author katsuragi
  *
@@ -35,6 +37,7 @@ public class DawsonElectionTest {
 		testGetPostalRangeStart();
 		testIsLimitedToPostalRange();
 		testGetName();
+		testGetTally();
 	}
 
 	private static void testTheTweelveParameterConstructor() {
@@ -567,5 +570,104 @@ public class DawsonElectionTest {
 		}
 
 	}
+	private static void testGetTally() {
+		System.out.println("\t------------------------------------------");
+		StubTally tal = new StubTally();
+		testGetTally("Case 1 - Should return the same tally object since we are not deep copying it ", tal, true);
+	}
+
+	private static void testGetTally(String testCase, Tally tal, boolean expectValid) {
+
+		System.out.println("   " + testCase);
+		try {
+			String s1 = "Brandon";
+			String s2 = "Bob";
+			String s3 = "Jordy";
+
+			DawsonElection d1 = new DawsonElection("Hello World", "single", 2016, 12, 2, 2017, 04, 22, null, null, tal,
+					s1, s2, s3);
+			if (d1.getTally().equals(tal)) {
+				System.out.println("The getTally returns the correct string which is " + d1.getTally());
+			} else {
+				System.out.println(
+						" ==== FAILED TEST ==== GETTALLY SHOULD RETURN SIMILAR THE SAME TALLY OBJECT AS IT WAS PASSED THROUGH THE CONSTRUCTOR ");
+			}
+			if (!expectValid)
+				System.out.print("  Error! Expected Invalid. ==== FAILED TEST ==== ");
+
+			System.out.println("\n");
+		} catch (IllegalArgumentException iae) {
+			System.out.println("\t" + iae.getMessage());
+			if (expectValid) {
+				System.out.println(" Error! Expected Valid. ====== FAILED TEST =====");
+			}
+		} catch (Exception e) {
+			System.out.println(
+					"\tUNEXPECTED EXCEPTION TYPE!" + e.getClass() + " " + e.getMessage() + "====FAILED TEST====");
+			if (expectValid) {
+				System.out.println("Expected Valid");
+			}
+
+			System.out.println("\n");
+
+		}
+
+	}
+	private static void testSetTally() {
+		System.out.println("\t------------------------------------------");
+		StubTally tal = new StubTally();
+		tal.setElectionName("Hi");
+		testSetTally(
+				"Case 1 - Should set the DawsonElection tally to the one passed in the parameter since they have same electionName ",
+				tal, true);
+		StubTally tal1 = new StubTally();
+		tal1.setElectionName("HelloWorld");
+		testSetTally(
+				"Case 2 - Should throw exception since the DawsonElection tally election name is different from  the one passed in the parameter of the setTally method ",
+				tal1, false);
+		testSetTally(
+				"Case 3 - Should throw an exception since the tally objec that is passed in the parameter is null referenced ",
+				null, true);
+	}
+
+	private static void testSetTally(String testCase, Tally tal, boolean expectValid) {
+
+		System.out.println("   " + testCase);
+		try {
+			StubTally st = new StubTally();
+			st.setElectionName("Hi");
+			String s1 = "Brandon";
+			String s2 = "Bob";
+			String s3 = "Jordy";
+
+			DawsonElection d1 = new DawsonElection("Hello World", "single", 2016, 12, 2, 2017, 04, 22, null, null, st,
+					s1, s2, s3);
+			d1.setTally(tal);
+			System.out.println(
+					"The getTally returns the correct string since the Tally object in the set parameter has the same election name  which is "
+							+ d1.getTally().getElectionName());
+
+			if (!expectValid)
+				System.out.print("  Error! Expected Invalid. ==== FAILED TEST ==== ");
+
+			System.out.println("\n");
+		} catch (IllegalArgumentException iae) {
+			System.out.println("\t" + iae.getMessage());
+			if (expectValid) {
+				System.out.println(" Error! Expected Valid. ====== FAILED TEST =====");
+			}
+		} catch (Exception e) {
+			System.out.println(
+					"\tUNEXPECTED EXCEPTION TYPE!" + e.getClass() + " " + e.getMessage() + "====FAILED TEST====");
+			if (expectValid) {
+				System.out.println("Expected Valid");
+			}
+
+			System.out.println("\n");
+
+		}
+
+	}
+
 
 }
