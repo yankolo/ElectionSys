@@ -8,7 +8,7 @@ import java.time.DateTimeException;
 import election.business.interfaces.Ballot;
 import election.business.interfaces.Tally;
 import election.business.interfaces.Voter;
-import lib.Address;
+
 
 
 
@@ -32,6 +32,7 @@ public class DawsonElectionTest {
 		testGetStartDate();
 		testGetPostalRangeEnd();
 		testGetPostalRangeStart();
+		testIsLimitedToPostalRange();
 	}
 
 	private static void testTheTweelveParameterConstructor() {
@@ -443,6 +444,58 @@ public class DawsonElectionTest {
 						postalRangeStart, st, s1, s2, s3);
 				System.out.println(
 						"The string passed to this test method is a valid postal range : " + d1.getPostalRangeStart());
+			}
+			if (!expectValid)
+				System.out.print("  Error! Expected Invalid. ==== FAILED TEST ==== ");
+
+			System.out.println("\n");
+		} catch (IllegalArgumentException iae) {
+			System.out.println("\t" + iae.getMessage());
+			if (expectValid) {
+				System.out.println(" Error! Expected Valid. ====== FAILED TEST =====");
+			}
+		} catch (Exception e) {
+			System.out.println(
+					"\tUNEXPECTED EXCEPTION TYPE!" + e.getClass() + " " + e.getMessage() + "====FAILED TEST====");
+			if (expectValid) {
+				System.out.println("Expected Valid");
+			}
+
+			System.out.println("\n");
+
+		}
+
+	}
+	private static void testIsLimitedToPostalRange() {
+		System.out.println("\t------------------------------------------");
+		String s1 = "H";
+		String s2 = "G";
+		testIsLimitedToPostalRange("Case 1 - both startRange and the endRange are null", null, null, true);
+		testIsLimitedToPostalRange("Case 2 - only startRange is null referenced and the endRange contains a string",
+				null, s1, true);
+		testIsLimitedToPostalRange("Case 3 - startRange is a valid string and the endRange is null", s1, null, true);
+		testIsLimitedToPostalRange("Case 4 - both startRange and the endRange are valid Strings", s2, s1, true);
+
+	}
+
+	private static void testIsLimitedToPostalRange(String testCase, String startRange, String endRange,
+			boolean expectValid) {
+
+		System.out.println("   " + testCase);
+		StubTally st = new StubTally();
+		try {
+			String s1 = "Brandon";
+			String s2 = "Bob";
+			String s3 = "Jordy";
+
+			DawsonElection d1 = new DawsonElection("Hello World", "single", 2016, 12, 2, 2017, 04, 22, startRange,
+					endRange, st, s1, s2, s3);
+			if (d1.isLimitedToPostalRange()) {
+				System.out.println("The two strings passed to this test method are valid postal ranges : "
+						+ d1.isLimitedToPostalRange());
+			} else {
+				System.out.println(
+						"The two strings passed to this test method tells that the postal ranges is not important for this election ");
 			}
 			if (!expectValid)
 				System.out.print("  Error! Expected Invalid. ==== FAILED TEST ==== ");
