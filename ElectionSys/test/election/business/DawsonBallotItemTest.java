@@ -21,6 +21,7 @@ public class DawsonBallotItemTest {
 		testGetChoice();
 		testGetMaxValue();
 		testGetValue();
+		testSetValue();
 
 	}
 	
@@ -198,6 +199,36 @@ public class DawsonBallotItemTest {
 
 		System.out.println();
 
+	}
+	
+	private static void testSetValue() {
+		System.out.println("\n\nTesting the setValue method.");
+		testSetValue("Case 1 - Valid: Setting value to 10. DawsonBallotItem (Yanik,20)", "Yanik", 20, 10, 10);
+		testSetValue("Case 2 - Invalid: Setting value to -10. DawsonBallotItem (Nikita,21)", "Nikita", 21, -10, 0);
+		testSetValue("Case 3 - Invalid: Setting value=30 to a number bigger than maxValue=22. DawsonBallotItem (Sammy,22)", "Sammy", 22, 30,0);
+	}
+	
+	private static void testSetValue(String testCase, String choice, int maxValue, int value, int expectedValue) {
+		System.out.println("   " + testCase);
+		
+		try {
+		DawsonBallotItem item = new DawsonBallotItem(choice, maxValue);
+		item.setValue(value);
+		System.out.println("\tThe Email instance was created: " + item);
+
+		if (item.getValue() != expectedValue) {
+			System.out.print("  Error! Expected Invalid. ==== FAILED TEST ====");
+		}
+		} catch (IllegalArgumentException iae) {
+			System.out.println("\t" + iae.getMessage());
+
+		} catch (Exception e) {
+			System.out.println(
+					"\tUNEXPECTED EXCEPTION TYPE!" + e.getClass() + " " + e.getMessage() + "====FAILED TEST====");
+
+		}
+
+		System.out.println();
 	}
 
 
