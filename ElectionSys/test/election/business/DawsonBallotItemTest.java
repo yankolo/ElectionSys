@@ -3,6 +3,8 @@
  */
 package election.business;
 
+import election.business.interfaces.BallotItem;
+
 /**
  * @author moham
  *
@@ -15,6 +17,7 @@ public class DawsonBallotItemTest {
 	public static void main(String[] args) {
 		testTheTwoParametersConstructor();
 		testTheCopyConstructor();
+		testCompareTo();
 
 	}
 	
@@ -92,6 +95,46 @@ public class DawsonBallotItemTest {
 			}
 		}
 		System.out.println();
+	}
+	
+	private static void testCompareTo() {
+		System.out.println("\n\nTesting the compareTo method.");
+		DawsonBallotItem item1 = new DawsonBallotItem("Alpha", 18);
+		DawsonBallotItem item2 = new DawsonBallotItem("Mohamed", 18);
+
+		testCompareTo("Case 1: Comparing (Mohamed) with (Alpha) should return a positive number", "Mohamed", 20, item1,
+				12);
+		testCompareTo("Case 2: Comparing (MOHAMED) with (Alpha) should return a positive number", "MOHAMED", 20, item1,
+				12);
+		testCompareTo("Case 3: Comparing (Alpha) with (Mohamed) should return a negative number", "Alpha", 20, item2,
+				-12);
+		testCompareTo("Case 4: Comparing (ALPHA) with (Mohamed) should return a negative number", "ALPHA", 20, item2,
+				-12);
+		testCompareTo("Case 5: Comparing (Mohamed) with (Mohamed) should return 0", "Mohamed", 20, item2, 0);
+		testCompareTo("Case 6: Comparing (MOHAMED) with (Mohamed) should return 0", "MOHAMED", 20, item2, 0);
+	}
+
+	private static void testCompareTo(String testCase, String choice, int maxValue, BallotItem item, int expectValid) {
+		System.out.println("   " + testCase);
+
+		try {
+			DawsonBallotItem object = new DawsonBallotItem(choice, maxValue);
+			System.out.println("\tThe Email instance was created: " + object);
+			System.out.println("\tThe compareTo method returns: " + object.compareTo(item));
+			if (object.compareTo(item) != expectValid) {
+				System.out.print("  Error! Expected Invalid. ==== FAILED TEST ====");
+			}
+
+		} catch (IllegalArgumentException iae) {
+			System.out.println("\t" + iae.getMessage());
+
+		} catch (Exception e) {
+			System.out.println(
+					"\tUNEXPECTED EXCEPTION TYPE!" + e.getClass() + " " + e.getMessage() + "====FAILED TEST====");
+
+		}
+		System.out.println();
+
 	}
 
 }
