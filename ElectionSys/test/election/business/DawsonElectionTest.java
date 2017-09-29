@@ -11,6 +11,7 @@ import election.business.interfaces.Voter;
 import lib.Address;
 
 
+
 /**
  * @author katsuragi
  *
@@ -25,6 +26,7 @@ public class DawsonElectionTest {
 		compareToTest();
 		testGetElectionType();
 		testGetElectionChoices();
+		testGetEndDate();
 	}
 
 	private static void testTheTweelveParameterConstructor() {
@@ -242,6 +244,53 @@ public class DawsonElectionTest {
 			DawsonElection d1 = new DawsonElection("Hello World", "single", 2017, 04, 22, 2018, 04, 22, null, null, st,
 					items);
 			System.out.println("This array passed to this test method is a valid String array: " + d1.toString());
+			if (!expectValid)
+				System.out.print("  Error! Expected Invalid. ==== FAILED TEST ==== ");
+
+			System.out.println("\n");
+		} catch (IllegalArgumentException iae) {
+			System.out.println("\t" + iae.getMessage());
+			if (expectValid) {
+				System.out.println(" Error! Expected Valid. ====== FAILED TEST =====");
+			}
+		} catch (Exception e) {
+			System.out.println(
+					"\tUNEXPECTED EXCEPTION TYPE!" + e.getClass() + " " + e.getMessage() + "====FAILED TEST====");
+			if (expectValid) {
+				System.out.println("Expected Valid");
+			}
+
+			System.out.println("\n");
+
+		}
+
+	}
+
+	private static void testGetEndDate() {
+		System.out.println("\t------------------------------------------");
+		int year = 2017;
+		int month = 9;
+		int day = 28;
+		testGetEndDate("Case 1 - Passed a valid integer numbers to create a date (EndDate localDate object)", year,
+				month, day, true);
+		year = 1997;
+		month = 10;
+		day = 04;
+		testGetEndDate("Case 2 - Passed a valid Integer numbers to create a date (EndDate localDate Object)", year,
+				month, day, true);
+	}
+
+	private static void testGetEndDate(String testCase, int year, int month, int day, boolean expectValid) {
+
+		System.out.println("   " + testCase);
+		StubTally st = new StubTally();
+		try {
+			String s1 = "Brandon";
+			String s2 = "Bob";
+			String s3 = "Jordy";
+			DawsonElection d1 = new DawsonElection("Hello World", "single", 2017, 04, 22, year, month, day, null, null,
+					st, s1, s2, s3);
+			System.out.println("The integers passed to this test method is a date : " + d1.getEndDate().toString());
 			if (!expectValid)
 				System.out.print("  Error! Expected Invalid. ==== FAILED TEST ==== ");
 
