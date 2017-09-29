@@ -38,6 +38,7 @@ public class DawsonElectionTest {
 		testIsLimitedToPostalRange();
 		testGetName();
 		testGetTally();
+		testSetTally();
 	}
 
 	private static void testTheTweelveParameterConstructor() {
