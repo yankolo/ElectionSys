@@ -9,7 +9,7 @@ import lib.*;
   * 
   * 
   * @author Nikita
-  * @version 30.09.2017
+  * @version 29.09.2017
   */
  public class DawsonVoter implements Voter, Serializable{
  	private final Name name;
@@ -29,21 +29,26 @@ import lib.*;
  	}
 
 	@Override
-	public int compareTo(Voter o) {
-		// TODO Auto-generated method stub
-		return 0;
-	}
-
-	@Override
-	public Email getEmail() {
-		// TODO Auto-generated method stub
-		return null;
+	public Email getEmail(){
+		return email;
 	}
 
 	@Override
 	public PostalCode getPostalCode() {
 		// TODO Auto-generated method stub
 		return null;
+	}
+	
+	@Override
+	public void setPostalCode(PostalCode newCode) {
+		// TODO Auto-generated method stub
+		
+	}
+	
+	@Override
+	public int compareTo(Voter o) {
+		// TODO Auto-generated method stub
+		return 0;
 	}
 
 	@Override
@@ -52,9 +57,5 @@ import lib.*;
 		return false;
 	}
 
-	@Override
-	public void setPostalCode(PostalCode newCode) {
-		// TODO Auto-generated method stub
-		
-	}
+	
  } 
