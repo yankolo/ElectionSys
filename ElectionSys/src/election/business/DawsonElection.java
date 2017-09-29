@@ -72,10 +72,12 @@ public class DawsonElection implements Election {
 			throw new IllegalArgumentException("The type of electon cannot be an empty string");
 		}
 
-		if (startRange.trim().isEmpty()) {
+		if (!(isNull(startRange))) {
+			if(startRange.trim().isEmpty())
 			throw new IllegalArgumentException("The startRange cannot be an empty string");
 		}
-		if (endRange.trim().isEmpty()) {
+		if (!(isNull(endRange))) {
+			if(endRange.trim().isEmpty())
 			throw new IllegalArgumentException("The type of electon cannot be an empty string");
 		}
 
@@ -110,6 +112,10 @@ public class DawsonElection implements Election {
 			}
 		} else {
 			throw new IllegalArgumentException("The minimum for the Ballot items must be of length 2 or more.");
+		}
+		if(!(isLimitedToPostalRange())) {
+			this.postalCodeEndRange = endRange;
+			this.postalCodeStartRange = startRange;
 		}
 		this.name = name;
 
