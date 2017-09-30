@@ -110,11 +110,12 @@ import lib.*;
 				return true;
 		return false;
 	}
-	
+
 	@Override
-	public int compareTo(Voter arg0) {
-		// TODO Auto-generated method stub
-		return 0;
+	public int compareTo(Voter voter){
+		if(voter == null)
+			throw new IllegalArgumentException("Cannot compare a DawsonVoter to a null Voter object");
+		return email.getAddress().compareToIgnoreCase(voter.getEmail().getAddress());
 	}
  } 
 

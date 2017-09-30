@@ -19,6 +19,7 @@ public class DawsonVoterTest {
 		testSetPostalCode();
 		testIsEligible();
 		testEquals();
+		testCompareTo();
 	}
 
 	private static void testGetName() {
@@ -30,18 +31,20 @@ public class DawsonVoterTest {
 		System.out.println(testCase);
 		
 		try {
-		DawsonVoter dv = new DawsonVoter(fName, lName, "moe@gmail.com", "J4W2Y9");
-		System.out.print("\tThe DawsonVoter instance was created: " + dv);
+			DawsonVoter dv = new DawsonVoter(fName, lName, "moe@gmail.com", "J4W2Y9");
+			System.out.print("\tThe DawsonVoter instance was created: " + dv);
 
-		if (!dv.getName().toString().equals(expectedResult)) {
-			System.out.print("Error! Expected Invalid. ==== FAILED TEST ====");
-		}
-		System.out.print("\tReturn: " + dv.getName());
-		
-		} catch (IllegalArgumentException iae) {
+			if (!dv.getName().toString().equals(expectedResult)) {
+				System.out.print("Error! Expected Invalid. ==== FAILED TEST ====");
+			}
+			else
+				System.out.print("\tReturn: " + dv.getName());
+		} 
+		catch (IllegalArgumentException iae) {
 			System.out.println(iae.getMessage());
 			System.out.println("Error! Expected Invalid. ==== FAILED TEST ====");
-		} catch (Exception e) {
+		} 
+		catch (Exception e) {
 			System.out.println("UNEXPECTED EXCEPTION TYPE!" + e.getClass() + " " + e.getMessage() + "====FAILED TEST====");
 		}
 		System.out.println("\n");
@@ -56,18 +59,20 @@ public class DawsonVoterTest {
 		System.out.println(testCase);
 		
 		try {
-		DawsonVoter dv = new DawsonVoter("Mo", "Hamza", email, "J4W2Y9");
-		System.out.print("\tThe DawsonVoter instance was created: " + dv);
+			DawsonVoter dv = new DawsonVoter("Mo", "Hamza", email, "J4W2Y9");
+			System.out.print("\tThe DawsonVoter instance was created: " + dv);
 
-		if (!dv.getEmail().toString().equals(expectedResult)) {
-			System.out.print("Error! Expected Invalid. ==== FAILED TEST ====");
-		}
-		System.out.print("\tReturn: " + dv.getEmail());
-		
-		} catch (IllegalArgumentException iae) {
+			if (!dv.getEmail().toString().equals(expectedResult)) {
+				System.out.print("Error! Expected Invalid. ==== FAILED TEST ====");
+			}
+			else
+				System.out.print("\tReturn: " + dv.getEmail());
+		} 
+		catch (IllegalArgumentException iae) {
 			System.out.println(iae.getMessage());
 			System.out.println("Error! Expected Invalid. ==== FAILED TEST ====");
-		} catch (Exception e) {
+		} 
+		catch (Exception e) {
 			System.out.println("UNEXPECTED EXCEPTION TYPE!" + e.getClass() + " " + e.getMessage() + "====FAILED TEST====");
 		}
 		System.out.println("\n");
@@ -82,18 +87,20 @@ public class DawsonVoterTest {
 		System.out.println(testCase);
 		
 		try {
-		DawsonVoter dv = new DawsonVoter("Mo", "Hamza", "moe@gmail.com", postalCode);
-		System.out.print("\tThe DawsonVoter instance was created: " + dv);
+			DawsonVoter dv = new DawsonVoter("Mo", "Hamza", "moe@gmail.com", postalCode);
+			System.out.print("\tThe DawsonVoter instance was created: " + dv);
 
-		if (!dv.getPostalCode().toString().equals(expectedResult)) {
+			if (!dv.getPostalCode().toString().equals(expectedResult)) {
 			System.out.print("Error! Expected Invalid. ==== FAILED TEST ====");
+			}
+			else
+				System.out.print("\tReturn: " + dv.getPostalCode());
 		}
-		System.out.print("\tReturn: " + dv.getPostalCode());
-		
-		} catch (IllegalArgumentException iae) {
+		catch (IllegalArgumentException iae) {
 			System.out.println(iae.getMessage());
 			System.out.println("Error! Expected Invalid. ==== FAILED TEST ====");
-		} catch (Exception e) {
+		} 
+		catch (Exception e) {
 			System.out.println("UNEXPECTED EXCEPTION TYPE!" + e.getClass() + " " + e.getMessage() + "====FAILED TEST====");
 		}
 		System.out.println("\n");
@@ -108,18 +115,19 @@ public class DawsonVoterTest {
 		System.out.println(testCase);
 		
 		try {
-		DawsonVoter dv = new DawsonVoter("Mo", "Hamza", "moe@gmail.com", "H4W2Y9");
-		PostalCode pc = new PostalCode(postalCode);
-		dv.setPostalCode(pc);
-		System.out.print("\tA DawsonVoter instance was created: " + dv);
-		System.out.print("\n\tA PostalCode instance was created: " + pc);
+			DawsonVoter dv = new DawsonVoter("Mo", "Hamza", "moe@gmail.com", "H4W2Y9");
+			PostalCode pc = new PostalCode(postalCode);
+			dv.setPostalCode(pc);
+			System.out.print("\tA DawsonVoter instance was created: " + dv);
+			System.out.print("\n\tA PostalCode instance was created: " + pc);
 
-		if (!dv.getPostalCode().toString().equals(expectedResult)) {
-			System.out.print("Error! Expected Invalid. ==== FAILED TEST ====");
-		}
-		System.out.print("\tPostal code changed from H4W2Y9 to: " + dv.getPostalCode());
-		
-		} catch (IllegalArgumentException iae) {
+			if (!dv.getPostalCode().toString().equals(expectedResult)) {
+				System.out.print("Error! Expected Invalid. ==== FAILED TEST ====");
+			}
+			else
+				System.out.print("\n\n\t\tPostal code changed from H4W2Y9 to: " + dv.getPostalCode());
+		} 
+		catch (IllegalArgumentException iae) {
 			System.out.println(iae.getMessage());
 			System.out.println("Error! Expected Invalid. ==== FAILED TEST ====");
 		} catch (Exception e) { 
@@ -139,25 +147,24 @@ public class DawsonVoterTest {
 		System.out.println(testCase);
 		
 		try {
-		DawsonVoter dv = new DawsonVoter("Mo", "Hamza", "moe@gmail.com", postalCode);
-		DawsonElection de = new DawsonElection("e1", "RANKED", 2017, 9, startDay, 2017, 9, endDay, "H4W2Y9", "J4W2Y9", new StubTally(), "bi1", "bi2");
-		System.out.print("\tA DawsonVoter instance was created: " + dv);
-		System.out.print("\n\tA DawsonElection instance was created: " + de);
-
-		if (dv.isEligible(de)){
-			System.out.println("\n\t\tCase " + caseNum + " checked");
-			System.out.print("\t\tisEligible: " + dv.isEligible(de));
-		}
+			DawsonVoter dv = new DawsonVoter("Mo", "Hamza", "moe@gmail.com", postalCode);
+			DawsonElection de = new DawsonElection("e1", "RANKED", 2017, 9, startDay, 2017, 9, endDay, "H4W2Y9", "J4W2Y9", new StubTally(), "bi1", "bi2");
+			System.out.print("\tA DawsonVoter instance was created: " + dv);
+			System.out.print("\n\tA DawsonElection instance was created: " + de);
 		
-		else{
-			System.out.println("\n\t\tCase " + caseNum + " checked");
-			System.out.print("\t\tisEligible: " + dv.isEligible(de));
+			if (dv.isEligible(de) == expectedResult){
+				System.out.println("\n\t\tCase " + caseNum + " checked");
+				System.out.print("\t\tisEligible: " + dv.isEligible(de));
+			}	
+			else{
+				System.out.print("Error! Expected Invalid. ==== FAILED TEST ====");
+			}
 		}
-		
-		} catch (IllegalArgumentException iae) {
+		catch (IllegalArgumentException iae) {
 			System.out.println(iae.getMessage());
 			System.out.println("Error! Expected Invalid. ==== FAILED TEST ====");
-		} catch (Exception e) {
+		} 
+		catch (Exception e) {
 			System.out.println("UNEXPECTED EXCEPTION TYPE!" + e.getClass() + " " + e.getMessage() + "====FAILED TEST====");
 		}
 		System.out.println("\n");
@@ -172,25 +179,67 @@ public class DawsonVoterTest {
 		System.out.println(testCase);
 		
 		try {
-		DawsonVoter dv = new DawsonVoter("Mo", "Hamza", email, "J4W2Y9");
-		DawsonVoter otherDv = new DawsonVoter("Mo", "Hamza", emailTwo, "J4W2Y9");
-		System.out.print("\tA DawsonVoter instance was created: " + dv);
-		System.out.print("\n\tA second DawsonVoter instance was created: " + otherDv);
+			DawsonVoter dv = new DawsonVoter("Mo", "Hamza", email, "J4W2Y9");
+			DawsonVoter otherDv = new DawsonVoter("Mo", "Hamza", emailTwo, "J4W2Y9");
+			System.out.print("\tA DawsonVoter instance was created: " + dv);
+			System.out.print("\n\tA second DawsonVoter instance was created: " + otherDv);
 
-		if (dv.equals(otherDv)){
-			System.out.println("\n\n\t\tCase " + caseNum + " checked");
-			System.out.print("\t\tequals: " + dv.equals(otherDv));
-		}
-		
-		else{
-			System.out.println("\n\n\t\tCase " + caseNum + " checked");
-			System.out.print("\t\tequals: " + dv.equals(otherDv));
-		}
-		
-		} catch (IllegalArgumentException iae) {
+			if (dv.equals(otherDv) == expectedResult){
+				System.out.println("\n\n\t\tCase " + caseNum + " checked");
+				System.out.print("\t\tequals: " + dv.equals(otherDv));
+			}	
+			else{
+				System.out.println("Error! Expected Invalid. ==== FAILED TEST ====");
+			}
+		} 
+		catch (IllegalArgumentException iae) {
 			System.out.println(iae.getMessage());
 			System.out.println("Error! Expected Invalid. ==== FAILED TEST ====");
-		} catch (Exception e) {
+		} 
+		catch (Exception e) {
+			System.out.println("UNEXPECTED EXCEPTION TYPE!" + e.getClass() + " " + e.getMessage() + "====FAILED TEST====");
+		}
+		System.out.println("\n");
+	}
+	
+	private static void testCompareTo() {
+		System.out.println("\nTesting the compareTo method \n");
+		testCompareTo("1", "Case 1: same emails 2x\"moe@gmail.com\"", "moe@gmail.com", "moe@gmail.com", 0);
+		testCompareTo("2", "Case 2: different emails \"moe@gmail.com\" and \"zoe@gmail.com\"", "moe@gmail.com", "zoe@gmail.com", -1);
+	}
+	private static void testCompareTo(String caseNum, String testCase, String email, String emailTwo, int expectedResult) {
+		System.out.println(testCase);
+		
+		try {
+			DawsonVoter dv = new DawsonVoter("Mo", "Hamza", email, "J4W2Y9");
+			DawsonVoter otherDv = new DawsonVoter("Mo", "Hamza", emailTwo, "J4W2Y9");
+			System.out.print("\tA DawsonVoter instance was created: " + dv);
+			System.out.print("\n\tA second DawsonVoter instance was created: " + otherDv);
+			
+			if (dv.compareTo(otherDv) == expectedResult && expectedResult == 0){
+				System.out.println("\n\n\t\tCase " + caseNum + " checked");
+				System.out.print("\t\tcompareTo: " + dv.compareTo(otherDv) + " --- (they are the same)");
+			}
+			
+			else if (dv.compareTo(otherDv) >= expectedResult && expectedResult > 0){
+				System.out.println("\n\n\t\tCase " + caseNum + " checked");
+				System.out.print("\t\tcompareTo: " + dv.compareTo(otherDv) + " --- (" + email + " comes after " + emailTwo + ")");
+			}
+		
+			else if (dv.compareTo(otherDv) <= expectedResult && expectedResult < 0){
+				System.out.println("\n\n\t\tCase " + caseNum + " checked");
+				System.out.print("\t\tcompareTo: " + dv.compareTo(otherDv) + " --- (" + email + " comes before " + emailTwo + ")");
+			}
+		
+			else{
+				System.out.println("Error! Expected Invalid. ==== FAILED TEST ====");
+			}	
+		} 
+		catch (IllegalArgumentException iae) {
+			System.out.println(iae.getMessage());
+			System.out.println("Error! Expected Invalid. ==== FAILED TEST ====");
+		} 
+		catch (Exception e) {
 			System.out.println("UNEXPECTED EXCEPTION TYPE!" + e.getClass() + " " + e.getMessage() + "====FAILED TEST====");
 		}
 		System.out.println("\n");
