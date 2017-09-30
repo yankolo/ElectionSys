@@ -1,5 +1,9 @@
 package election.business;
 
+import lib.*;
+import election.business.interfaces.*;
+import election.business.*;
+
 /**
  * 
  * @author Nikita
@@ -13,6 +17,7 @@ public class DawsonVoterTest {
 		testGetEmail();
 		testGetPostalCode();
 		testSetPostalCode();
+		testIsEligible();
 	}
 
 	private static void testGetName() {
@@ -103,15 +108,50 @@ public class DawsonVoterTest {
 		
 		try {
 		DawsonVoter dv = new DawsonVoter("Mo", "Hamza", "moe@gmail.com", "H4W2Y9");
-		DawsonVoter dv2 = new DawsonVoter("Mo", "Hamza", "moe@gmail.com", postalCode);
-		dv.setPostalCode(dv2.getPostalCode());
+		PostalCode pc = new PostalCode(postalCode);
+		dv.setPostalCode(pc);
 		System.out.print("\tA DawsonVoter instance was created: " + dv);
-		System.out.print("\n\tA second DawsonVoter instance was created: " + dv);
+		System.out.print("\n\tA PostalCode instance was created: " + pc);
 
 		if (!dv.getPostalCode().toString().equals(expectedResult)) {
 			System.out.print("Error! Expected Invalid. ==== FAILED TEST ====");
 		}
 		System.out.print("\tPostal code changed from H4W2Y9 to: " + dv.getPostalCode());
+		
+		} catch (IllegalArgumentException iae) {
+			System.out.println(iae.getMessage());
+			System.out.println("Error! Expected Invalid. ==== FAILED TEST ====");
+		} catch (Exception e) { 
+			System.out.println("UNEXPECTED EXCEPTION TYPE!" + e.getClass() + " " + e.getMessage() + "====FAILED TEST====");
+		}
+		System.out.println("\n");
+	}
+	
+	private static void testIsEligible() {
+		System.out.println("\nTesting the IsEligible method \n");
+		testIsEligible("1", "Case 1: date in range, active postal code range, postal code in range", "J4W2Y9", 29, 30, true);
+		testIsEligible("2", "Case 2: date in range, active postal code range, postal code not in range", "J5W2Y9", 29, 30, false);
+		testIsEligible("3", "Case 3: date not in range", "J4W2Y9", 28, 29, false);
+	}
+	
+	private static void testIsEligible(String caseNum, String testCase, String postalCode, int startDay, int endDay, boolean expectedResult) {
+		System.out.println(testCase);
+		
+		try {
+		DawsonVoter dv = new DawsonVoter("Mo", "Hamza", "moe@gmail.com", "J4W2Y9");
+		DawsonElection de = new DawsonElection("e1", "RANKED", 2017, 9, startDay, 2017, 9, endDay, "H4W2Y9", "J4W2Y9", new StubTally(), "bi1", "bi2");
+		System.out.print("\tA DawsonVoter instance was created: " + dv);
+		System.out.print("\n\tA DawsonElection instance was created: " + de);
+
+		if (dv.isEligible(de)){
+			System.out.println("\n\t\tCase " + caseNum + " checked");
+			System.out.print("\t\tisEligible: " + dv.isEligible(de));
+		}
+		
+		else{
+			System.out.println("\n\t\tCase " + caseNum + " checked");
+			System.out.print("\t\tisEligible: " + dv.isEligible(de));
+		}
 		
 		} catch (IllegalArgumentException iae) {
 			System.out.println(iae.getMessage());
