@@ -7,7 +7,7 @@ import election.business.*;
 /**
  * 
  * @author Nikita
- * @version 29.09.2017
+ * @version 30.09.2017
  */
 public class DawsonVoterTest {
 	public static void main(String[] args) {
@@ -20,6 +20,8 @@ public class DawsonVoterTest {
 		testIsEligible();
 		testEquals();
 		testCompareTo();
+		testHashCode();
+		testToString();
 	}
 
 	private static void testGetName() {
@@ -235,6 +237,69 @@ public class DawsonVoterTest {
 				System.out.println("Error! Expected Invalid. ==== FAILED TEST ====");
 			}	
 		} 
+		catch (IllegalArgumentException iae) {
+			System.out.println(iae.getMessage());
+			System.out.println("Error! Expected Invalid. ==== FAILED TEST ====");
+		} 
+		catch (Exception e) {
+			System.out.println("UNEXPECTED EXCEPTION TYPE!" + e.getClass() + " " + e.getMessage() + "====FAILED TEST====");
+		}
+		System.out.println("\n");
+	}
+	
+	private static void testHashCode() {
+		System.out.println("\nTesting the hashCode method \n");
+		testHashCode("Case 1: objects with same emails", "moe@gmail.com", "moe@gmail.com", true);
+		testHashCode("Case 2: objects with different emails", "moe@gmail.com", "zoe@gmail.com", false);
+	}
+	
+	private static void testHashCode(String testCase, String email, String emailTwo, boolean expectedResult) {
+		System.out.println(testCase);
+		
+		try {
+			DawsonVoter dv = new DawsonVoter("Mo", "Hamza", email, "J4W2Y9");
+			DawsonVoter otherDv = new DawsonVoter("Mo", "Hamza", emailTwo, "J4W2Y9");
+			System.out.print("\tA DawsonVoter instance was created: " + dv);
+			System.out.print("\n\tA second DawsonVoter instance was created: " + otherDv);
+
+			if (dv.hashCode() == otherDv.hashCode() && expectedResult == true) {
+				System.out.print("\n\n\t\tTest passed, return for first object: " + dv.hashCode());
+				System.out.print("\n\t\t\t     return for second object: " + otherDv.hashCode());
+			}
+			else if (dv.hashCode() != otherDv.hashCode() && expectedResult == false){
+				System.out.print("\n\n\t\tTest passed, return for first object: " + dv.hashCode());
+				System.out.print("\n\t\t\t     return for second object: " + otherDv.hashCode());
+			}
+			else
+				System.out.println("Error! Expected Invalid. ==== FAILED TEST ====");
+		}
+		catch (IllegalArgumentException iae) {
+			System.out.println(iae.getMessage());
+			System.out.println("Error! Expected Invalid. ==== FAILED TEST ====");
+		} 
+		catch (Exception e) {
+			System.out.println("UNEXPECTED EXCEPTION TYPE!" + e.getClass() + " " + e.getMessage() + "====FAILED TEST====");
+		}
+		System.out.println("\n");
+	}
+	
+	private static void testToString() {
+		System.out.println("\nTesting the toString method \n");
+		testToString("Case 1: formatted DawsonVoter(\"Mo\", \"Hamza\", \"moe@gmail.com\", \"J4W2Y9\") string representation", "moe@gmail.com", "Mo", "Hamza", "J4W2Y9", "moe@gmail.com*Mo*Hamza*J4W2Y9");
+	}
+	
+	private static void testToString(String testCase, String email, String fName, String lName, String pCode, String expectedResult){
+		System.out.println(testCase);
+		
+		try {
+			DawsonVoter dv = new DawsonVoter(fName, lName, email, pCode);
+			System.out.print("\tA DawsonVoter instance was created: " + dv);
+			
+			if(dv.toString().compareTo(expectedResult) == 0)
+				System.out.print("\n\n\t\tTest passed, formatted output: " + dv.toString());
+			else
+				System.out.println("Error! Expected Invalid. ==== FAILED TEST ====");
+		}
 		catch (IllegalArgumentException iae) {
 			System.out.println(iae.getMessage());
 			System.out.println("Error! Expected Invalid. ==== FAILED TEST ====");

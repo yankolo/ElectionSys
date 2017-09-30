@@ -11,7 +11,7 @@ import lib.*;
   * and provides some useful methods
   * 
   * @author Nikita
-  * @version 29.09.2017
+  * @version 30.09.2017
   */
  public class DawsonVoter implements Voter, Serializable{
  	private Name name;
@@ -37,7 +37,9 @@ import lib.*;
  	}
 
  	/**
- 	 * return the name field which is a Name instance
+ 	 * Returns the name field which is a Name instance
+ 	 * 
+ 	 * @return name instance field
  	 */
  	@Override
 	public Name getName(){
@@ -45,7 +47,9 @@ import lib.*;
  	}
 
  	/**
- 	 * return the email field which is an Email instance
+ 	 * Returns the email field which is an Email instance
+ 	 * 
+ 	 * @return email instance field
  	 */
 	@Override
 	public Email getEmail(){
@@ -53,7 +57,9 @@ import lib.*;
 	}
 
 	/**
-	 * return the postal code which is a PostalCode instance
+	 * Returns the postal code which is a PostalCode instance
+	 * 
+	 * @return postalCode instance field
 	 */
 	@Override
 	public PostalCode getPostalCode(){
@@ -82,9 +88,13 @@ import lib.*;
 	 * 		   voter is in its bounds
 	 * 
 	 * @param elect is an Election type object
+	 * @throws IllegalArgumentException if elect is null
+	 * @return true/false for eligibilty
 	 */
 	@Override
 	public boolean isEligible(Election elect){
+		if(elect == null)
+			throw new IllegalArgumentException("Cannot verify eligibility to vote in a null Election");
 		LocalDate currentDate = LocalDate.now();
 		if(currentDate.isBefore(elect.getEndDate().plusDays(1)) && currentDate.isAfter(elect.getStartDate().minusDays(1))){
 			if(elect.isLimitedToPostalRange()){
@@ -97,6 +107,14 @@ import lib.*;
 		return false;
 	}	
 	
+	/**
+	 * Checks for equality of two objects according to two factors:
+	 * 		1. If they are the instances of the same class
+	 * 		2. If they have the same emails
+	 * 
+	 * @param object is object to use for equality check
+	 * @return true/false for object equality
+	 */
 	@Override
 	public final boolean equals(Object object){
 		if (this == object)
@@ -111,11 +129,38 @@ import lib.*;
 		return false;
 	}
 
+	/**
+	 * Compares two Voter type objects based on their emails
+	 * 
+	 * @param voter is object use for comparison
+	 * @throws IllegalArgumentException if voter is null 
+	 * @return compareTo's output
+	 */
 	@Override
 	public int compareTo(Voter voter){
 		if(voter == null)
 			throw new IllegalArgumentException("Cannot compare a DawsonVoter to a null Voter object");
 		return email.getAddress().compareToIgnoreCase(voter.getEmail().getAddress());
+	}
+	
+	/**
+	 * Returns an object's hashcode based on it's email attribute
+	 * 
+	 * @return hashcode
+	 */
+	@Override
+	public final int hashCode(){
+		return email.toString().toUpperCase().hashCode();
+	}
+	
+	/**
+	 * Returns a formatted String representation of a DawsonVoter instance
+	 * 
+	 * @return formatted String
+	 */
+	@Override
+	public String toString(){
+		return (email.getAddress() + "*" + name.getFirstName() + "*" + name.getLastName() + "*" + postalCode.getCode());
 	}
  } 
 
