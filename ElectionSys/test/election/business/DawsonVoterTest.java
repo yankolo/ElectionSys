@@ -162,6 +162,40 @@ public class DawsonVoterTest {
 		}
 		System.out.println("\n");
 	}
+	
+	private static void testEquals() {
+		System.out.println("\nTesting the equals method \n");
+		testEquals("1", "Case 1: same emails 2x\"moe@gmail.com\"", "moe@gmail.com", "moe@gmail.com", true);
+		testEquals("2", "Case 2: different emails \"moe@gmail.com\" and \"moeee@gmail.com\"", "moe@gmail.com", "moeee@gmail.com", false);
+	}
+	private static void testEquals(String caseNum, String testCase, String email, String emailTwo, boolean expectedResult) {
+		System.out.println(testCase);
+		
+		try {
+		DawsonVoter dv = new DawsonVoter("Mo", "Hamza", email, "J4W2Y9");
+		DawsonVoter otherDv = new DawsonVoter("Mo", "Hamza", emailTwo, "J4W2Y9");
+		System.out.print("\tA DawsonVoter instance was created: " + dv);
+		System.out.print("\n\tA second DawsonVoter instance was created: " + otherDv);
+
+		if (dv.equals(otherDv)){
+			System.out.println("\n\n\t\tCase " + caseNum + " checked");
+			System.out.print("\t\tequals: " + dv.equals(otherDv));
+		}
+		
+		else{
+			System.out.println("\n\n\t\tCase " + caseNum + " checked");
+			System.out.print("\t\tequals: " + dv.equals(otherDv));
+		}
+		
+		} catch (IllegalArgumentException iae) {
+			System.out.println(iae.getMessage());
+			System.out.println("Error! Expected Invalid. ==== FAILED TEST ====");
+		} catch (Exception e) {
+			System.out.println("UNEXPECTED EXCEPTION TYPE!" + e.getClass() + " " + e.getMessage() + "====FAILED TEST====");
+		}
+		System.out.println("\n");
+	}
 }
+
 	
 

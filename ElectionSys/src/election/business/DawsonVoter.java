@@ -98,6 +98,20 @@ import lib.*;
 	}	
 	
 	@Override
+	public final boolean equals(Object object){
+		if (this == object)
+			return true; 
+		if (object == null) 
+			return false;
+		if (!(object instanceof DawsonVoter))
+			return false;
+		DawsonVoter voter = (DawsonVoter) object;
+		if(email.getAddress().equalsIgnoreCase(voter.email.getAddress()))
+				return true;
+		return false;
+	}
+	
+	@Override
 	public int compareTo(Voter arg0) {
 		// TODO Auto-generated method stub
 		return 0;
