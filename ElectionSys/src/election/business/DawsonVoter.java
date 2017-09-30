@@ -82,15 +82,15 @@ import lib.*;
 	 * 		   voter is in its bounds
 	 * 
 	 * @param elect is an Election type object
-	 * @throws IllegalArgumentException if elect is null
 	 */
 	@Override
 	public boolean isEligible(Election elect){
 		LocalDate currentDate = LocalDate.now();
 		if(currentDate.isBefore(elect.getEndDate().plusDays(1)) && currentDate.isAfter(elect.getStartDate().minusDays(1))){
 			if(elect.isLimitedToPostalRange()){
-				if(postalCode.toString().compareToIgnoreCase(elect.getPostalRangeStart()) >= 0 && 0 >= postalCode.toString().compareToIgnoreCase(elect.getPostalRangeEnd()))
-					return true;
+				if(!(postalCode.inRange(elect.getPostalRangeStart(), elect.getPostalRangeEnd())))
+					return false;
+				return true;
 			}
 			return true;
 		}
@@ -98,7 +98,7 @@ import lib.*;
 	}	
 	
 	@Override
-	public int compareTo(Voter o) {
+	public int compareTo(Voter arg0) {
 		// TODO Auto-generated method stub
 		return 0;
 	}

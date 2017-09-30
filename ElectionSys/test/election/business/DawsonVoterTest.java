@@ -18,6 +18,7 @@ public class DawsonVoterTest {
 		testGetPostalCode();
 		testSetPostalCode();
 		testIsEligible();
+		testEquals();
 	}
 
 	private static void testGetName() {
@@ -128,9 +129,9 @@ public class DawsonVoterTest {
 	}
 	
 	private static void testIsEligible() {
-		System.out.println("\nTesting the IsEligible method \n");
+		System.out.println("\nTesting the isEligible method \n");
 		testIsEligible("1", "Case 1: date in range, active postal code range, postal code in range", "J4W2Y9", 29, 30, true);
-		testIsEligible("2", "Case 2: date in range, active postal code range, postal code not in range", "J5W2Y9", 29, 30, false);
+		testIsEligible("2", "Case 2: date in range, active postal code range, postal code not in range", "G4W2Y9", 29, 30, false);
 		testIsEligible("3", "Case 3: date not in range", "J4W2Y9", 28, 29, false);
 	}
 	
@@ -138,7 +139,7 @@ public class DawsonVoterTest {
 		System.out.println(testCase);
 		
 		try {
-		DawsonVoter dv = new DawsonVoter("Mo", "Hamza", "moe@gmail.com", "J4W2Y9");
+		DawsonVoter dv = new DawsonVoter("Mo", "Hamza", "moe@gmail.com", postalCode);
 		DawsonElection de = new DawsonElection("e1", "RANKED", 2017, 9, startDay, 2017, 9, endDay, "H4W2Y9", "J4W2Y9", new StubTally(), "bi1", "bi2");
 		System.out.print("\tA DawsonVoter instance was created: " + dv);
 		System.out.print("\n\tA DawsonElection instance was created: " + de);
@@ -162,4 +163,5 @@ public class DawsonVoterTest {
 		System.out.println("\n");
 	}
 }
+	
 
