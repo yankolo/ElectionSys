@@ -5,17 +5,9 @@ package election.business;
 
 import java.time.DateTimeException;
 import election.business.interfaces.Ballot;
+import election.business.interfaces.Election;
 import election.business.interfaces.Tally;
 import election.business.interfaces.Voter;
-
-
-
-
-
-
-
-
-
 
 /**
  * @author katsuragi
@@ -40,6 +32,7 @@ public class DawsonElectionTest {
 		testGetTally();
 		testSetTally();
 		testGetBallot();
+		testCastBallot();
 		testEquals();
 		testHashCode();
 		toStringTest();
@@ -238,6 +231,7 @@ public class DawsonElectionTest {
 		}
 
 	}
+
 	private static void testGetElectionChoices() {
 		System.out.println("---------- TESTING THE GETELECTIONCHOICES ----------");
 		String s1 = "Brandon";
@@ -293,8 +287,9 @@ public class DawsonElectionTest {
 		year = 1997;
 		month = 10;
 		day = 04;
-		testGetEndDate("Case 2 - Passed a valid Integer numbers to create a date (EndDate localDate Object)", year,
-				month, day, true);
+		testGetEndDate(
+				"Case 2 - Passed a valid Integer numbers to create a date (EndDate localDate Object) but the startDate is bigger than the endDate",
+				year, month, day, false);
 	}
 
 	private static void testGetEndDate(String testCase, int year, int month, int day, boolean expectValid) {
@@ -329,6 +324,7 @@ public class DawsonElectionTest {
 		}
 
 	}
+
 	private static void testGetStartDate() {
 		System.out.println("---------- TESTING THE GETSTARTDATE ----------");
 		int year = 1994;
@@ -336,11 +332,12 @@ public class DawsonElectionTest {
 		int day = 05;
 		testGetStartDate("Case 1 - Passed a valid integer numbers to create a date (StartDate localDate object)", year,
 				month, day, true);
-		year = 1965;
+		year = 2019;
 		month = 06;
 		day = 07;
-		testGetStartDate("Case 2 - Passed a valid Integer numbers to create a date (StartDate localDate Object)", year,
-				month, day, true);
+		testGetStartDate(
+				"Case 2 - Passed a valid Integer numbers to create a date (StartDate localDate Object) but is Bigger than the endDate",
+				year, month, day, false);
 	}
 
 	private static void testGetStartDate(String testCase, int year, int month, int day, boolean expectValid) {
@@ -375,6 +372,7 @@ public class DawsonElectionTest {
 		}
 
 	}
+
 	private static void testGetPostalRangeEnd() {
 		System.out.println("---------- TESTING THE GET_POSTALRANGE_END ----------");
 		testGetPostalRangeEnd(
@@ -426,6 +424,7 @@ public class DawsonElectionTest {
 		}
 
 	}
+
 	private static void testGetPostalRangeStart() {
 		System.out.println("---------- TESTING THE GET_POSTAL_RANGE_START ----------");
 		testGetPostalRangeStart(
@@ -453,8 +452,9 @@ public class DawsonElectionTest {
 			} else {
 				DawsonElection d1 = new DawsonElection("Hello World", "single", 2016, 12, 2, 2017, 04, 22, "F",
 						postalRangeStart, st, s1, s2, s3);
-				System.out.println(
-						"The string passed to this test method is a valid postal range : " + d1.getPostalRangeStart());
+				System.out.println("The string passed to this test method which is " + postalRangeStart
+						+ " ,is a valid postal range  but will be set to null because of the method isLimitedToRangeMethod: "
+						+ d1.getPostalRangeStart());
 			}
 			if (!expectValid)
 				System.out.print("  Error! Expected Invalid. ==== FAILED TEST ==== ");
@@ -477,6 +477,7 @@ public class DawsonElectionTest {
 		}
 
 	}
+
 	private static void testIsLimitedToPostalRange() {
 		System.out.println("---------- TESTING THE IS_LIMITED_TO_POSTAL_RANGE ----------");
 		String s1 = "H";
@@ -502,11 +503,11 @@ public class DawsonElectionTest {
 			DawsonElection d1 = new DawsonElection("Hello World", "single", 2016, 12, 2, 2017, 04, 22, startRange,
 					endRange, st, s1, s2, s3);
 			if (d1.isLimitedToPostalRange()) {
-				System.out.println("The two strings passed to this test method are valid postal ranges : "
-						+ d1.isLimitedToPostalRange());
-			} else {
 				System.out.println(
 						"The two strings passed to this test method tells that the postal ranges is not important for this election ");
+			} else {
+				System.out.println(
+						"The two strings passed to this test method are valid postal range it is Limited to range");
 			}
 			if (!expectValid)
 				System.out.print("  Error! Expected Invalid. ==== FAILED TEST ==== ");
@@ -529,6 +530,7 @@ public class DawsonElectionTest {
 		}
 
 	}
+
 	private static void testGetName() {
 		System.out.println("---------- TESTING THE GET_NAME  ---------");
 		String s1 = "USA ELECTION";
@@ -576,6 +578,7 @@ public class DawsonElectionTest {
 		}
 
 	}
+
 	private static void testGetTally() {
 		System.out.println("---------- TESTING THE GET_TALLY ----------");
 		StubTally tal = new StubTally();
@@ -619,6 +622,7 @@ public class DawsonElectionTest {
 		}
 
 	}
+
 	private static void testSetTally() {
 		System.out.println("---------- TESTING THE SET_METHOD ----------");
 		StubTally tal = new StubTally();
@@ -674,12 +678,14 @@ public class DawsonElectionTest {
 		}
 
 	}
+
 	private static void testGetBallot() {
 		System.out.println("---------- TESTING THE GET_BALLOT ----------");
 		Voter v = null;
 		testGetBallot("Case 1 -- Pass a null referenced voter object - should throw an exception", v, false);
 	}
-	private static void testGetBallot (String testCase , Voter v , boolean expectValid) {
+
+	private static void testGetBallot(String testCase, Voter v, boolean expectValid) {
 		System.out.println("   " + testCase);
 		try {
 			StubTally st = new StubTally();
@@ -689,7 +695,7 @@ public class DawsonElectionTest {
 
 			DawsonElection d1 = new DawsonElection("Hello World", "single", 2016, 12, 2, 2017, 04, 22, null, null, st,
 					s1, s2, s3);
-			
+
 			Ballot sb = d1.getBallot(v);
 			if (!expectValid)
 				System.out.print("  Error! Expected Invalid. ==== FAILED TEST ==== ");
@@ -711,7 +717,63 @@ public class DawsonElectionTest {
 
 		}
 	}
-	//has yet to fully test the castBallot 
+
+	private static void testCastBallot() {
+		System.out.println("---------- TESTING THE CAST_BALLOT ----------");
+		DawsonBallotItem dbe = new DawsonBallotItem("Nikita", 20);
+		DawsonBallotItem dbe1 = new DawsonBallotItem("Yanik", 21);
+		DawsonBallotItem dbe2 = new DawsonBallotItem("Mohamed", 22);
+		DawsonBallotItem dbe3 = new DawsonBallotItem("Sammy", 23);
+		DawsonBallotItem[] dbeArray = new DawsonBallotItem[4];
+		dbeArray[0] = dbe;
+		dbeArray[1] = dbe1;
+		dbeArray[2] = dbe2;
+		dbeArray[3] = dbe3;
+		StubTally st = new StubTally();
+		String s1 = "Brandon";
+		String s2 = "Bob";
+		String s3 = "Jordy";
+		DawsonVoter dv = new DawsonVoter(s1, s2, "moe@gmail.com", "J4W2Y9");
+		DawsonVoter dvNull = null;
+		DawsonElection de = new DawsonElection("Hello World", "single", 2016, 12, 2, 2017, 10, 30, null, null, st, s1,
+				s2, s3);
+		StubBallot sb = new StubBallot(dbeArray, de);
+		StubBallot sbNull = null;
+		testCastBallot("Case 1 - Pass a val Ballot object and voter  ", sb, de, dv, true);
+		testCastBallot("Case 2 - Pass a valid Ballot object but null referenced voter  ", sb, de, dvNull, false);
+		testCastBallot("Case 3 - Pass a a null referenced Ballot object and a valid voter that is elligible to vote ",
+				sbNull, de, dv, false);
+
+	}
+
+	private static void testCastBallot(String testCase, Ballot sb, Election de, Voter v, boolean expectValid) {
+		System.out.println("   " + testCase);
+		try {
+
+			de.castBallot(sb, v);
+			System.out.println("PASSED TEST -- the castBallot has executed successfully");
+			if (!expectValid) {
+				System.out.println(" Error! Expected InValid. ====== FAILED TEST =====");
+			}
+			System.out.println("\n");
+		} catch (IllegalArgumentException iae) {
+			System.out.println("\t" + iae.getMessage());
+			if (expectValid) {
+				System.out.println(" Error! Expected Valid. ====== FAILED TEST =====");
+			}
+		} catch (Exception e) {
+			System.out.println(
+					"\tUNEXPECTED EXCEPTION TYPE!" + e.getClass() + " " + e.getMessage() + "====FAILED TEST====");
+			if (expectValid) {
+				System.out.println("Expected Valid");
+			}
+
+			System.out.println("\n");
+
+		}
+	}
+
+	// has yet to fully test the castBallot
 	private static void testEquals() {
 		StubTally st = new StubTally();
 		String s1 = "Brandon";
@@ -719,34 +781,40 @@ public class DawsonElectionTest {
 		String s3 = "Jordy";
 		System.out.println("---------- TESTING THE EQUALS  ----------");
 
-		DawsonElection de = new DawsonElection("Hello World", "single", 2016, 12, 2, 2017, 04, 22, null, null, st,
-				s1, s2, s3);
+		DawsonElection de = new DawsonElection("Hello World", "single", 2016, 12, 2, 2017, 04, 22, null, null, st, s1,
+				s2, s3);
 		DawsonElection de1 = null;
-		DawsonElection de2 = new DawsonElection("Hek", "single", 2016, 12, 2, 2017, 04, 22, null, null, st,
-				s1, s2, s3);
+		DawsonElection de2 = new DawsonElection("Hek", "single", 2016, 12, 2, 2017, 04, 22, null, null, st, s1, s2, s3);
 		DawsonElection de3 = de;
-		DawsonElection de4 = new DawsonElection("Hello World", "single", 2016, 11, 2, 2017, 04, 22, null, null, st,
-				s1, s2, s3);
-		testEquals("Case 1 -- if both DawsonElection objects reference to the same object - should return true ", de, de3, true);
-		testEquals("Case 2 -- if either DawsonElection object is null referenced  - should return false ", de, de1, false);
-		testEquals("Case 3 -- if both DawsonElection objects have the same Election name - should return true ", de, de4, true);
-		testEquals("Case 4 -- if both DawsonElection objects have the different Election name - should return true ", de, de2, false);
-
+		DawsonElection de4 = new DawsonElection("Hello World", "single", 2016, 11, 2, 2017, 04, 22, null, null, st, s1,
+				s2, s3);
+		testEquals("Case 1 -- if both DawsonElection objects reference to the same object - should return true ", de,
+				de3, true);
+		testEquals("Case 2 -- if either DawsonElection object is null referenced  - should return false ", de, de1,
+				false);
+		testEquals("Case 3 -- if both DawsonElection objects have the same Election name - should return true ", de,
+				de4, true);
+		testEquals("Case 4 -- if both DawsonElection objects have the different Election name - should return false ",
+				de, de2, false);
 
 	}
-	private static void testEquals(String testCase, DawsonElection de ,DawsonElection d1 ,  boolean expectValid) {
+
+	private static void testEquals(String testCase, DawsonElection de, DawsonElection d1, boolean expectValid) {
 		System.out.println("   " + testCase);
 		try {
-			
-			if(de.equals(d1) == expectValid) {
-				if(de.equals(d1)) {
+
+			if (de.equals(d1) == expectValid) {
+				if (de.equals(d1)) {
 					System.out.println(" Passed test --- " + de.getName() + " and " + d1.getName() + " are equal");
+				} else {
+					if (de == null || d1 == null) {
+						System.out.println("Passed test -- null referenced objects should return false");
+					} else {
+						System.out.println(
+								" Passed test --- " + d1.getName() + " and " + de.getName() + " are  not equal");
+					}
 				}
-				else {
-					System.out.println(" Passed test --- " + d1 + " and " + de.getName() + " are  not equal");
-				}
-			}
-			else {
+			} else {
 				System.out.print(" ==== FAILED TEST ==== ERROR OOCURED IN THE EQUALS METHOD  ");
 			}
 
@@ -766,38 +834,47 @@ public class DawsonElectionTest {
 			System.out.println("\n");
 
 		}
-	
+
 	}
+
 	private static void testHashCode() {
 		StubTally st = new StubTally();
 		String s1 = "Brandon";
 		String s2 = "Bob";
 		String s3 = "Jordy";
 		System.out.println("---------- TESTING THE HASH_CODE ----------");
-		DawsonElection de = new DawsonElection("Hello World", "single", 2016, 12, 2, 2017, 04, 22, null, null, st,
-				s1, s2, s3);
-		DawsonElection de2 = new DawsonElection("Hek", "single", 2016, 12, 2, 2017, 04, 22, null, null, st,
-				s1, s2, s3);
+		DawsonElection de = new DawsonElection("Hello World", "single", 2016, 12, 2, 2017, 04, 22, null, null, st, s1,
+				s2, s3);
+		DawsonElection de2 = new DawsonElection("Hek", "single", 2016, 12, 2, 2017, 04, 22, null, null, st, s1, s2, s3);
 		DawsonElection de3 = de;
-		DawsonElection de4 = new DawsonElection("Hello World", "single", 2016, 11, 2, 2017, 04, 22, null, null, st,
-				s1, s2, s3);
-		testHashCode("Case 1 -- if both DawsonElection objects reference to the same object - hashCode should be the same ", de, de3, true);
-		testHashCode("Case 2 -- if both DawsonElection objects have the same Election name - hashCode should be the same ", de, de4, true);
-		testHashCode("Case 3 -- if both DawsonElection objects have the different Election name - hashCode should be different ", de, de2, false);
-
+		DawsonElection de4 = new DawsonElection("Hello World", "single", 2016, 11, 2, 2017, 04, 22, null, null, st, s1,
+				s2, s3);
+		testHashCode(
+				"Case 1 -- if both DawsonElection objects reference to the same object - hashCode should be the same ",
+				de, de3, true);
+		testHashCode(
+				"Case 2 -- if both DawsonElection objects have the same Election name - hashCode should be the same ",
+				de, de4, true);
+		testHashCode(
+				"Case 3 -- if both DawsonElection objects have the different Election name - hashCode should be different ",
+				de, de2, false);
 
 	}
-	private static void testHashCode(String testCase, DawsonElection de ,DawsonElection d1 ,  boolean expectValid) {
+
+	private static void testHashCode(String testCase, DawsonElection de, DawsonElection d1, boolean expectValid) {
 		System.out.println("   " + testCase);
 		try {
-			
-			if( (d1.hashCode() == de.hashCode() && expectValid )) {
-				
-					System.out.println(" Passed test ---  The hashCode of the first DawsonElection object is " + de.hashCode() + " and  the hash Code of the second DawsonElection Object is " + d1.hashCode() + " have  equal hashCode");
 
-			}
-			else {
-				System.out.println(" Passed test ---  The hashCode of the first DawsonElection object is " + de.hashCode() + " and  the hash Code of the second DawsonElection Object is " + d1.hashCode() + "  have  different hashCode");
+			if ((d1.hashCode() == de.hashCode() && expectValid)) {
+
+				System.out.println(" Passed test ---  The hashCode of the first DawsonElection object is "
+						+ de.hashCode() + " and  the hash Code of the second DawsonElection Object is " + d1.hashCode()
+						+ " have  equal hashCode");
+
+			} else {
+				System.out.println(" Passed test ---  The hashCode of the first DawsonElection object is "
+						+ de.hashCode() + " and  the hash Code of the second DawsonElection Object is " + d1.hashCode()
+						+ "  have  different hashCode");
 			}
 
 			System.out.println("\n");
@@ -816,27 +893,27 @@ public class DawsonElectionTest {
 			System.out.println("\n");
 
 		}
-	
+
 	}
+
 	private static void toStringTest() {
 		StubTally st = new StubTally();
 		String s1 = "Brandon";
 		String s2 = "Bob";
 		String s3 = "Jordy";
 
-		DawsonElection de = new DawsonElection("Hello World", "single", 2016, 12, 2, 2017, 04, 22, null, null, st,
-				s1, s2, s3);
-		DawsonElection de1 = new DawsonElection("Hello World", "ranked", 2016, 12, 2, 2017, 04, 22, "G", "H", st,
-				s1, s2);
+		DawsonElection de = new DawsonElection("Hello World", "single", 2016, 12, 2, 2017, 04, 22, null, null, st, s1,
+				s2, s3);
+		DawsonElection de1 = new DawsonElection("Hello World", "ranked", 2016, 12, 2, 2017, 04, 22, "G", "H", st, s1,
+				s2);
 		System.out.println("---------- TESTING THE TO_STRING ----------");
-		System.out.println("Case 1 - A DawsonElection object that has no postal code range and has 3 ballot item choices");
+		System.out.println(
+				"Case 1 - A DawsonElection object that has no postal code range and has 3 ballot item choices");
 		System.out.println(de.toString());
-		System.out.println("Case 2 - A DawsonElection object that has a postal code range and has 2 ballot item choices");
+		System.out
+				.println("Case 2 - A DawsonElection object that has a postal code range and has 2 ballot item choices");
 		System.out.println(de1.toString());
 
-		
-		
 	}
-	
 
 }
