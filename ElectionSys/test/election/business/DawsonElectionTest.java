@@ -395,13 +395,14 @@ public class DawsonElectionTest {
 			if (postalRangeEnd == null) {
 				DawsonElection d1 = new DawsonElection("Hello World", "single", 2016, 12, 2, 2017, 04, 22, null,
 						postalRangeEnd, st, s1, s2, s3);
+
 				System.out.println(
-						"The string passed to this test method is a valid postal range : " + d1.getPostalRangeEnd());
+						"Nulls are  valid postal range - means that the election is not limited to postal code ");
 			} else {
 				DawsonElection d1 = new DawsonElection("Hello World", "single", 2016, 12, 2, 2017, 04, 22, "F",
 						postalRangeEnd, st, s1, s2, s3);
-				System.out.println(
-						"The string passed to this test method is a valid postal range : " + d1.getPostalRangeEnd());
+				System.out.println("The string passed to this test method which is " + d1.getPostalRangeEnd()
+						+ " is a valid postalRange end ");
 			}
 			if (!expectValid)
 				System.out.print("  Error! Expected Invalid. ==== FAILED TEST ==== ");
@@ -448,13 +449,12 @@ public class DawsonElectionTest {
 				DawsonElection d1 = new DawsonElection("Hello World", "single", 2016, 12, 2, 2017, 04, 22, null,
 						postalRangeStart, st, s1, s2, s3);
 				System.out.println(
-						"The string passed to this test method is a valid postal range : " + d1.getPostalRangeStart());
+						"Nulls are  valid postal range - means that the election is not limited to postal code ");
 			} else {
 				DawsonElection d1 = new DawsonElection("Hello World", "single", 2016, 12, 2, 2017, 04, 22, "F",
 						postalRangeStart, st, s1, s2, s3);
 				System.out.println("The string passed to this test method which is " + postalRangeStart
-						+ " ,is a valid postal range  but will be set to null because of the method isLimitedToRangeMethod: "
-						+ d1.getPostalRangeStart());
+						+ " is a valid postalRange start ");
 			}
 			if (!expectValid)
 				System.out.print("  Error! Expected Invalid. ==== FAILED TEST ==== ");
