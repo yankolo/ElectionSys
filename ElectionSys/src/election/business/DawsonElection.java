@@ -221,9 +221,9 @@ public class DawsonElection implements Election {
 	public boolean isLimitedToPostalRange() {
 		// TODO Auto-generated method stub
 		if (isNull(getPostalRangeEnd()) || isNull(getPostalRangeStart())) {
-			return true;
-		} else {
 			return false;
+		} else {
+			return true;
 		}
 	}
 
