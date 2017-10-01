@@ -113,10 +113,8 @@ public class DawsonElection implements Election {
 		} else {
 			throw new IllegalArgumentException("The minimum for the Ballot items must be of length 2 or more.");
 		}
-		if(!(isLimitedToPostalRange())) {
-			this.postalCodeEndRange = endRange;
-			this.postalCodeStartRange = startRange;
-		}
+		this.postalCodeEndRange = endRange;
+		this.postalCodeStartRange = startRange;
 		this.name = name;
 
 	}
@@ -223,9 +221,9 @@ public class DawsonElection implements Election {
 	public boolean isLimitedToPostalRange() {
 		// TODO Auto-generated method stub
 		if (isNull(getPostalRangeEnd()) || isNull(getPostalRangeStart())) {
-			return false;
-		} else {
 			return true;
+		} else {
+			return false;
 		}
 	}
 
