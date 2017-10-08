@@ -112,10 +112,8 @@ public class ListUtilities {
 		if (list == null) {
 			throw new NullPointerException("The array that is passed through this method cannot be null referenced");
 		}
-		for (Comparable element : list) {
-			if (element == null) {
-				throw new IllegalArgumentException("The list array must be filled if you wish to sort it");
-			}
+		if(nullRefenreceElements(list)) {
+			throw new IllegalArgumentException("The list array must be filled if you wish to sort it");
 		}
 		for (int i = 0; i < list.length - 1; i++) {
 			int smallIndex = i;
@@ -131,7 +129,17 @@ public class ListUtilities {
 
 	}
 
-	// TODO merge method
-
+	
+	
 	// TODO Comparator sort
+	
+	@SuppressWarnings({ "rawtypes", "unchecked" })
+	private static boolean nullRefenreceElements (Comparable[] list ) {
+		for (Comparable element : list) {
+			if (element == null) {
+				return true;
+			}
+		}
+		return true;
+	}
 }
