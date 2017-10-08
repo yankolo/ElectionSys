@@ -8,11 +8,9 @@ public class TestListUtilities {
 	
 	TestSortMethodString();
 	}
-	public static void TestCompareToMethodName() {
-		
-	}
 
 	public static void TestSortMethodString() {
+		System.out.println("-----------Testing The Generic Sort method-----------");
 		String[] array1 = {"Sammy" , "Mohammed" , "Nikita" , "Yanick" };
 		TestSortMethodString("Case 1 - valid String array should be sorted in alphabetic order", array1, true);
 		String [] array2 = null;
