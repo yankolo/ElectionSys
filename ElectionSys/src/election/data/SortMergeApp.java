@@ -3,6 +3,7 @@ package election.data;
 import java.io.File;
 import java.util.ArrayList;
 import java.io.IOException;
+import java.util.Arrays;
 
 import election.business.interfaces.Voter;
 import util.ListUtilities;
@@ -45,6 +46,40 @@ public class SortMergeApp {
 			} catch (IOException e) {
 				System.out.println("Error writing sorted voters file!");
 			}
+		}
+		
+		
+		// Merging Voters -------
+		// Creating String[] that contains the paths of all of the sorted voter files
+		String[] sortedVoterFilePathsList = createFilePathsArray("voters", "datafiles\\sorted");
+		// Creating array of Voter[] that will store sorted voter lists
+		Voter[][] sortedVoterLists = new Voter[sortedVoterFilePathsList.length][];
+						
+		// Populating sortedVoterLists with sorted voter lists
+		for (int i = 0; i < sortedVoterLists.length; i++)
+			sortedVoterLists[i] = ElectionFileLoader.getVoterListFromSequentialFile(sortedVoterFilePathsList[i]);
+						
+		// Creating mergedVoterArrayList that will be used to merge all the sorted voter lists
+		@SuppressWarnings("rawtypes")
+		ArrayList<Comparable[]> mergedVoterArrayList = new ArrayList<Comparable[]>();
+		mergedVoterArrayList.addAll(Arrays.asList(sortedVoterLists));
+					
+		// Merging all the sorted voter lists
+		while (mergedVoterArrayList.size() > 1) {
+			@SuppressWarnings("rawtypes")
+			Comparable[] merged = ListUtilities.merge(mergedVoterArrayList.get(0), mergedVoterArrayList.get(1), "datafiles\\sorted\\duplicateVoters.txt");
+			
+			// Set index 1 to merged list (of index 0 and 1) and remove index 0 (a neat way to merge all lists with the loop)
+			mergedVoterArrayList.set(1, merged);
+			mergedVoterArrayList.remove(0);
+		}
+		Voter[] mergedVoterList = (Voter[]) mergedVoterArrayList.get(0);
+						
+		// Writing mergedVoterList to file
+		try {
+		ListUtilities.saveListToTextFile(mergedVoterList, "datafiles\\database\\voters.txt");
+		} catch (IOException e) {
+			System.out.println("Error writing merged voters file!");
 		}
 	}
 	
