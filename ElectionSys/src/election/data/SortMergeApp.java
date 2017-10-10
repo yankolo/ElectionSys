@@ -2,6 +2,10 @@ package election.data;
 
 import java.io.File;
 import java.util.ArrayList;
+import java.io.IOException;
+
+import election.business.interfaces.Voter;
+import util.ListUtilities;
 
 public class SortMergeApp {
 
@@ -11,6 +15,37 @@ public class SortMergeApp {
 		
 		File databaseDirectory = new File("datafiles/database");
 		databaseDirectory.mkdir();
+		
+		
+		// Sorting Voters -------
+		// Creating String[] that contains the paths of all of the unsorted voter files
+		String[] voterFilePathsList = createFilePathsArray("voters", "datafiles\\unsorted");
+		// Creating array of Voter[] that will store voter lists
+		Voter[][] voterLists = new Voter[voterFilePathsList.length][];
+		
+		// Populating voterLists with voter lists
+		for (int i = 0; i < voterLists.length; i++)
+			voterLists[i] = ElectionFileLoader.getVoterListFromSequentialFile(voterFilePathsList[i]);
+		
+		// Sorting all the voter lists
+		for (Voter[] voterList: voterLists)
+			ListUtilities.sort(voterList);
+		
+		// Writing sorted voter lists to files
+		for (int i = 0; i < voterLists.length; i++) {
+			// To find the original name of the voter file
+			String originalFilePath = voterFilePathsList[i];
+			
+			// To be able to substring the original name of the voter file
+			int indexOfFileNameBeginning = originalFilePath.lastIndexOf("\\") + 1;
+			
+			String fileName = originalFilePath.substring(indexOfFileNameBeginning);
+			try {
+			ListUtilities.saveListToTextFile(voterLists[i], "datafiles\\sorted\\" + fileName);
+			} catch (IOException e) {
+				System.out.println("Error writing sorted voters file!");
+			}
+		}
 	}
 	
 	/**
