@@ -113,6 +113,40 @@ public class SortMergeApp {
 				System.out.println("Error writing sorted election file!");
 			}
 		}
+		
+		
+		// Merging elections -------
+		// Creating String[] that contains the paths of all of the sorted election files
+		String[] sortedElectionFilePathsList = createFilePathsArray("elections", "datafiles\\sorted");
+		// Creating array of Election[] that will store sorted election lists
+		Election[][] sortedElectionLists = new Election[sortedElectionFilePathsList.length][];
+						
+		// Populating sortedElectionLists with sorted election lists
+		for (int i = 0; i < sortedElectionLists.length; i++)
+			sortedElectionLists[i] = ElectionFileLoader.getElectionListFromSequentialFile(sortedElectionFilePathsList[i]);
+						
+		// Creating mergedElectionArrayList that will be used to merge all the sorted election lists
+		@SuppressWarnings("rawtypes")
+		ArrayList<Comparable[]> mergedElectionArrayList = new ArrayList<Comparable[]>();
+		mergedElectionArrayList.addAll(Arrays.asList(sortedElectionLists));
+					
+		// Merging all the sorted election lists
+		while (mergedElectionArrayList.size() > 1) {
+			@SuppressWarnings("rawtypes")
+			Comparable[] merged = ListUtilities.merge(mergedElectionArrayList.get(0), mergedElectionArrayList.get(1), "datafiles\\sorted\\duplicateElections.txt");
+			
+			// Set index 1 to merged list (of index 0 and 1) and remove index 0 (a neat way to merge all lists with the loop)
+			mergedElectionArrayList.set(1, merged);
+			mergedElectionArrayList.remove(0);
+		}
+		Election[] mergedElectionList = (Election[]) mergedElectionArrayList.get(0);
+						
+		// Writing mergedElectionList to file
+		try {
+		ListUtilities.saveListToTextFile(mergedElectionList, "datafiles\\database\\elections.txt");
+		} catch (IOException e) {
+			System.out.println("Error writing merged elections file!");
+		}
 	}
 	
 	/**
