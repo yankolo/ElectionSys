@@ -6,6 +6,7 @@ import java.io.IOException;
 import java.util.Arrays;
 
 import election.business.interfaces.Election;
+import election.business.interfaces.Tally;
 import election.business.interfaces.Voter;
 import util.ListUtilities;
 
@@ -147,6 +148,15 @@ public class SortMergeApp {
 		} catch (IOException e) {
 			System.out.println("Error writing merged elections file!");
 		}
+		
+		
+		// Loading Tally -------
+		// Creating String[] that contains the paths of all of the tally files (incase we'll have more tally files)
+		String[] tallyFilePathsList = createFilePathsArray("tally", "datafiles\\unsorted");
+
+		// Loading all tally files
+		for (int i = 0; i < tallyFilePathsList.length; i++)
+			ElectionFileLoader.setExistingTallyFromSequentialFile(tallyFilePathsList[i], mergedElectionList);
 	}
 	
 	/**
