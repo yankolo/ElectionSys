@@ -10,6 +10,13 @@ import election.business.interfaces.Tally;
 import election.business.interfaces.Voter;
 import util.ListUtilities;
 
+/**
+ * This application class sorts and merges all the voter files and election files.
+ * In addition, it loads the tally file
+ * 
+ * @author Yanik Kolomatski
+ *
+ */
 public class SortMergeApp {
 
 	public static void main(String[] args) {
