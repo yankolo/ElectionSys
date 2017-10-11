@@ -20,11 +20,11 @@ import util.ListUtilities;
 public class SortMergeApp {
 
 	public static void main(String[] args) {
-		File sortedDirectory = new File("datafiles/sorted");
-		sortedDirectory.mkdir();
+		Path sortedDirectory = Paths.get("datafiles/sorted");
+		Files.createDirectory(sortedDirectory);
 		
-		File databaseDirectory = new File("datafiles/database");
-		databaseDirectory.mkdir();
+		Path databaseDirectory = Paths.get("datafiles/database");
+		Files.createDirectory(databaseDirectory);
 		
 		
 		// Sorting Voters -------
