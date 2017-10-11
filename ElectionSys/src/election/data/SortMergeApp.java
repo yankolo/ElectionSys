@@ -146,12 +146,12 @@ public class SortMergeApp {
 		
 		
 		// Loading Tally -------
-		// Creating String[] that contains the paths of all of the tally files (incase we'll have more tally files)
-		String[] tallyFilePathsList = createFilePathsArray("tally", "datafiles\\unsorted");
+		// Creating Path[] that contains the paths of all of the tally files (incase we'll have more tally files)
+		Path[] tallyFilePathsList = createFilePathsArray("tally", "datafiles/unsorted");
 
 		// Loading all tally files
 		for (int i = 0; i < tallyFilePathsList.length; i++)
-			ElectionFileLoader.setExistingTallyFromSequentialFile(tallyFilePathsList[i], mergedElectionList);
+			ElectionFileLoader.setExistingTallyFromSequentialFile(tallyFilePathsList[i].toString(), mergedElectionList);
 	}
 	
 	/**
