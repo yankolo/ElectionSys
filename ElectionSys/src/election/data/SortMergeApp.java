@@ -55,24 +55,22 @@ public class SortMergeApp {
 		
 		
 		// Merging Voters -------
-		// Creating String[] that contains the paths of all of the sorted voter files
-		String[] sortedVoterFilePathsList = createFilePathsArray("voters", "datafiles\\sorted");
-		// Creating array of Voter[] that will store sorted voter lists
+		// Creating Path[] that contains the paths of all sorted voter files
+		Path[] sortedVoterFilePathsList = createFilePathsArray("voters", "datafiles/sorted");
+		// Creating array of Voter[] that will store all sorted voter lists
 		Voter[][] sortedVoterLists = new Voter[sortedVoterFilePathsList.length][];
 						
 		// Populating sortedVoterLists with sorted voter lists
 		for (int i = 0; i < sortedVoterLists.length; i++)
-			sortedVoterLists[i] = ElectionFileLoader.getVoterListFromSequentialFile(sortedVoterFilePathsList[i]);
+			sortedVoterLists[i] = ElectionFileLoader.getVoterListFromSequentialFile(sortedVoterFilePathsList[i].toString());
 						
 		// Creating mergedVoterArrayList that will be used to merge all the sorted voter lists
-		@SuppressWarnings("rawtypes")
 		ArrayList<Comparable[]> mergedVoterArrayList = new ArrayList<Comparable[]>();
 		mergedVoterArrayList.addAll(Arrays.asList(sortedVoterLists));
 					
 		// Merging all the sorted voter lists
 		while (mergedVoterArrayList.size() > 1) {
-			@SuppressWarnings("rawtypes")
-			Comparable[] merged = ListUtilities.merge(mergedVoterArrayList.get(0), mergedVoterArrayList.get(1), "datafiles\\sorted\\duplicateVoters.txt");
+			Comparable[] merged = ListUtilities.merge(mergedVoterArrayList.get(0), mergedVoterArrayList.get(1), "datafiles/sorted/duplicateVoters.txt");
 			
 			// Set index 1 to merged list (of index 0 and 1) and remove index 0 (a neat way to merge all lists with the loop)
 			mergedVoterArrayList.set(1, merged);
@@ -82,7 +80,7 @@ public class SortMergeApp {
 						
 		// Writing mergedVoterList to file
 		try {
-		ListUtilities.saveListToTextFile(mergedVoterList, "datafiles\\database\\voters.txt");
+		ListUtilities.saveListToTextFile(mergedVoterList, "datafiles/database/voters.txt");
 		} catch (IOException e) {
 			System.out.println("Error writing merged voters file!");
 		}
