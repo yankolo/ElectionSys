@@ -87,14 +87,14 @@ public class SortMergeApp {
 		
 		
 		// Sorting Elections -------
-		// Creating String[] that contains the paths of all of the unsorted elections files
-		String[] electionFilePathsList = createFilePathsArray("elections", "datafiles\\unsorted");
-		// Creating array of Election[] that will store election lists
+		// Creating Path[] that contains the paths of all unsorted elections files
+		Path[] electionFilePathsList = createFilePathsArray("elections", "datafiles/unsorted");
+		// Creating array of Path[] that will store all election lists
 		Election[][] electionLists = new Election[electionFilePathsList.length][];
 		
 		// Populating electionLists with election lists
 		for (int i = 0; i < electionLists.length; i++)
-			electionLists[i] = ElectionFileLoader.getElectionListFromSequentialFile(electionFilePathsList[i]);
+			electionLists[i] = ElectionFileLoader.getElectionListFromSequentialFile(electionFilePathsList[i].toString());
 		
 		// Sorting all the election lists
 		for (Election[] electionList: electionLists)
@@ -102,15 +102,11 @@ public class SortMergeApp {
 		
 		// Writing sorted election lists to files
 		for (int i = 0; i < electionLists.length; i++) {
-			// To find the original name of the election file
-			String originalFilePath = electionFilePathsList[i];
+			// Find the original name of the voter file to be able to create file
+			String filename = electionFilePathsList[i].getFileName().toString();
 			
-			// To be able to substring the original name of the election file
-			int indexOfFileNameBeginning = originalFilePath.lastIndexOf("\\") + 1;
-			
-			String fileName = originalFilePath.substring(indexOfFileNameBeginning);
 			try {
-			ListUtilities.saveListToTextFile(electionLists[i], "datafiles\\sorted\\" + fileName);
+			ListUtilities.saveListToTextFile(electionLists[i], "datafiles/sorted/" + filename);
 			} catch (IOException e) {
 				System.out.println("Error writing sorted election file!");
 			}
