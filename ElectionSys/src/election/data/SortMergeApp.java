@@ -1,6 +1,6 @@
 package election.data;
 
-import java.io.File;
+import java.nio.file.*;
 import java.util.ArrayList;
 import java.io.IOException;
 import java.util.Arrays;
@@ -167,47 +167,52 @@ public class SortMergeApp {
 	}
 	
 	/**
-	 * Create string array containing the paths of all of the files
+	 * Create Path array containing the paths of all of the files
 	 * with a .txt extension that have the same file name (followed by numbers) 
 	 * 
 	 * @param name The name of the files
 	 * @param directoryPath The directory of the files
-	 * @return String[]
+	 * @return Path[]
 	 */
-	private static String[] createFilePathsArray(String name, String directoryPath) {
+	private static Path[] createFilePathsArray(String name, String directoryPath) {
 		return createFilePathsArray(name, directoryPath, ".txt");
 	}
 	
 	/**
-	 * Create string array  containing the paths of all of the files
+	 * Create Path array  containing the paths of all of the files
 	 * that have the same file name (followed by numbers)
 	 * 
 	 * @param name The name of the files
 	 * @param directoryPath The directory of the files
 	 * @param fileExtension The extension of the files
-	 * @return String[]
+	 * @return Path[]
 	 */
-	private static String[] createFilePathsArray(String name, String directoryPath, String fileExtension) {
-		// Create ArrayList containing Strings
-		ArrayList<String> filePaths= new ArrayList<String>();
-		
+	private static Path[] createFilePathsArray(String name, String directoryPath, String fileExtension) {
 		// Create list of all files in the specified directory
-		File directory = new File(directoryPath);
-		File[] listOfFiles = directory.listFiles();
-		
-		// Iterate through the listOfFiles array, store the path of the file in the filePath array list
-		// if it matches the specified pattern and if it is a file
-		for (int i = 0; i < listOfFiles.length; i++) {
-			String path = listOfFiles[i].getPath();
-			// Replace all \\ with \\\\ of the directory path for java regex pattern compatibility
-			directoryPath = directory.getPath().replaceAll("\\\\", "\\\\\\\\");
-			// Create regex match pattern
-			String matchPattern = directoryPath + "\\\\" + name + "[0-9]*\\" + fileExtension +"$";
-			if (path.matches(matchPattern))
-				if (listOfFiles[i].isFile())
-					filePaths.add(listOfFiles[i].getPath());
+		Path directory = Paths.get(directoryPath);
+		Path[] listOfFiles;
+		try {
+			listOfFiles = (Path[]) Files.list(directory).toArray();
+		} catch (IOException e) {
+			System.out.println("Couldn't list files in " + directoryPath);
+			return new Path[] {}; // Return empty array
 		}
 		
-		return filePaths.toArray(new String[filePaths.size()]);
+		// Create ArrayList that will contain the paths of the files that have the right name and extension
+		ArrayList<Path> filePaths= new ArrayList<Path>();
+		
+		// Store the path of the files that match the specified filename specification 
+		// in the filePath ArrayList
+		for (Path file: listOfFiles) {
+			String filename = file.getFileName().toString();
+			if (filename.matches(name + "[0-9]*") && filename.endsWith(fileExtension))
+				filePaths.add(file);
+		}
+		
+		// Transform ArrayList to Array to be able to return an array of Path
+		Path[] pathsArray = new Path[filePaths.size()];
+		pathsArray = filePaths.toArray(pathsArray);
+		
+		return pathsArray;
 	}
 }
