@@ -125,7 +125,11 @@ public class SortMergeApp {
 						
 		// Populating sortedVoterLists with sorted voter lists
 		for (int i = 0; i < sortedVoterLists.length; i++)
+			try {
 			sortedVoterLists[i] = ElectionFileLoader.getVoterListFromSequentialFile(sortedVoterFilePathsList[i].toString());
+			} catch (IOException e){
+				System.out.println(e);
+			}
 						
 		// Creating mergedVoterArrayList that will be used to merge all the sorted voter lists
 		ArrayList<Comparable[]> mergedVoterArrayList = new ArrayList<Comparable[]>();
@@ -145,7 +149,7 @@ public class SortMergeApp {
 		try {
 		ListUtilities.saveListToTextFile(mergedVoterList, "datafiles/database/voters.txt");
 		} catch (IOException e) {
-			System.out.println("Error writing merged voters file!");
+			System.out.println(e);
 		}
 	}
 	
