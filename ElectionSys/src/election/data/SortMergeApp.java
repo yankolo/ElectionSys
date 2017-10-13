@@ -224,10 +224,18 @@ public class SortMergeApp {
 		// Creating Path[] that contains the paths of all of the tally files (incase we'll have more tally files)
 		Path[] tallyFilePathsList = createFilePathsArray("tally", "datafiles/unsorted");
 		// Load merged election list
+		try {
 		Election[] mergedElectionList = ElectionFileLoader.getElectionListFromSequentialFile("datafiles/database/elections.txt");
+		} catch (IOException e) {
+			System.out.println(e);
+		}
 		
 		// Loading all tally files
 		for (int i = 0; i < tallyFilePathsList.length; i++)
+			try {
 			ElectionFileLoader.setExistingTallyFromSequentialFile(tallyFilePathsList[i].toString(), mergedElectionList);
+			} catch (IOException e) {
+				System.out.println(e);
+			}
 	}
 }
