@@ -161,7 +161,11 @@ public class SortMergeApp {
 		
 		// Populating electionLists with election lists
 		for (int i = 0; i < electionLists.length; i++)
+			try {
 			electionLists[i] = ElectionFileLoader.getElectionListFromSequentialFile(electionFilePathsList[i].toString());
+			} catch (IOException e) {
+				System.out.println(e);
+			}
 		
 		// Sorting all the election lists
 		for (Election[] electionList: electionLists)
@@ -175,7 +179,7 @@ public class SortMergeApp {
 			try {
 			ListUtilities.saveListToTextFile(electionLists[i], "datafiles/sorted/" + filename);
 			} catch (IOException e) {
-				System.out.println("Error writing sorted election file!");
+				System.out.println(e);
 			}
 		}
 	}
