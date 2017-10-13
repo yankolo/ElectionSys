@@ -80,10 +80,14 @@ public class SortMergeApp {
 	
 	private static void createDirectories() {
 		Path sortedDirectory = Paths.get("datafiles/sorted");
-		Files.createDirectory(sortedDirectory);
-		
 		Path databaseDirectory = Paths.get("datafiles/database");
+		
+		try {
+		Files.createDirectory(sortedDirectory);
 		Files.createDirectory(databaseDirectory);
+		} catch (IOException e) {
+			System.out.println(e);
+		}
 	}
 	
 	private static void sortVoters() {
