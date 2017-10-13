@@ -207,7 +207,9 @@ public class SortMergeApp {
 	private static void loadTally () {
 		// Creating Path[] that contains the paths of all of the tally files (incase we'll have more tally files)
 		Path[] tallyFilePathsList = createFilePathsArray("tally", "datafiles/unsorted");
-
+		// Load merged election list
+		Election[] mergedElectionList = ElectionFileLoader.getElectionListFromSequentialFile("datafiles/database/elections.txt");
+		
 		// Loading all tally files
 		for (int i = 0; i < tallyFilePathsList.length; i++)
 			ElectionFileLoader.setExistingTallyFromSequentialFile(tallyFilePathsList[i].toString(), mergedElectionList);
