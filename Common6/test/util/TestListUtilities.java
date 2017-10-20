@@ -1,26 +1,27 @@
 package util;
 
+import java.io.IOException;
 import java.util.Arrays;
 
 public class TestListUtilities {
 
 	public static void main(String[] args) {
 	
-	TestSortMethodString();
+	TestSortMethod();
 	}
 
-	public static void TestSortMethodString() {
+	public static void TestSortMethod() {
 		System.out.println("-----------Testing The Generic Sort method-----------");
 		String[] array1 = {"Sammy" , "Mohammed" , "Nikita" , "Yanick" };
-		TestSortMethodString("Case 1 - valid String array should be sorted in alphabetic order", array1, true);
+		TestSortMethod("Case 1 - valid String array should be sorted in alphabetic order", array1, true);
 		String [] array2 = null;
-		TestSortMethodString("Case 2 - invalid String array, should not sort the array and should throw a NullPointerException", array2, false);
+		TestSortMethod("Case 2 - invalid String array, should not sort the array and should throw a NullPointerException", array2, false);
 		String [] array3 = {"Sammy" , "Mohammed" , "Nikita" , "Yanick" , null };
-		TestSortMethodString("Case 3 - invalid String array, should not sort the array and should throw a IllegalArgumentException", array3, false);
+		TestSortMethod("Case 3 - invalid String array, should not sort the array and should throw a IllegalArgumentException", array3, false);
 
 	}
 
-	public static void TestSortMethodString(String testCase, String[] array, boolean expectValid) {
+	public static void TestSortMethod(String testCase, String[] array, boolean expectValid) {
 		System.out.println("   " + testCase);
 		try {
 			ListUtilities.sort(array);
@@ -52,5 +53,6 @@ public class TestListUtilities {
 		System.out.println("\n");
 
 	}
+	
 
 }

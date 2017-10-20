@@ -1,9 +1,12 @@
 package util;
 
+import java.io.File;
 import java.io.IOException;
 import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
+import java.nio.file.FileAlreadyExistsException;
 import java.nio.file.Files;
+import java.nio.file.InvalidPathException;
 import java.nio.file.OpenOption;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -112,7 +115,7 @@ public class ListUtilities {
 		if (list == null) {
 			throw new NullPointerException("The array that is passed through this method cannot be null referenced");
 		}
-		if(nullRefenreceElements(list)) {
+		if (nullRefenreceElements(list)) {
 			throw new IllegalArgumentException("The list array must be filled if you wish to sort it");
 		}
 		for (int i = 0; i < list.length - 1; i++) {
@@ -128,18 +131,13 @@ public class ListUtilities {
 		}
 
 	}
-
-	
-	
-	// TODO Comparator sort
-	
-	@SuppressWarnings({ "rawtypes", "unchecked" })
-	private static boolean nullRefenreceElements (Comparable[] list ) {
+	@SuppressWarnings({ "rawtypes" })
+	private static boolean nullRefenreceElements(Comparable[] list) {
 		for (Comparable element : list) {
 			if (element == null) {
 				return true;
 			}
 		}
-		return true;
+		return false;
 	}
 }
