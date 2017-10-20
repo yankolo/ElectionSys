@@ -86,7 +86,7 @@ public class SortMergeApp {
 		Files.createDirectory(sortedDirectory);
 		Files.createDirectory(databaseDirectory);
 		} catch (IOException e) {
-			System.out.println(e);
+			System.out.println(e.getMessage());
 		}
 	}
 	
@@ -101,7 +101,7 @@ public class SortMergeApp {
 			try {
 			voterLists[i] = ElectionFileLoader.getVoterListFromSequentialFile(voterFilePathsList[i].toString());
 			} catch (IOException e) {
-				System.out.println(e);
+				System.out.println(e.getMessage());
 			}
 		
 		// Sorting all the voter lists
@@ -116,7 +116,7 @@ public class SortMergeApp {
 			try {
 			ListUtilities.saveListToTextFile(voterLists[i], "datafiles/sorted/" + filename);
 			} catch (IOException e) {
-				System.out.println(e);
+				System.out.println(e.getMessage());
 			}
 		}
 	}
@@ -132,7 +132,7 @@ public class SortMergeApp {
 			try {
 			sortedVoterLists[i] = ElectionFileLoader.getVoterListFromSequentialFile(sortedVoterFilePathsList[i].toString());
 			} catch (IOException e){
-				System.out.println(e);
+				System.out.println(e.getMessage());
 			}
 						
 		// Creating mergedVoterArrayList that will be used to merge all the sorted voter lists
@@ -153,7 +153,7 @@ public class SortMergeApp {
 		try {
 		ListUtilities.saveListToTextFile(mergedVoterList, "datafiles/database/voters.txt");
 		} catch (IOException e) {
-			System.out.println(e);
+			System.out.println(e.getMessage());
 		}
 	}
 	
@@ -168,7 +168,7 @@ public class SortMergeApp {
 			try {
 			electionLists[i] = ElectionFileLoader.getElectionListFromSequentialFile(electionFilePathsList[i].toString());
 			} catch (IOException e) {
-				System.out.println(e);
+				System.out.println(e.getMessage());
 			}
 		
 		// Sorting all the election lists
@@ -183,7 +183,7 @@ public class SortMergeApp {
 			try {
 			ListUtilities.saveListToTextFile(electionLists[i], "datafiles/sorted/" + filename);
 			} catch (IOException e) {
-				System.out.println(e);
+				System.out.println(e.getMessage());
 			}
 		}
 	}
@@ -199,7 +199,7 @@ public class SortMergeApp {
 			try {
 			sortedElectionLists[i] = ElectionFileLoader.getElectionListFromSequentialFile(sortedElectionFilePathsList[i].toString());
 			} catch (IOException e) {
-				System.out.println(e);
+				System.out.println(e.getMessage());
 			}
 						
 		// Creating mergedElectionArrayList that will be used to merge all the sorted election lists
@@ -220,7 +220,7 @@ public class SortMergeApp {
 		try {
 		ListUtilities.saveListToTextFile(mergedElectionList, "datafiles/database/elections.txt");
 		} catch (IOException e) {
-			System.out.println(e);
+			System.out.println(e.getMessage());
 		}
 	}
 	
@@ -231,7 +231,7 @@ public class SortMergeApp {
 		try {
 		Election[] mergedElectionList = ElectionFileLoader.getElectionListFromSequentialFile("datafiles/database/elections.txt");
 		} catch (IOException e) {
-			System.out.println(e);
+			System.out.println(e.getMessage());
 		}
 		
 		// Loading all tally files
@@ -239,7 +239,7 @@ public class SortMergeApp {
 			try {
 			ElectionFileLoader.setExistingTallyFromSequentialFile(tallyFilePathsList[i].toString(), mergedElectionList);
 			} catch (IOException e) {
-				System.out.println(e);
+				System.out.println(e.getMessage());
 			}
 	}
 }
