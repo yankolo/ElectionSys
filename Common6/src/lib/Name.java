@@ -121,14 +121,14 @@ public final class Name implements Serializable, Comparable<Name>{
 	 */
 	private String validate(String name) {
 		if (name == null) {
-			throw new IllegalArgumentException("Address Error - Invalid value = " + name);
+			throw new IllegalArgumentException("Name Error - Invalid value = " + name);
 		}
 		
 		String valid = name.trim();
 		
 		// Regex to validate the name according the the rules
 		if(!valid.matches("^[a-zA-Z](?:[a-zA-Z]|(?:([ '-])(?![ '-])))*[a-zA-Z]$")) 
-			throw new IllegalArgumentException("Address Error - Invalid value = " + name);
+			throw new IllegalArgumentException("Name Error - Invalid value = " + name);
 		
 		return valid;
 	}
