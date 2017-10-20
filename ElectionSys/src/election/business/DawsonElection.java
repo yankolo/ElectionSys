@@ -74,11 +74,11 @@ public class DawsonElection implements Election {
 
 		if (!(isNull(startRange))) {
 			if(startRange.trim().isEmpty())
-			throw new IllegalArgumentException("The startRange cannot be an empty string");
+			postalCodeStartRange = null;
 		}
 		if (!(isNull(endRange))) {
 			if(endRange.trim().isEmpty())
-			throw new IllegalArgumentException("The type of electon cannot be an empty string");
+			postalCodeEndRange = null;
 		}
 
 		if (validDateRange(startYear, startMonth, startDay, endYear, endMonth, endDay)) {
@@ -465,7 +465,7 @@ public class DawsonElection implements Election {
 			int endDay) {
 		LocalDate start = LocalDate.of(startYear, startMonth, startDay);
 		LocalDate end = LocalDate.of(endYear, endMonth, endDay);
-		if (start.isAfter(end) || start.isEqual(end)) {
+		if (start.isAfter(end)) {
 			return false;
 		} else {
 			return true;
