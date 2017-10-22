@@ -4,6 +4,9 @@
 package election.business;
 
 import java.time.DateTimeException;
+
+import com.sun.org.apache.bcel.internal.generic.NEW;
+
 import election.business.interfaces.Ballot;
 import election.business.interfaces.Election;
 import election.business.interfaces.Tally;
@@ -43,61 +46,62 @@ public class DawsonElectionTest {
 		String s2 = "Bob";
 		String s3 = "Jordy";
 		String single = "single";
+		String name = "Dawson Election";
 		String[] s4 = null;
-		StubTally st = new StubTally();
-		StubTally st_Null = null;
+		DawsonTally dt = new  DawsonTally(3, name);
+		DawsonTally dt_Null = null;
 		System.out.println("---------- TESTING THE CONSTRUCTOR ----------");
 		testTheTweelveParameterConstructor(
 				"Case 1 - Enter All valid values through the constructor using the following (Dawson Election , the Type is single , start date: 2017- 10-20 , end date: 2018-02-24, startRange: , endRange:  , Tally  , expected Value : true , String...items)",
-				"Dawson Election", single, 2017, 10, 20, 2018, 02, 04, null, null, st, true, s1, s2, s3);
+				name, single, 2017, 10, 20, 2018, 02, 04, null, null, dt, true, s1, s2, s3);
 		testTheTweelveParameterConstructor(
 				"Case 2 - Enter a invalid value for the name (--- name null referenced string ---)through the constructor using the following (null , the Type is single , start date: 2017- 10-20 , end date: 2018-02-24, startRange: , endRange:  , Tally  , expected Value : false , String...items)",
-				null, single, 2017, 10, 20, 2018, 02, 04, null, null, st, false, s1, s2, s3);
+				null, single, 2017, 10, 20, 2018, 02, 04, null, null, dt, false, s1, s2, s3);
 		testTheTweelveParameterConstructor(
 				"Case 3 - Enter a invalid value for the name (---  name empty string ---) through the constructor using the following ( empty string , the Type is single , start date: 2017- 10-20 , end date: 2018-02-24, startRange: , endRange:  , Tally  , expected Value : false , String...items)",
-				"", single, 2017, 10, 20, 2018, 02, 04, null, null, st, false, s1, s2, s3);
+				"", single, 2017, 10, 20, 2018, 02, 04, null, null, dt, false, s1, s2, s3);
 		testTheTweelveParameterConstructor(
 				"Case 4 - Enter a invalid value for the type (---  type null referenced ---) through the constructor using the following (Dawson Election , the Type is null , start date: 2017- 10-20 , end date: 2018-02-24, startRange: , endRange:  , Tally  , expected Value : false , String...items)",
-				"DawsonElection", null, 2017, 10, 20, 2018, 02, 04, null, null, st, false, s1, s2, s3);
+				name, null, 2017, 10, 20, 2018, 02, 04, null, null, dt, false, s1, s2, s3);
 		testTheTweelveParameterConstructor(
 				"Case 5 - Enter a invalid value for the type (---  type empty string ---) through the constructor using the following (Dawson Election , the Type is empty string , start date: 2017- 10-20 , end date: 2018-02-24, startRange: , endRange:  , Tally  , expected Value : false , String...items)",
-				"DawsonElection", "", 2017, 10, 20, 2018, 02, 04, null, null, st, false, s1, s2, s3);
+				name, "", 2017, 10, 20, 2018, 02, 04, null, null, dt, false, s1, s2, s3);
 		testTheTweelveParameterConstructor(
 				"Case 6 - Enter a invalid value for the type (--- a Election type that does not exist ---) through the constructor using the following (Dawson Election , the Type wow, start date: 2017- 10-20 , end date: 2018-02-24, startRange: , endRange:  , Tally  , expected Value : false , String...items)",
-				"DawsonElection", "wow", 2017, 10, 20, 2018, 02, 04, null, null, st, false, s1, s2, s3);
+				name, "wow", 2017, 10, 20, 2018, 02, 04, null, null, dt, false, s1, s2, s3);
 		testTheTweelveParameterConstructor(
 				"Case 7 - Enter a invalid value for the for the number of months for the start date  ( 42 ) through the constructor using the following (Dawson Election , the Type is single, start date: 2017- 42-20 , end date: 2018-02-24, startRange: , endRange:  , Tally  , expected Value : false , String...items)",
-				"DawsonElection", single, 2017, 42, 20, 2018, 02, 04, null, null, st, false, s1, s2, s3);
+				name, single, 2017, 42, 20, 2018, 02, 04, null, null, dt, false, s1, s2, s3);
 		testTheTweelveParameterConstructor(
 				"Case 8 - Enter a invalid value for the for the number of days in a month for the start date  ( 35 days in a month ) through the constructor using the following (Dawson Election , the Type is single, start date: 2017- 10-35 , end date: 2018-02-24, startRange: , endRange:  , Tally  , expected Value : false , String...items)",
-				"DawsonElection", single, 2017, 10, 35, 2018, 02, 04, null, null, st, false, s1, s2, s3);
+				name, single, 2017, 10, 35, 2018, 02, 04, null, null, dt, false, s1, s2, s3);
 		testTheTweelveParameterConstructor(
 				"Case 9 - Enter a invalid value for the for the number of months for the end date  ( 14 ) through the constructor using the following (Dawson Election , the Type is single, start date: 2017- 10-20 , end date: 2018-14-24, startRange: , endRange:  , Tally  , expected Value : false , String...items)",
-				"DawsonElection", single, 2017, 42, 20, 2018, 14, 04, null, null, st, false, s1, s2, s3);
+				name, single, 2017, 42, 20, 2018, 14, 04, null, null, dt, false, s1, s2, s3);
 		testTheTweelveParameterConstructor(
 				"Case 10 - Enter a invalid value for the for the number of days in a month for the start date  ( 33 ) through the constructor using the following (Dawson Election , the Type is single, start date: 2017- 10-20 , end date: 2018-02-33, startRange: , endRange:  , Tally  , expected Value : false , String...items)",
-				"DawsonElection", single, 2017, 42, 20, 2018, 02, 33, null, null, st, false, s1, s2, s3);
+				name, single, 2017, 42, 20, 2018, 02, 33, null, null, dt, false, s1, s2, s3);
 		testTheTweelveParameterConstructor(
 				"Case 11 - Enter a invalid end date , the end date is actually smaller than the start date  ( start: 2017-02-10 ---- end date: 2016-02-20 ) through the constructor using the following (Dawson Election , the Type is single, start date: 2017- 10-20 , end date: 2016-02-20, startRange: , endRange:  , Tally  , expected Value : false , String...items)",
-				"DawsonElection", single, 2017, 10, 20, 2016, 02, 20, null, null, st, false, s1, s2, s3);
+				name, single, 2017, 10, 20, 2016, 02, 20, null, null, dt, false, s1, s2, s3);
 		testTheTweelveParameterConstructor(
 				"Case 12 - Enter a invalid end date , the end date is actually equal to the start date  ( start: 2017-02-10 ---- end date: 2017-02-10 ) through the constructor using the following (Dawson Election , the Type is single, start date: 2017- 10-20 , end date: 2017-10-20, startRange: , endRange:  , Tally  , expected Value : false , String...items)",
-				"DawsonElection", single, 2017, 10, 20, 2017, 10, 20, null, null, st, false, s1, s2, s3);
+				name, single, 2017, 10, 20, 2017, 10, 20, null, null, dt, false, s1, s2, s3);
 		testTheTweelveParameterConstructor(
 				"Case 13 - Enter All valid values expect for the Tally ( --- null referenced tally -- ) through the constructor using the following (Dawson Election , the Type is single , start date: 2017- 10-20 , end date: 2018-02-24, startRange: , endRange:  , Tally is null , expected Value : false , String...items)",
-				"Dawson Election", single, 2017, 10, 20, 2018, 02, 04, null, null, st_Null, false, s1, s2, s3);
+				name, single, 2017, 10, 20, 2018, 02, 04, null, null, dt_Null, false, s1, s2, s3);
 		testTheTweelveParameterConstructor(
 				"Case 14 - Enter invalid value for the items ( --- null referenced items --- ) through the constructor using the following (Dawson Election , the Type is single , start date: 2017- 10-20 , end date: 2018-02-24, startRange: , endRange:  , Tally  , expected Value : false , String...items == null)",
-				"Dawson Election", single, 2017, 10, 20, 2018, 02, 04, null, null, st, false, s4);
+				name, single, 2017, 10, 20, 2018, 02, 04, null, null, dt, false, s4);
 		testTheTweelveParameterConstructor(
 				"Case 15 - Enter invalid value for the items ( --- only one value --- ) through the constructor using the following (Dawson Election , the Type is single , start date: 2017- 10-20 , end date: 2018-02-24, startRange = null , endRange = null  , Tally = StubBallot , expected Value : false , s1 = BRANDON, ",
-				"Dawson Election", single, 2017, 10, 20, 2018, 02, 04, null, null, st, false, s1);
+				name, single, 2017, 10, 20, 2018, 02, 04, null, null, dt, false, s1);
 		testTheTweelveParameterConstructor(
 				"Case 16 - Enter invalid value for the startPostalRange ( --- empty string --- ) through the constructor using the following (Dawson Election , the Type is single , start date: 2017- 10-20 , end date: 2018-02-24, startRange = empty string , endRange = null  , Tally = StubBallot , expected Value : false , s1 ,s2 ,s3 ",
-				"Dawson Election", single, 2017, 10, 20, 2018, 02, 04, "", null, st, false, s1, s2, s3);
+				name, single, 2017, 10, 20, 2018, 02, 04, "", null, dt, false, s1, s2, s3);
 		testTheTweelveParameterConstructor(
 				"Case 17 - Enter invalid value for the endPostalRange ( --- empty string --- ) through the constructor using the following (Dawson Election , the Type is single , start date: 2017- 10-20 , end date: 2018-02-24, startRange = null , endRange = empty String  , Tally = StubBallot , expected Value : false , s1 ,s2 ,s3 ",
-				"Dawson Election", single, 2017, 10, 20, 2018, 02, 04, null, "", st, false, s1, s2, s3);
+				name, single, 2017, 10, 20, 2018, 02, 04, null, "", dt, false, s1, s2, s3);
 
 	}
 
@@ -138,16 +142,18 @@ public class DawsonElectionTest {
 	}
 
 	private static void compareToTest() {
-		StubTally st = new StubTally();
 		String s1 = "Dawson";
 		String s2 = "hello world";
 		String s3 = "zebra";
-		DawsonElection de1 = new DawsonElection(s1, "single", 1997, 02, 25, 1998, 05, 23, null, null, st, s2, s3);
+		DawsonTally dt = new DawsonTally(2 , s1);
+		DawsonTally dt1 = new DawsonTally(2,s2);
+		DawsonTally dt2 = new DawsonTally (2,s3);
+		DawsonElection de1 = new DawsonElection(s1, "single", 1997, 02, 25, 1998, 05, 23, null, null, dt, s2, s3);
 		System.out.println("---------- TESTING THE COMPARE TO METHOD ----------");
 		compareToTest("Case1 - valid DawsonElection Object - the name of the election of  ", de1, true);
-		de1 = new DawsonElection(s2, "single", 1997, 02, 25, 1998, 05, 23, null, null, st, s1, s3);
+		de1 = new DawsonElection(s2, "single", 1997, 02, 25, 1998, 05, 23, null, null, dt1, s1, s3);
 		compareToTest("Case2 - valid DawsonElection Object - the name of the election   is hello world", de1, true);
-		de1 = new DawsonElection(s3, "single", 1997, 02, 25, 1998, 05, 23, null, null, st, s1, s2);
+		de1 = new DawsonElection(s3, "single", 1997, 02, 25, 1998, 05, 23, null, null, dt2, s1, s2);
 		compareToTest("Case 3 - valid DawsonElection Object - the name of the election is zebra ", de1, true);
 		de1 = null;
 		compareToTest("Case 4 - invalid DawsonElection Object - the dawson election object is null", de1, false);
@@ -158,10 +164,10 @@ public class DawsonElectionTest {
 		String s1 = "Brandon";
 		String s2 = "Bob";
 		String s3 = "Jordy";
-		StubTally st = new StubTally();
+	
 		try {
-
-			DawsonElection d1 = new DawsonElection("Hello World", "single", 2017, 04, 22, 2018, 04, 22, null, null, st,
+			DawsonTally dt = new DawsonTally(3, "Hello World");
+			DawsonElection d1 = new DawsonElection("Hello World", "single", 2017, 04, 22, 2018, 04, 22, null, null, dt,
 					s1, s2, s3);
 			int compare = d1.compareTo(test);
 			System.out.println(
@@ -203,10 +209,9 @@ public class DawsonElectionTest {
 		String s1 = "Brandon";
 		String s2 = "Bob";
 		String s3 = "Jordy";
-		StubTally st = new StubTally();
 		try {
-
-			DawsonElection d1 = new DawsonElection("Hello World", type, 2017, 04, 22, 2018, 04, 22, null, null, st, s1,
+			DawsonTally dt = new DawsonTally(3, "Hello World");
+			DawsonElection d1 = new DawsonElection("Hello World", type, 2017, 04, 22, 2018, 04, 22, null, null, dt, s1,
 					s2, s3);
 			System.out.println("This type passed to this test method is a valid Election type: "
 					+ d1.getElectionType().toString());
@@ -249,10 +254,9 @@ public class DawsonElectionTest {
 	private static void testGetElectionChoices(String testCase, boolean expectValid, String... items) {
 
 		System.out.println("   " + testCase);
-		StubTally st = new StubTally();
 		try {
-
-			DawsonElection d1 = new DawsonElection("Hello World", "single", 2017, 04, 22, 2018, 04, 22, null, null, st,
+			DawsonTally dt = new DawsonTally(items.length,"Hello World" );
+			DawsonElection d1 = new DawsonElection("Hello World", "single", 2017, 04, 22, 2018, 04, 22, null, null, dt,
 					items);
 			System.out.println("This array passed to this test method is a valid String array: " + d1.toString());
 			if (!expectValid)
@@ -295,13 +299,14 @@ public class DawsonElectionTest {
 	private static void testGetEndDate(String testCase, int year, int month, int day, boolean expectValid) {
 
 		System.out.println("   " + testCase);
-		StubTally st = new StubTally();
+		
 		try {
 			String s1 = "Brandon";
 			String s2 = "Bob";
 			String s3 = "Jordy";
+			DawsonTally dt = new DawsonTally(3, "Hello World");
 			DawsonElection d1 = new DawsonElection("Hello World", "single", 2017, 04, 22, year, month, day, null, null,
-					st, s1, s2, s3);
+					dt, s1, s2, s3);
 			System.out.println("The integers passed to this test method is a date : " + d1.getEndDate().toString());
 			if (!expectValid)
 				System.out.print("  Error! Expected Invalid. ==== FAILED TEST ==== ");
@@ -343,11 +348,12 @@ public class DawsonElectionTest {
 	private static void testGetStartDate(String testCase, int year, int month, int day, boolean expectValid) {
 
 		System.out.println("   " + testCase);
-		StubTally st = new StubTally();
+		
 		try {
 			String s1 = "Brandon";
 			String s2 = "Bob";
 			String s3 = "Jordy";
+			DawsonTally st = new DawsonTally(3, "Hello World");
 			DawsonElection d1 = new DawsonElection("Hello World", "single", year, month, day, 2017, 04, 22, null, null,
 					st, s1, s2, s3);
 			System.out.println("The integers passed to this test method is a date : " + d1.getStartDate().toString());
@@ -387,20 +393,21 @@ public class DawsonElectionTest {
 	private static void testGetPostalRangeEnd(String testCase, String postalRangeEnd, boolean expectValid) {
 
 		System.out.println("   " + testCase);
-		StubTally st = new StubTally();
+		
 		try {
 			String s1 = "Brandon";
 			String s2 = "Bob";
 			String s3 = "Jordy";
+			DawsonTally dt = new DawsonTally(3,"Hello World");
 			if (postalRangeEnd == null) {
 				DawsonElection d1 = new DawsonElection("Hello World", "single", 2016, 12, 2, 2017, 04, 22, null,
-						postalRangeEnd, st, s1, s2, s3);
+						postalRangeEnd, dt, s1, s2, s3);
 
 				System.out.println(
 						"Nulls are  valid postal range - means that the election is not limited to postal code ");
 			} else {
 				DawsonElection d1 = new DawsonElection("Hello World", "single", 2016, 12, 2, 2017, 04, 22, "F",
-						postalRangeEnd, st, s1, s2, s3);
+						postalRangeEnd, dt, s1, s2, s3);
 				System.out.println("The string passed to this test method which is " + d1.getPostalRangeEnd()
 						+ " is a valid postalRange end ");
 			}
@@ -440,19 +447,20 @@ public class DawsonElectionTest {
 	private static void testGetPostalRangeStart(String testCase, String postalRangeStart, boolean expectValid) {
 
 		System.out.println("   " + testCase);
-		StubTally st = new StubTally();
+		
 		try {
 			String s1 = "Brandon";
 			String s2 = "Bob";
 			String s3 = "Jordy";
+			DawsonTally dt = new DawsonTally(3, "Hello World");
 			if (postalRangeStart == null) {
 				DawsonElection d1 = new DawsonElection("Hello World", "single", 2016, 12, 2, 2017, 04, 22, null,
-						postalRangeStart, st, s1, s2, s3);
+						postalRangeStart, dt, s1, s2, s3);
 				System.out.println(
 						"Nulls are  valid postal range - means that the election is not limited to postal code ");
 			} else {
 				DawsonElection d1 = new DawsonElection("Hello World", "single", 2016, 12, 2, 2017, 04, 22, "F",
-						postalRangeStart, st, s1, s2, s3);
+						postalRangeStart, dt, s1, s2, s3);
 				System.out.println("The string passed to this test method which is " + postalRangeStart
 						+ " is a valid postalRange start ");
 			}
@@ -494,12 +502,12 @@ public class DawsonElectionTest {
 			boolean expectValid) {
 
 		System.out.println("   " + testCase);
-		StubTally st = new StubTally();
+		
 		try {
 			String s1 = "Brandon";
 			String s2 = "Bob";
 			String s3 = "Jordy";
-
+			DawsonTally st = new DawsonTally(3,"Hello World");
 			DawsonElection d1 = new DawsonElection("Hello World", "single", 2016, 12, 2, 2017, 04, 22, startRange,
 					endRange, st, s1, s2, s3);
 			if (d1.isLimitedToPostalRange()) {
@@ -544,13 +552,13 @@ public class DawsonElectionTest {
 	private static void testGetName(String testCase, String name, boolean expectValid) {
 
 		System.out.println("   " + testCase);
-		StubTally st = new StubTally();
+		
 		try {
 			String s1 = "Brandon";
 			String s2 = "Bob";
 			String s3 = "Jordy";
-
-			DawsonElection d1 = new DawsonElection(name, "single", 2016, 12, 2, 2017, 04, 22, null, null, st, s1, s2,
+			DawsonTally dt = new DawsonTally(3,name);
+			DawsonElection d1 = new DawsonElection(name, "single", 2016, 12, 2, 2017, 04, 22, null, null, dt, s1, s2,
 					s3);
 			if (d1.getName().equalsIgnoreCase(name)) {
 				System.out.println("The getName returns the correct string which is " + d1.getName());
@@ -581,7 +589,7 @@ public class DawsonElectionTest {
 
 	private static void testGetTally() {
 		System.out.println("---------- TESTING THE GET_TALLY ----------");
-		StubTally tal = new StubTally();
+		DawsonTally tal = new DawsonTally(3, "Hello World");
 		testGetTally("Case 1 - Should return the same tally object since we are not deep copying it ", tal, true);
 	}
 
@@ -625,13 +633,11 @@ public class DawsonElectionTest {
 
 	private static void testSetTally() {
 		System.out.println("---------- TESTING THE SET_METHOD ----------");
-		StubTally tal = new StubTally();
-		tal.setElectionName("Hi");
+		DawsonTally tal = new DawsonTally(3, "Hi") ;
 		testSetTally(
 				"Case 1 - Should set the DawsonElection tally to the one passed in the parameter since they have same electionName ",
 				tal, true);
-		StubTally tal1 = new StubTally();
-		tal1.setElectionName("HelloWorld");
+		DawsonTally tal1 = new DawsonTally(3, "HelloWorld") ;
 		testSetTally(
 				"Case 2 - Should throw exception since the DawsonElection tally election name is different from  the one passed in the parameter of the setTally method ",
 				tal1, false);
@@ -644,8 +650,7 @@ public class DawsonElectionTest {
 
 		System.out.println("   " + testCase);
 		try {
-			StubTally st = new StubTally();
-			st.setElectionName("Hi");
+			DawsonTally st = new DawsonTally(3 , "Hi");
 			String s1 = "Brandon";
 			String s2 = "Bob";
 			String s3 = "Jordy";
@@ -688,12 +693,11 @@ public class DawsonElectionTest {
 	private static void testGetBallot(String testCase, Voter v, boolean expectValid) {
 		System.out.println("   " + testCase);
 		try {
-			StubTally st = new StubTally();
 			String s1 = "Brandon";
 			String s2 = "Bob";
 			String s3 = "Jordy";
-
-			DawsonElection d1 = new DawsonElection("Hello World", "single", 2016, 12, 2, 2017, 04, 22, null, null, st,
+			DawsonTally dt = new DawsonTally(3, "Hello World");
+			DawsonElection d1 = new DawsonElection("Hello World", "single", 2016, 12, 2, 2017, 04, 22, null, null, dt,
 					s1, s2, s3);
 
 			Ballot sb = d1.getBallot(v);
@@ -729,16 +733,16 @@ public class DawsonElectionTest {
 		dbeArray[1] = dbe1;
 		dbeArray[2] = dbe2;
 		dbeArray[3] = dbe3;
-		StubTally st = new StubTally();
 		String s1 = "Brandon";
 		String s2 = "Bob";
 		String s3 = "Jordy";
+		DawsonTally st = new DawsonTally(3, "Hello World");
 		DawsonVoter dv = new DawsonVoter(s1, s2, "moe@gmail.com", "J4W2Y9");
 		DawsonVoter dvNull = null;
 		DawsonElection de = new DawsonElection("Hello World", "single", 2016, 12, 2, 2017, 10, 30, null, null, st, s1,
 				s2, s3);
-		StubBallot sb = new StubBallot(dbeArray, de);
-		StubBallot sbNull = null;
+		Ballot sb = DawsonElectionFactory.DAWSON_ELECTION.getBallot(dbeArray, de.getElectionType(), de);
+		Ballot sbNull = null;
 		testCastBallot("Case 1 - Pass a val Ballot object and voter  ", sb, de, dv, true);
 		testCastBallot("Case 2 - Pass a valid Ballot object but null referenced voter  ", sb, de, dvNull, false);
 		testCastBallot("Case 3 - Pass a a null referenced Ballot object and a valid voter that is elligible to vote ",
@@ -775,18 +779,19 @@ public class DawsonElectionTest {
 
 	// has yet to fully test the castBallot
 	private static void testEquals() {
-		StubTally st = new StubTally();
+		DawsonTally dt = new DawsonTally(3, "Hello World");
+		DawsonTally dt2 = new DawsonTally(3, "Hek");
 		String s1 = "Brandon";
 		String s2 = "Bob";
 		String s3 = "Jordy";
 		System.out.println("---------- TESTING THE EQUALS  ----------");
 
-		DawsonElection de = new DawsonElection("Hello World", "single", 2016, 12, 2, 2017, 04, 22, null, null, st, s1,
+		DawsonElection de = new DawsonElection("Hello World", "single", 2016, 12, 2, 2017, 04, 22, null, null, dt, s1,
 				s2, s3);
 		DawsonElection de1 = null;
-		DawsonElection de2 = new DawsonElection("Hek", "single", 2016, 12, 2, 2017, 04, 22, null, null, st, s1, s2, s3);
+		DawsonElection de2 = new DawsonElection("Hek", "single", 2016, 12, 2, 2017, 04, 22, null, null, dt2, s1, s2, s3);
 		DawsonElection de3 = de;
-		DawsonElection de4 = new DawsonElection("Hello World", "single", 2016, 11, 2, 2017, 04, 22, null, null, st, s1,
+		DawsonElection de4 = new DawsonElection("Hello World", "single", 2016, 11, 2, 2017, 04, 22, null, null, dt, s1,
 				s2, s3);
 		testEquals("Case 1 -- if both DawsonElection objects reference to the same object - should return true ", de,
 				de3, true);
@@ -838,16 +843,17 @@ public class DawsonElectionTest {
 	}
 
 	private static void testHashCode() {
-		StubTally st = new StubTally();
+		DawsonTally dt = new DawsonTally(3, "Hello World");
+		DawsonTally dt1 = new DawsonTally(3, "Hek");
 		String s1 = "Brandon";
 		String s2 = "Bob";
 		String s3 = "Jordy";
 		System.out.println("---------- TESTING THE HASH_CODE ----------");
-		DawsonElection de = new DawsonElection("Hello World", "single", 2016, 12, 2, 2017, 04, 22, null, null, st, s1,
+		DawsonElection de = new DawsonElection("Hello World", "single", 2016, 12, 2, 2017, 04, 22, null, null, dt, s1,
 				s2, s3);
-		DawsonElection de2 = new DawsonElection("Hek", "single", 2016, 12, 2, 2017, 04, 22, null, null, st, s1, s2, s3);
+		DawsonElection de2 = new DawsonElection("Hek", "single", 2016, 12, 2, 2017, 04, 22, null, null, dt1, s1, s2, s3);
 		DawsonElection de3 = de;
-		DawsonElection de4 = new DawsonElection("Hello World", "single", 2016, 11, 2, 2017, 04, 22, null, null, st, s1,
+		DawsonElection de4 = new DawsonElection("Hello World", "single", 2016, 11, 2, 2017, 04, 22, null, null, dt, s1,
 				s2, s3);
 		testHashCode(
 				"Case 1 -- if both DawsonElection objects reference to the same object - hashCode should be the same ",
@@ -897,14 +903,14 @@ public class DawsonElectionTest {
 	}
 
 	private static void toStringTest() {
-		StubTally st = new StubTally();
+		DawsonTally dt = new DawsonTally(3, "Hello World");
 		String s1 = "Brandon";
 		String s2 = "Bob";
 		String s3 = "Jordy";
 
-		DawsonElection de = new DawsonElection("Hello World", "single", 2016, 12, 2, 2017, 04, 22, null, null, st, s1,
+		DawsonElection de = new DawsonElection("Hello World", "single", 2016, 12, 2, 2017, 04, 22, null, null, dt, s1,
 				s2, s3);
-		DawsonElection de1 = new DawsonElection("Hello World", "ranked", 2016, 12, 2, 2017, 04, 22, "G", "H", st, s1,
+		DawsonElection de1 = new DawsonElection("Hello World", "ranked", 2016, 12, 2, 2017, 04, 22, "G", "H", dt, s1,
 				s2);
 		System.out.println("---------- TESTING THE TO_STRING ----------");
 		System.out.println(

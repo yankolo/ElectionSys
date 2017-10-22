@@ -14,6 +14,7 @@ import election.business.interfaces.Voter;
 /**
  * 
  * This class represents an Election
+ * 
  * @author Sammy Chaouki
  *
  */
@@ -31,14 +32,16 @@ public class DawsonElection implements Election {
 	/**
 	 * The constructor to create an DawsonElection type object Purpose: The purpose
 	 * of this constructor is to create an object of type DawsonElection that
-	 * instantiate String name - corresponds to the name of the Election 
-	 * a LocalDate startDate - that takes as its parameters a int year, month , day - 
-	 * a LocalDate endDate - that takes as its parameters a int year, month , day a String
-	 * postalCodeEndRange - if theres is a postal code range, it should not be null referenced - 
-	 * a String postalCodeEndRange - if theres is a postal code range, it should not be null referenced - 
-	 * a Tally object -  which is used to track the cast ballot results
-	 * a BallotItem [] ballots - which contains all the possible choices in a election
-	 * a ElectionType (which is enum type) electionType - which contains the possible type of elections  
+	 * instantiate String name - corresponds to the name of the Election a LocalDate
+	 * startDate - that takes as its parameters a int year, month , day - a
+	 * LocalDate endDate - that takes as its parameters a int year, month , day a
+	 * String postalCodeEndRange - if theres is a postal code range, it should not
+	 * be null referenced - a String postalCodeEndRange - if theres is a postal code
+	 * range, it should not be null referenced - a Tally object - which is used to
+	 * track the cast ballot results a BallotItem [] ballots - which contains all
+	 * the possible choices in a election a ElectionType (which is enum type)
+	 * electionType - which contains the possible type of elections
+	 * 
 	 * @param name
 	 * @param type
 	 * @param startYear
@@ -51,9 +54,11 @@ public class DawsonElection implements Election {
 	 * @param endRange
 	 * @param tally
 	 * @param items
-	 * @throws IllegalArgumentException - if any reference variables is null reference (except for endRange and Start range).
-	 * 									- if any String variable is an empty string
-	 * 									
+	 * @throws IllegalArgumentException
+	 *             - if any reference variables is null reference (except for
+	 *             endRange and Start range). - if any String variable is an empty
+	 *             string
+	 * 
 	 * 
 	 */
 	public DawsonElection(String name, String type, int startYear, int startMonth, int startDay, int endYear,
@@ -63,6 +68,9 @@ public class DawsonElection implements Election {
 		}
 		if (name.trim().isEmpty()) {
 			throw new IllegalArgumentException("The name of the election cannot be an empty string");
+		}
+		else {
+			this.name = name;
 		}
 		if (isNull(type)) {
 			throw new IllegalArgumentException("The type of election cannot be a null referenced string");
@@ -105,18 +113,19 @@ public class DawsonElection implements Election {
 		if (isNull(items)) {
 			throw new IllegalArgumentException("The Ballot items cannot be null referenced.");
 		}
+
 		if (validBallotItems(items)) {
 			ballots = new BallotItem[items.length];
 			for (int i = 0; i < items.length; i++) {
-				ballots[i] = new DawsonBallotItem(items[i], items.length);
+				ballots[i] = DawsonElectionFactory.DAWSON_ELECTION.getBallotItem(items[i], this.electionType,
+						items.length);
 			}
 		} else {
 			throw new IllegalArgumentException("The minimum for the Ballot items must be of length 2 or more.");
 		}
 		this.postalCodeEndRange = endRange;
 		this.postalCodeStartRange = startRange;
-		this.name = name;
-
+		
 	}
 
 	/**
@@ -125,7 +134,8 @@ public class DawsonElection implements Election {
 	 * 
 	 * @param o
 	 *            - only Election type objects can be passed to this method
-	 * @throws IllegalArgumentException - null referenced Election o
+	 * @throws IllegalArgumentException
+	 *             - null referenced Election o
 	 * @return integer value of the comparTo method of this name and the parameters
 	 *         name
 	 */
@@ -283,25 +293,28 @@ public class DawsonElection implements Election {
 	 * contains a stub ballot object.
 	 * 
 	 * @param v
-	 * @throws IllegalArgumentException - if Voter v is null referenced
+	 * @throws IllegalArgumentException
+	 *             - if Voter v is null referenced
 	 * @return sb
 	 */
 	@Override
 	public Ballot getBallot(Voter v) {
 		// TODO Auto-generated method stub
-		if(isNull(v)) {
+		if (isNull(v)) {
 			throw new IllegalArgumentException("The voter passed through the getBallot cannot be null referenced ");
+		} else {
+			BallotItem[] bi = creatBallotArray(this.ballots);
+			Ballot bt = DawsonElectionFactory.DAWSON_ELECTION.getBallot(bi, getElectionType(), this);
+			return bt;
 		}
-		else
-		{
-		BallotItem[] bi = creatBallotArray(this.ballots);
-		StubBallot sb = new StubBallot(bi, this);
-		return sb;
-		}
+
 	}
 
 	/**
-	 * This method is used to update the tally object depending on the ballot
+	 * { BallotItem[] bi = creatBallotArray(this.ballots); StubBallot sb = new
+	 * StubBallot(bi, this); return sb; } /** }
+	 * 
+	 * /** This method is used to update the tally object depending on the ballot
 	 * parameter. If the ballot is a valid selection, then tally is updated
 	 * 
 	 * @param b
@@ -312,16 +325,16 @@ public class DawsonElection implements Election {
 	@Override
 	public void castBallot(Ballot b, Voter v) throws IllegalArgumentException {
 		// TODO Auto-generated method stub
-		if(isNull(v)) {
+		if (isNull(v)) {
 			throw new IllegalArgumentException("Voter v cannot be null referenced - castBallot");
 		}
 		if (v.isEligible(this)) {
 			if (isNull(b)) {
-			throw new IllegalArgumentException(
-					"In the castBallot method a ballout passed through the parameters cannot be null referenced");
+				throw new IllegalArgumentException(
+						"In the castBallot method a ballout passed through the parameters cannot be null referenced");
 			}
 			if (b.validateSelections()) {
-			this.tally.update(b);
+				this.tally.update(b);
 			}
 		}
 	}
@@ -385,7 +398,7 @@ public class DawsonElection implements Election {
 	 */
 	@Override
 	public final int hashCode() {
-		return  this.name.toUpperCase().hashCode();
+		return this.name.toUpperCase().hashCode();
 	}
 
 	/**
@@ -519,7 +532,7 @@ public class DawsonElection implements Election {
 	private BallotItem[] creatBallotArray(BallotItem[] bi) {
 		BallotItem[] array = new BallotItem[bi.length];
 		for (int i = 0; i < bi.length; i++) {
-			array[i] = new DawsonBallotItem(bi[i]);
+			array[i] = DawsonElectionFactory.DAWSON_ELECTION.getBallotItem(bi[i]);
 		}
 		return array;
 	}
