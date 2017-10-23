@@ -7,6 +7,7 @@ import java.util.List;
 
 import election.business.DawsonElectionFactory;
 import election.business.interfaces.Voter;
+import election.business.interfaces.Election;
 
 public class ElectionFileLoader {
 	private ElectionFileLoader() {
@@ -147,4 +148,19 @@ public class ElectionFileLoader {
 		}
 		return nonNullVotersArray;
 	}
+	
+	/**
+	 * 
+	 * @param filename
+	 * @return
+	 * @throws IOException
+	 */
+	public static Election[] getElectionListFromSequentialFile(String filename) throws IOException {
+		// TODO Code Method
+	}
+	
+	/*
+	 *  Space to create private helper methods
+	 */
+	
 }
