@@ -139,11 +139,43 @@ public class ListUtilities {
 		return c;
 	}
 	
-	//to be coded by Nikita 
-	public static void sort(Comparable[] list, Comparator sortOrder) throws IllegalArgumentException, NullPointerException{
-	
-	
-	}
+	 /**
+	  * @author Nikita
+	  * 
+	  * Sorts a list of objects in the given order.
+	  * 
+	  * Precondition: Assumes that the list is not null and that the 
+	  *	list's capacity is equal to the list's size.
+	  * 
+	  * @param list A list of objects. Assumes that the list's capacity is equal to the list's size. 
+	  * @param sortOrder A Comparator object that defines the sort order 
+	  * @throws IllegalArgumentException if the parameter is not full to capacity.
+	  *
+	  * @throws NullPointerException if the list or sortOrder are null.
+	  */
+	 @SuppressWarnings({ "rawtypes", "unchecked" })
+	 public static void sort(Comparable[] list, Comparator sortOrder) throws IllegalArgumentException, NullPointerException{
+		 if(list == null) {
+			 throw new NullPointerException("Cannot sort null array.");
+		 }
+		 
+		 for(Comparable index : list) {
+			 if(index == null) {
+				 throw new IllegalArgumentException("Cannot sort array if it contains indices referencing to null.");
+			 }
+		 }
+		 
+		 Comparable temp;
+		 for (int a = 0; a < list.length - 1; a++) {
+			 for (int b = a + 1; b < list.length; b++) {
+				 if (sortOrder.compare(list[a], list[b]) > 0) {
+					 temp = list[b];
+					 list[b] = list[a];
+					 list[a] = temp;
+				 }
+			 }
+		 }
+	 }
 	
 	@SuppressWarnings({ "rawtypes" })
 	private static boolean nullRefenreceElements(Comparable[] list) {
