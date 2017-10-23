@@ -42,9 +42,28 @@ public class ElectionFileLoader {
 		}
 
 	}
+		
+	/**
+	 * 
+	 * @param filename
+	 * @return
+	 * @throws IOException
+	 */
+	public static Election[] getElectionListFromSequentialFile(String filename) throws IOException {
+		// TODO Code Method
+	}
 	
+	/**
+	 * 
+	 * @param filename
+	 * @param elections
+	 * @throws IOException
+	 */
+	public static void setExistingTallyFromSequentialFile (String filename, Election[] elections) 
+			throws IOException {
+		// TODO Code Method
+	}
 	
-
 	/**
 	 * The createVoterArray takes a String[] linesArray (that contains every line
 	 * from the Voter text file) and the Voter filename so that the message error
@@ -149,34 +168,14 @@ public class ElectionFileLoader {
 		}
 		return nonNullVotersArray;
 	}
-	
-	/**
-	 * 
-	 * @param filename
-	 * @return
-	 * @throws IOException
-	 */
-	public static Election[] getElectionListFromSequentialFile(String filename) throws IOException {
-		// TODO Code Method
-	}
+
 	
 	/*
-	 *  Space to create private helper methods
+	 *  Space to create private helper methods for Election
 	 */
-	
-	/**
-	 * 
-	 * @param filename
-	 * @param elections
-	 * @throws IOException
-	 */
-	public static void setExistingTallyFromSequentialFile (String filename, Election[] elections) 
-			throws IOException {
-		// TODO Code Method
-	}
 	
 	/*
-	 *  Space to create private helper methods
+	 *  Space to create private helper methods for Tally
 	 */
 	
 
