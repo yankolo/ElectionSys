@@ -190,6 +190,7 @@ public class ElectionFileLoader {
 				
 				if(lines.get(i).trim().isEmpty()) {
 					lines.remove(i);
+					i--;
 				}
 			}
 			
