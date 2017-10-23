@@ -131,6 +131,20 @@ public class ListUtilities {
 		}
 
 	}
+	// to be coded by Sammy 
+	@SuppressWarnings({ "rawtypes", "unchecked" })
+	public static Comparable[] merge(Comparable[] list1, Comparable[] list2, String duplicateFileName)
+			throws IOException {
+		Comparable [] c = null;
+		return c;
+	}
+	
+	//to be coded by Nikita 
+	public static void sort(Comparable[] list, Comparator sortOrder) throws IllegalArgumentException, NullPointerException{
+	
+	
+	}
+	
 	@SuppressWarnings({ "rawtypes" })
 	private static boolean nullRefenreceElements(Comparable[] list) {
 		for (Comparable element : list) {

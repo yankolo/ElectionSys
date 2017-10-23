@@ -7,21 +7,21 @@ public class TestListUtilities {
 
 	public static void main(String[] args) {
 	
-	TestSortMethod();
+	TestGeneralSortMethod();
 	}
 
-	public static void TestSortMethod() {
+	public static void TestGeneralSortMethod() {
 		System.out.println("-----------Testing The Generic Sort method-----------");
 		String[] array1 = {"Sammy" , "Mohammed" , "Nikita" , "Yanick" };
-		TestSortMethod("Case 1 - valid String array should be sorted in alphabetic order", array1, true);
+		TestGeneralSortMethod("Case 1 - valid String array should be sorted in alphabetic order", array1, true);
 		String [] array2 = null;
-		TestSortMethod("Case 2 - invalid String array, should not sort the array and should throw a NullPointerException", array2, false);
+		TestGeneralSortMethod("Case 2 - invalid String array, should not sort the array and should throw a NullPointerException", array2, false);
 		String [] array3 = {"Sammy" , "Mohammed" , "Nikita" , "Yanick" , null };
-		TestSortMethod("Case 3 - invalid String array, should not sort the array and should throw a IllegalArgumentException", array3, false);
+		TestGeneralSortMethod("Case 3 - invalid String array, should not sort the array and should throw a IllegalArgumentException", array3, false);
 
 	}
 
-	public static void TestSortMethod(String testCase, String[] array, boolean expectValid) {
+	public static void TestGeneralSortMethod(String testCase, String[] array, boolean expectValid) {
 		System.out.println("   " + testCase);
 		try {
 			ListUtilities.sort(array);
@@ -52,6 +52,23 @@ public class TestListUtilities {
 		}
 		System.out.println("\n");
 
+	}
+	//defining method headers for methods
+	public static void TestMergeMethod() {
+		
+		
+	}
+	//defining method headers for methods
+	public static void TestMegermethod(int x) {
+		
+	}
+	//defining method headers for methods
+	public static void TestSecondSortMethod() {
+		
+	}
+	//defining method headers for methods
+	public static void TestSecondSortMethod(int x) {
+		
 	}
 	
 
