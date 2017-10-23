@@ -163,4 +163,18 @@ public class ElectionFileLoader {
 	 *  Space to create private helper methods
 	 */
 	
+	/**
+	 * 
+	 * @param filename
+	 * @param elections
+	 * @throws IOException
+	 */
+	public static void setExistingTallyFromSequentialFile (String filename, Election[] elections) 
+			throws IOException {
+		// TODO Code Method
+	}
+	
+	/*
+	 *  Space to create private helper methods
+	 */
 }
