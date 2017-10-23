@@ -14,6 +14,7 @@ public class ElectionFileLoader {
 
 	}
 
+	
 	/**
 	 * The getVoterListFromSequentialFile reads a voter file and puts every line in
 	 * a list of Strings. It then converts the list of Strings into a String[]
@@ -177,4 +178,30 @@ public class ElectionFileLoader {
 	/*
 	 *  Space to create private helper methods
 	 */
+	
+
+	private static String[] createLinesArray(String filename) throws IOException{
+		Path file = Paths.get(filename);
+		Charset uncoding = Charset.forName("UTF-8");
+		
+		try {
+			List<String> lines = Files.readAllLines(file, uncoding);
+			
+			for(int i=0; i<lines.size(); i++) {
+				
+				if(lines.get(i).trim().isEmpty()) {
+					lines.remove(i);
+				}
+			}
+			
+			String[] linesArray = new String[lines.size()];
+			linesArray = lines.toArray(linesArray);
+			
+			return linesArray;
+		}catch(IOException ioe) {
+			throw new IOException("Error reading lines from file: " + filename);
+		}
+	}
+	
+
 }
