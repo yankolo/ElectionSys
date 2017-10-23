@@ -9,7 +9,7 @@ public class TestListUtilities {
 	public static void main(String[] args) {
 	
 	TestGeneralSortMethod();
-	
+	TestMergeMethod();
 	testSecondSort();
 	}
 
@@ -58,14 +58,55 @@ public class TestListUtilities {
 	}
 	//defining method headers for methods
 	public static void TestMergeMethod() {
-		
+		System.out.println("-----------Testing The Merge method-----------");
+		String[] array1 = {"Sammy"  , "Nikita" , "Yanick" };
+		ListUtilities.sort(array1);
+		String[] array2 = {"Lamelo" , "Sammy" , "Mohammed" , "Liangelo" , "Lavar", "Zack" };
+		ListUtilities.sort(array2);
+		TestMergeMethod("Case 1 -- Valid sorted arrays are passed to the merge method -- ", array1, array2, true);
+		String [] array3 = null;
+		String [] array4 = null;
+		TestMergeMethod("Case 2 -- Invalid sorted arrays are passed to the merge method - ( the first array is null referenced) -- ", array3, array2, false);
+		TestMergeMethod("Case 3 -- Invalid sorted arrays are passed to the merge method - ( the second array is null referenced) -- ", array1, array4, false);
+		TestMergeMethod("Case 4 -- Invalid sorted arrays are passed to the merge method - ( the both arrays are null referenced) -- ", array3, array4, false);
+		String [] array5 = {"Sammy" , null , "Nikita" , "Yanick" };
+		TestMergeMethod("Case 5 -- Invalid sorted arrays are passed to the merge method - ( first array contains a null referenced value ) -- ", array5, array2, false);
+		TestMergeMethod("Case 6 -- Invalid sorted arrays are passed to the merge method - ( second array contains a null referenced value ) -- ", array2, array5, false);
+
 		
 	}
-	//defining method headers for methods
-	public static void TestMegermethod(int x) {
-		
-	}
+	public static void TestMergeMethod(String testCase, String[] array1, String [] array2 ,  boolean expectValid) {
 	
+		System.out.println(" " + testCase);
+		try {
+			Comparable[] c = ListUtilities.merge(array1, array2, "hello.txt");
+			System.out.print("\tThe String array instance was sorted\n" );
+			System.out.println("\t This the content of the Sorted String " + Arrays.toString(c));
+
+			if (!expectValid)
+				System.out.print("  Error! Expected Invalid. ==== FAILED TEST ====");
+
+			System.out.println("\n");
+		} catch (IllegalArgumentException iae) {
+			System.out.println("\t" + iae.getMessage());
+			if (expectValid) {
+				System.out.println(" Error! Expected Valid. ====== FAILED TEST =====");
+			}
+		} catch (NullPointerException npe) {
+			System.out.println("\t" + npe.getMessage());
+			if (expectValid) {
+				System.out.println(" Error! Expected Valid. ====== FAILED TEST =====");
+
+			}
+		} catch (IOException e) {
+			System.out.println(
+					"\tUNEXPECTED EXCEPTION TYPE!" + e.getClass() + " " + e.getMessage() + "====FAILED TEST====");
+			if (expectValid) {
+				System.out.println("Expected Valid");
+			}
+		}
+		System.out.println("\n");
+	}
 	public static void testSecondSort(){
 		System.out.println("Testing the second sort method \n");
 		

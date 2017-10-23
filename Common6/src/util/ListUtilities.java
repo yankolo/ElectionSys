@@ -14,6 +14,7 @@ import java.nio.file.StandardOpenOption;
 import java.util.Comparator;
 import java.lang.reflect.Array;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 //skeleton provides the imports, plus methods saveListToTextFile and the Comparator sort overload
@@ -131,12 +132,140 @@ public class ListUtilities {
 		}
 
 	}
-	// to be coded by Sammy 
+	/*
+	 * @author - Sammy Chaouki
+	 * 
+	 * Efficiently merges two sorted lists of objects in ascending natural order. If
+	 * the duplicate objects are in both lists, the object from list1 is merged into
+	 * the resulting list, and both objects are written to the duplicate file.
+	 * 
+	 * Precondition: Assumes that the lists are not null and that both lists contain
+	 * objects that can be compared to each other and are filled to capacity.
+	 * 
+	 *
+	 * @param list1 A naturally sorted list of objects. Assumes that the list
+	 * contains no duplicates and that its capacity is equal to its size.
+	 * 
+	 * @param list2 A naturally sorted list of objects. Assumes that the list
+	 * contains no duplicates and that its capacity is equal to its size.
+	 * 
+	 * @param duplicateFileName The name of the file in datafiles\duplicates to
+	 * which duplicate pairs will be appended.
+	 * 
+	 * @throws IllegalArgumentException if either parameter is not full to capacity.
+	 */
 	@SuppressWarnings({ "rawtypes", "unchecked" })
 	public static Comparable[] merge(Comparable[] list1, Comparable[] list2, String duplicateFileName)
-			throws IOException {
-		Comparable [] c = null;
-		return c;
+			throws IOException , IllegalArgumentException{
+		List<String> duplicateArray = new ArrayList<String>();
+		Path dir;
+		String file = "datafiles/duplicate/" + duplicateFileName;
+		try {
+			dir = Paths.get("datafiles/duplicate");
+			if (!Files.exists(dir))
+				Files.createDirectory(dir);
+		} catch (InvalidPathException ipe) {
+			System.err.println("You have entered invalid cahracters as path");
+		} catch (FileAlreadyExistsException faee) {
+			System.err.println("You have entered a path of a directory that already exists");
+		} catch (IOException ioe) {
+			System.err.println("The parent directory doesnt not exist");
+		}
+		if (list1 == null) {
+			throw new IllegalArgumentException(" The list passed as the first parameter cannot be null referenced");
+
+		}
+		if (list2 == null) {
+			throw new IllegalArgumentException(" The list passed as the second parameter cannot be null referenced");
+		}
+		if (nullRefenreceElements(list1)) {
+			throw new IllegalArgumentException(
+					"The first array passed to the merge method " + "must be filled if you wish to sort it");
+		}
+		if (nullRefenreceElements(list2)) {
+			throw new IllegalArgumentException(
+					"The second array passed to the merge method " + " must be filled if you wish to merge it");
+		}
+		if (duplicateFileName == null) {
+			throw new IllegalArgumentException("You may not pass a null referenced path to this file");
+		}
+		Comparable[] list3 = (Comparable[]) Array.newInstance(list1.getClass().getComponentType(),
+				list1.length + list2.length);
+		int indexArrayForList1 = 0; // this variable is used to keep track of the index for the list1 array
+		int indexArrayForList2 = 0; // this variable is used to keep track fo the index for the list2 array
+		int indexArrayDuplicate = 0; // this variable is used to keep track of the index for the duplicate array
+		for (int i = 0; i < list3.length; i++) {
+			/**
+			 * This if statement is used to check if the index of the list1 array is equal to its length
+			 * this means that the list1 has been fully filled in the merge method.
+			 * It will just add all the list2 elements to the merge array
+			 */
+			if (indexArrayForList1 == list1.length) {
+				for (int j = indexArrayForList2; j < list2.length; j++) {
+					list3[i] = list2[j];
+					i++;
+				}
+				break;
+			}
+			/**
+			 * This if statement is used to check if the index of the list2 array is equal to its length
+			 * this means that the list1 has been fully filled in the merge method.
+			 * It will just add all the list2 elements to the merge array
+			 */
+			if (indexArrayForList2 == list2.length) {
+				for (int j = indexArrayForList1; j < list1.length; j++) {
+					list3[i] = list1[j];
+					i++;
+				}
+				break;
+			}
+			/**
+			 * This just compares the element of list1 to list2, 
+			 * and if the list1 element is lower than the element of list2 
+			 * store the element of list1 to the merge array and increment the index for the list1 array
+			 */
+			if (list1[indexArrayForList1].compareTo(list2[indexArrayForList2]) < 0) {
+				list3[i] = list1[indexArrayForList1];
+				indexArrayForList1++;
+				continue;
+
+			}
+			/**
+			 * This just compares the element of list1 to list2, 
+			 * and if the list1 element is greater than the element of list2 
+			 * store the element of list2 to the merge array and increment the index for the list2 array
+			 */
+			else if (list1[indexArrayForList1].compareTo(list2[indexArrayForList2]) > 0) {
+				list3[i] = list2[indexArrayForList2];
+				indexArrayForList2++;
+				continue;
+			}
+			/**
+			 *This will only execute if both elements are the same.
+			 *It will then store the first element to the duplicate array with a message indicating that the first element was merged
+			 *and it will only add one of the elements to the merge array
+			 */
+			else {
+				list3[i] = list1[indexArrayForList1];
+				duplicateArray.add(indexArrayDuplicate, list1[indexArrayForList1].toString() + " (merged)");
+				indexArrayDuplicate++;
+				duplicateArray.add(indexArrayDuplicate, list2[indexArrayForList2].toString());
+				indexArrayForList1++;
+				indexArrayForList2++;
+				continue;
+			}
+
+		}
+		/**
+		 * If the size of the duplicate array is not equal 0,
+		 *  this means that the array has duplicates. If true, 
+		 *  it will write the duplicate array in the file passed to the merge method 
+		 */
+		if (duplicateArray.size() != 0) {
+			saveListToTextFile(duplicateArray.toArray(), file);
+		}
+		list3 = Arrays.copyOf(list3, list3.length - indexArrayDuplicate);
+		return list3;
 	}
 	
 	 /**
@@ -176,7 +305,11 @@ public class ListUtilities {
 			 }
 		 }
 	 }
-	
+	/**
+	 * Checks if an element in an array is null referenced
+	 * @param list
+	 * @return
+	 */
 	@SuppressWarnings({ "rawtypes" })
 	private static boolean nullRefenreceElements(Comparable[] list) {
 		for (Comparable element : list) {
