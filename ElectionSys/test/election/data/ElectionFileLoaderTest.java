@@ -90,13 +90,26 @@ public class ElectionFileLoaderTest {
 	private static void testGetElectionListFromSequentialFile() {
 		System.out.println("Testing the getElectionListFromSequentialFile");
 		System.out.println();
-		testGetElectionListFromSequentialFile("Case 1 - 1 Valid Election", "test/election/data/electionTest/case1.txt",1);
-		testGetElectionListFromSequentialFile("Case 2 - 3 Valid Election", "test/election/data/electionTest/case2.txt",3);
-		testGetElectionListFromSequentialFile("Case 3 - 1 Invalid Election: number of elements is 10", "test/election/data/electionTest/case3.txt",0);
-		testGetElectionListFromSequentialFile("Case 4 - 1 Invalid Election: number of ballot is less than the number in the Election header", "test/election/data/electionTest/case4.txt",0);
-		testGetElectionListFromSequentialFile("Case 5 - 1 Invalid Election: the choice in the Election header is not an int", "test/election/data/electionTest/case5.txt", 0);
-		testGetElectionListFromSequentialFile("Case 6 - 1 Invalid Election: Number of ballot is grater than the number of choices in the ELection header", "test/election/data/electionTest/case6.txt",0);
-		testGetElectionListFromSequentialFile("Case 7 - 2 Valid Election and 1 Invalid Election at the end of the file", "test/election/data/electionTest/case7.txt",0);
+		testGetElectionListFromSequentialFile("Case 1 - 1 Valid Election", "test/election/data/electionTest/case1.txt",
+				1);
+		testGetElectionListFromSequentialFile("Case 2 - 3 Valid Election", "test/election/data/electionTest/case2.txt",
+				3);
+		testGetElectionListFromSequentialFile("Case 3 - 1 Invalid Election: number of elements is 10",
+				"test/election/data/electionTest/case3.txt", 0);
+		testGetElectionListFromSequentialFile(
+				"Case 4 - 1 Invalid Election: number of ballot is less than the number in the Election header",
+				"test/election/data/electionTest/case4.txt", 0);
+		testGetElectionListFromSequentialFile(
+				"Case 5 - 1 Invalid Election: the choice in the Election header is not an int",
+				"test/election/data/electionTest/case5.txt", 0);
+		testGetElectionListFromSequentialFile(
+				"Case 6 - 1 Invalid Election: Number of ballot is grater than the number of choices in the ELection header",
+				"test/election/data/electionTest/case6.txt", 0);
+		testGetElectionListFromSequentialFile("Case 7 - 2 Valid Election and 1 Invalid Election at the end of the file",
+				"test/election/data/electionTest/case7.txt", 0);
+		testGetElectionListFromSequentialFile(
+				"Case 8 - Text file contains empty lines at the begining and the end of the text file With 2 Valid Elections",
+				"test/election/data/electionTest/case8.txt", 2);
 	}
 
 	private static void testGetElectionListFromSequentialFile(String testCase, String filename,
@@ -106,14 +119,17 @@ public class ElectionFileLoaderTest {
 		try {
 			elections = ElectionFileLoader.getElectionListFromSequentialFile(filename);
 			System.out.println("\tNumber of Election created: " + elections.length);
-			
+
+			if (elections.length != numOfValidElections) {
+				System.out.println("  Error! Expected Invalid. ==== FAILED TEST ====");
+			}
+
 		} catch (IOException ioe) {
 			System.out.println("\t" + ioe.getMessage());
-		}
-		catch(Exception e) {
+		} catch (Exception e) {
 			System.out.println("\t" + e.getMessage());
 		}
 		System.out.println();
 	}
-	
+
 }
