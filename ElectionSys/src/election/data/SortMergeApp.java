@@ -113,8 +113,8 @@ public class SortMergeApp {
 			}
 		
 		// Sorting all the Voter arrays
-		for (Voter[] arrayOfVoters: arraysOfVoters)
-			ListUtilities.sort(arrayOfVoters);
+		for (int i = 0; i < arraysOfVoters.length; i++)
+			ListUtilities.sort(arraysOfVoters[i]);
 		
 		// Writing the sorted voter arrays to files
 		for (int i = 0; i < arraysOfVoters.length; i++) {
@@ -205,8 +205,8 @@ public class SortMergeApp {
 			}
 		
 		// Sorting all the Election arrays
-		for (Election[] arrayOfElections: arraysOfElections)
-			ListUtilities.sort(arrayOfElections);
+		for (int i = 0; i < arraysOfElections.length; i++)
+			ListUtilities.sort(arraysOfElections[i]);
 		
 		// Writing the sorted election arrays to files
 		for (int i = 0; i < arraysOfElections.length; i++) {
