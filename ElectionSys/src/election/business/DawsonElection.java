@@ -68,8 +68,7 @@ public class DawsonElection implements Election {
 		}
 		if (name.trim().isEmpty()) {
 			throw new IllegalArgumentException("The name of the election cannot be an empty string");
-		}
-		else {
+		} else {
 			this.name = name;
 		}
 		if (isNull(type)) {
@@ -125,7 +124,7 @@ public class DawsonElection implements Election {
 		}
 		this.postalCodeEndRange = endRange;
 		this.postalCodeStartRange = startRange;
-		
+
 	}
 
 	/**

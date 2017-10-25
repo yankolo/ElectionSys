@@ -48,7 +48,7 @@ public class DawsonElectionTest {
 		String single = "single";
 		String name = "Dawson Election";
 		String[] s4 = null;
-		DawsonTally dt = new  DawsonTally(3, name);
+		DawsonTally dt = new DawsonTally(3, name);
 		DawsonTally dt_Null = null;
 		System.out.println("---------- TESTING THE CONSTRUCTOR ----------");
 		testTheTweelveParameterConstructor(
@@ -96,12 +96,6 @@ public class DawsonElectionTest {
 		testTheTweelveParameterConstructor(
 				"Case 15 - Enter invalid value for the items ( --- only one value --- ) through the constructor using the following (Dawson Election , the Type is single , start date: 2017- 10-20 , end date: 2018-02-24, startRange = null , endRange = null  , Tally = StubBallot , expected Value : false , s1 = BRANDON, ",
 				name, single, 2017, 10, 20, 2018, 02, 04, null, null, dt, false, s1);
-		testTheTweelveParameterConstructor(
-				"Case 16 - Enter invalid value for the startPostalRange ( --- empty string --- ) through the constructor using the following (Dawson Election , the Type is single , start date: 2017- 10-20 , end date: 2018-02-24, startRange = empty string , endRange = null  , Tally = StubBallot , expected Value : false , s1 ,s2 ,s3 ",
-				name, single, 2017, 10, 20, 2018, 02, 04, "", null, dt, false, s1, s2, s3);
-		testTheTweelveParameterConstructor(
-				"Case 17 - Enter invalid value for the endPostalRange ( --- empty string --- ) through the constructor using the following (Dawson Election , the Type is single , start date: 2017- 10-20 , end date: 2018-02-24, startRange = null , endRange = empty String  , Tally = StubBallot , expected Value : false , s1 ,s2 ,s3 ",
-				name, single, 2017, 10, 20, 2018, 02, 04, null, "", dt, false, s1, s2, s3);
 
 	}
 
@@ -145,9 +139,9 @@ public class DawsonElectionTest {
 		String s1 = "Dawson";
 		String s2 = "hello world";
 		String s3 = "zebra";
-		DawsonTally dt = new DawsonTally(2 , s1);
-		DawsonTally dt1 = new DawsonTally(2,s2);
-		DawsonTally dt2 = new DawsonTally (2,s3);
+		DawsonTally dt = new DawsonTally(2, s1);
+		DawsonTally dt1 = new DawsonTally(2, s2);
+		DawsonTally dt2 = new DawsonTally(2, s3);
 		DawsonElection de1 = new DawsonElection(s1, "single", 1997, 02, 25, 1998, 05, 23, null, null, dt, s2, s3);
 		System.out.println("---------- TESTING THE COMPARE TO METHOD ----------");
 		compareToTest("Case1 - valid DawsonElection Object - the name of the election of  ", de1, true);
@@ -164,7 +158,7 @@ public class DawsonElectionTest {
 		String s1 = "Brandon";
 		String s2 = "Bob";
 		String s3 = "Jordy";
-	
+
 		try {
 			DawsonTally dt = new DawsonTally(3, "Hello World");
 			DawsonElection d1 = new DawsonElection("Hello World", "single", 2017, 04, 22, 2018, 04, 22, null, null, dt,
@@ -255,7 +249,7 @@ public class DawsonElectionTest {
 
 		System.out.println("   " + testCase);
 		try {
-			DawsonTally dt = new DawsonTally(items.length,"Hello World" );
+			DawsonTally dt = new DawsonTally(items.length, "Hello World");
 			DawsonElection d1 = new DawsonElection("Hello World", "single", 2017, 04, 22, 2018, 04, 22, null, null, dt,
 					items);
 			System.out.println("This array passed to this test method is a valid String array: " + d1.toString());
@@ -299,7 +293,7 @@ public class DawsonElectionTest {
 	private static void testGetEndDate(String testCase, int year, int month, int day, boolean expectValid) {
 
 		System.out.println("   " + testCase);
-		
+
 		try {
 			String s1 = "Brandon";
 			String s2 = "Bob";
@@ -348,7 +342,7 @@ public class DawsonElectionTest {
 	private static void testGetStartDate(String testCase, int year, int month, int day, boolean expectValid) {
 
 		System.out.println("   " + testCase);
-		
+
 		try {
 			String s1 = "Brandon";
 			String s2 = "Bob";
@@ -393,12 +387,12 @@ public class DawsonElectionTest {
 	private static void testGetPostalRangeEnd(String testCase, String postalRangeEnd, boolean expectValid) {
 
 		System.out.println("   " + testCase);
-		
+
 		try {
 			String s1 = "Brandon";
 			String s2 = "Bob";
 			String s3 = "Jordy";
-			DawsonTally dt = new DawsonTally(3,"Hello World");
+			DawsonTally dt = new DawsonTally(3, "Hello World");
 			if (postalRangeEnd == null) {
 				DawsonElection d1 = new DawsonElection("Hello World", "single", 2016, 12, 2, 2017, 04, 22, null,
 						postalRangeEnd, dt, s1, s2, s3);
@@ -447,7 +441,7 @@ public class DawsonElectionTest {
 	private static void testGetPostalRangeStart(String testCase, String postalRangeStart, boolean expectValid) {
 
 		System.out.println("   " + testCase);
-		
+
 		try {
 			String s1 = "Brandon";
 			String s2 = "Bob";
@@ -502,12 +496,12 @@ public class DawsonElectionTest {
 			boolean expectValid) {
 
 		System.out.println("   " + testCase);
-		
+
 		try {
 			String s1 = "Brandon";
 			String s2 = "Bob";
 			String s3 = "Jordy";
-			DawsonTally st = new DawsonTally(3,"Hello World");
+			DawsonTally st = new DawsonTally(3, "Hello World");
 			DawsonElection d1 = new DawsonElection("Hello World", "single", 2016, 12, 2, 2017, 04, 22, startRange,
 					endRange, st, s1, s2, s3);
 			if (d1.isLimitedToPostalRange()) {
@@ -552,12 +546,12 @@ public class DawsonElectionTest {
 	private static void testGetName(String testCase, String name, boolean expectValid) {
 
 		System.out.println("   " + testCase);
-		
+
 		try {
 			String s1 = "Brandon";
 			String s2 = "Bob";
 			String s3 = "Jordy";
-			DawsonTally dt = new DawsonTally(3,name);
+			DawsonTally dt = new DawsonTally(3, name);
 			DawsonElection d1 = new DawsonElection(name, "single", 2016, 12, 2, 2017, 04, 22, null, null, dt, s1, s2,
 					s3);
 			if (d1.getName().equalsIgnoreCase(name)) {
@@ -633,11 +627,11 @@ public class DawsonElectionTest {
 
 	private static void testSetTally() {
 		System.out.println("---------- TESTING THE SET_METHOD ----------");
-		DawsonTally tal = new DawsonTally(3, "Hi") ;
+		DawsonTally tal = new DawsonTally(3, "Hi");
 		testSetTally(
 				"Case 1 - Should set the DawsonElection tally to the one passed in the parameter since they have same electionName ",
 				tal, true);
-		DawsonTally tal1 = new DawsonTally(3, "HelloWorld") ;
+		DawsonTally tal1 = new DawsonTally(3, "HelloWorld");
 		testSetTally(
 				"Case 2 - Should throw exception since the DawsonElection tally election name is different from  the one passed in the parameter of the setTally method ",
 				tal1, false);
@@ -650,7 +644,7 @@ public class DawsonElectionTest {
 
 		System.out.println("   " + testCase);
 		try {
-			DawsonTally st = new DawsonTally(3 , "Hi");
+			DawsonTally st = new DawsonTally(3, "Hi");
 			String s1 = "Brandon";
 			String s2 = "Bob";
 			String s3 = "Jordy";
@@ -789,7 +783,8 @@ public class DawsonElectionTest {
 		DawsonElection de = new DawsonElection("Hello World", "single", 2016, 12, 2, 2017, 04, 22, null, null, dt, s1,
 				s2, s3);
 		DawsonElection de1 = null;
-		DawsonElection de2 = new DawsonElection("Hek", "single", 2016, 12, 2, 2017, 04, 22, null, null, dt2, s1, s2, s3);
+		DawsonElection de2 = new DawsonElection("Hek", "single", 2016, 12, 2, 2017, 04, 22, null, null, dt2, s1, s2,
+				s3);
 		DawsonElection de3 = de;
 		DawsonElection de4 = new DawsonElection("Hello World", "single", 2016, 11, 2, 2017, 04, 22, null, null, dt, s1,
 				s2, s3);
@@ -851,7 +846,8 @@ public class DawsonElectionTest {
 		System.out.println("---------- TESTING THE HASH_CODE ----------");
 		DawsonElection de = new DawsonElection("Hello World", "single", 2016, 12, 2, 2017, 04, 22, null, null, dt, s1,
 				s2, s3);
-		DawsonElection de2 = new DawsonElection("Hek", "single", 2016, 12, 2, 2017, 04, 22, null, null, dt1, s1, s2, s3);
+		DawsonElection de2 = new DawsonElection("Hek", "single", 2016, 12, 2, 2017, 04, 22, null, null, dt1, s1, s2,
+				s3);
 		DawsonElection de3 = de;
 		DawsonElection de4 = new DawsonElection("Hello World", "single", 2016, 11, 2, 2017, 04, 22, null, null, dt, s1,
 				s2, s3);
