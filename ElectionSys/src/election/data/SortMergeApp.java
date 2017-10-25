@@ -4,6 +4,7 @@ import java.nio.file.*;
 import java.util.ArrayList;
 import java.io.IOException;
 import java.util.Arrays;
+import java.util.List;
 
 import election.business.interfaces.Election;
 import election.business.interfaces.Tally;
@@ -64,7 +65,7 @@ public class SortMergeApp {
 		
 		// Create an ArrayList that will only contain the paths of the files that have the right name and extension.
 		// An ArrayList is used because it will be easier to dynamically add the right file paths 
-		ArrayList<Path> listOfFilePaths= new ArrayList<Path>();
+		List<Path> listOfFilePaths= new ArrayList<Path>();
 		
 		// Store the path of the files that match the specified filename specification 
 		// in filePathsList
@@ -143,7 +144,7 @@ public class SortMergeApp {
 			}
 						
 		// Creating listOfVoterArrays that will be used to merge all the sorted voter arrays
-		ArrayList<Comparable[]> listOfVoterArrays = new ArrayList<Comparable[]>();
+		List<Comparable[]> listOfVoterArrays = new ArrayList<Comparable[]>();
 		listOfVoterArrays.addAll(Arrays.asList(arraysOfSortedVoters));
 					
 		/* 
@@ -235,7 +236,7 @@ public class SortMergeApp {
 			}
 						
 		// Creating listOfElectionArrays that will be used to merge all the sorted election arrays
-		ArrayList<Comparable[]> listOfElectionArrays = new ArrayList<Comparable[]>();
+		List<Comparable[]> listOfElectionArrays = new ArrayList<Comparable[]>();
 		listOfElectionArrays.addAll(Arrays.asList(arraysOfSortedElections));
 					
 		/* 
