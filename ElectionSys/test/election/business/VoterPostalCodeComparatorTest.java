@@ -4,7 +4,7 @@ package election.business;
  * Test class of the VoterPostalCodeComparator class
  * 
  * @author Nikita
- * @version 24.10.2017
+ * @version 25.10.2017
  */
 public class VoterPostalCodeComparatorTest {
 	public static void main(String[] args) {
@@ -23,11 +23,11 @@ public class VoterPostalCodeComparatorTest {
 		System.out.println(testCase);
 		
 		/*
-		 * In order to verfiy the above test cases, a VoterPostalCodeComparator is created - it defines the way by which two voters will be compared
-		 * (i.e. in this case, by their postal codes). Next, two voters are created for comparison (The cases are validated according to the expected
+		 * In order to verify the above test cases, a VoterPostalCodeComparator is created - it defines the way by which two voters will be compared
+		 * (i.e. by their postal codes). Next, two voters are created for comparison (The cases are validated according to the expected
 		 * result represented by an int). If the output of the VoterPostalCodeComparator's compare method matches or is in the same range (e.g. if the
-		 * first voter comes after the second, the output is a positive integer which could be either exactly the expectedResult int or a larger number)
-		 * as the expected result, then the case is considered as checked. Otherwise the case fails
+		 * first voter comes after the second, the output is a positive integer which could be either exactly equal to the expectedResult int or a larger number)
+		 * as the expected result, then the case passes. Otherwise the case fails.
 		 */
 		try {
 			VoterPostalCodeComparator vpcc= new VoterPostalCodeComparator();
