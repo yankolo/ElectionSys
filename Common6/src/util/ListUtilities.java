@@ -278,22 +278,9 @@ public class ListUtilities {
 	  * 
 	  * @param list A list of objects. Assumes that the list's capacity is equal to the list's size. 
 	  * @param sortOrder A Comparator object that defines the sort order 
-	  * @throws IllegalArgumentException if the parameter is not full to capacity.
-	  *
-	  * @throws NullPointerException if the list or sortOrder are null.
 	  */
 	 @SuppressWarnings({ "rawtypes", "unchecked" })
-	 public static void sort(Comparable[] list, Comparator sortOrder) throws IllegalArgumentException, NullPointerException{
-		 if(list == null) {
-			 throw new NullPointerException("Cannot sort null array.");
-		 }
-		 
-		 for(Comparable index : list) {
-			 if(index == null) {
-				 throw new IllegalArgumentException("Cannot sort array if it contains indices referencing to null.");
-			 }
-		 }
-		 
+	 public static void sort(Comparable[] list, Comparator sortOrder){	 
 		 Comparable temp;
 		 for (int a = 0; a < list.length - 1; a++) {
 			 for (int b = a + 1; b < list.length; b++) {
@@ -305,6 +292,7 @@ public class ListUtilities {
 			 }
 		 }
 	 }
+	 
 	/**
 	 * Checks if an element in an array is null referenced
 	 * @param list

@@ -107,18 +107,18 @@ public class TestListUtilities {
 		}
 		System.out.println("\n");
 	}
+	
+	/*As it is not possible to use the VoterName and PostalCode comparators - since they are located in ElectionSys -.
+	 *The sort method is test using a custom StringComparator that works in a way similar to the other two Comparator
+	 *only it takes 2 Strings instead of 2 Voters
+	 */
 	public static void testSecondSort(){
 		System.out.println("Testing the second sort method \n");
 		
 		Comparable[] array = {"Yan", "Sam", "Mo", "Nik"};
-		Comparable[] arrayWithNullElement = {"Yan", null, "Mo", "Nik"};
 		
 		StringComparator sc = new StringComparator();
-		
-		testSecondSort("Case 1: null array", null, sc, false);
-		testSecondSort("Case 2: array with null element", arrayWithNullElement, sc, false);
-		testSecondSort("Case 3: valid array sorted with StringComparator", array, sc, true);
-		
+		testSecondSort("Case 1: valid array of strings sorted with StringComparator", array, sc, true);
 	}
 	
 	public static void testSecondSort(String testCase, Comparable[] c, Comparator sort, boolean expectValid) {
@@ -126,8 +126,8 @@ public class TestListUtilities {
 		  
 	    try { 
 		   ListUtilities.sort(c, sort);
-		   System.out.print("\tThe array was sorted\n" );
-		   System.out.println("\tThis the content of the Sorted String " + Arrays.toString(c));
+		   System.out.print("\t\tThe array was sorted\n" );
+		   System.out.println("\t\tThis the content of the Sorted String " + Arrays.toString(c));
 		   	    
 		   if (!expectValid)
 		     System.out.print("  Error! Expected Invalid. ==== FAILED TEST ====");
