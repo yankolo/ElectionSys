@@ -111,33 +111,60 @@ public class ElectionFileLoader {
 	 * The craeteElectionArray method takes a String[] linesArray which is an array
 	 * that contains all lines of the text file and a String filename which is the
 	 * name of the text file. It creates an empty Election ArrayList that stores all
-	 * Elections created. The method loops trough each line and splits the line on
-	 * the asterisk, storing all elements in a String[] election. If the length of
-	 * String[] voter is not equal to 11 (name, startYear, startMonth, startDay,
-	 * endYear, endMonth, endDay, startPostalCode, endPostalCode, type, numOptions),
-	 * the File is Discarded to prevent creating faulty Elections and an error
-	 * message is printed with the line number, the filename and the line of the
-	 * invalid Election. And the boolean invalidElection is set to true which will
-	 * be used to return an Empty Election[] based on it's condition, in the case of
-	 * a true boolean value it will return an Empty Election[]. Else it will
-	 * determine how many choices to store in a String[] choices based on the number
-	 * of choices found in the Election header.
+	 * Elections created. The method loops trough each election line (int
+	 * electionLine) which will always point to the line that contains the election
+	 * and splits the line on the asterisk, storing all elements in a String[]
+	 * election. If the length of String[] election is not equal to 11 (name,
+	 * startYear, startMonth, startDay, endYear, endMonth, endDay, startPostalCode,
+	 * endPostalCode, type, numOptions), the File is Discarded to prevent creating
+	 * faulty Elections and an error message is printed with the line number, the
+	 * filename and the line of the invalid Election. And the boolean
+	 * invalidElection is set to true which will be used to return an Empty
+	 * Election[] based on it's condition, in the case of a true boolean value it
+	 * will return an Empty Election[]. Else it will determine how many choices to
+	 * store in a String[] choices based on the number of choices found in the
+	 * Election header. Using copyOfRange method, the choices will be stored in the
+	 * String[] choices. It will then create an Election electionObj passing the
+	 * elements in the String[] election and the String[] choices to the
+	 * constructor. The Election created will then be added to the ArrayList
+	 * electionArrayList. Finally if anything resulted in an error or thrown an
+	 * exception, the createElectionArray will return an empty Election[]
+	 * electionArray. Otherwise it will convert the ArrayList electionArrayList to
+	 * Election[] electionArray and return it.
 	 * 
 	 * @param linesArray
 	 * @param filename
-	 * @return
+	 * @return Election[] electionArray
 	 */
 	private static Election[] createElectionArray(String[] linesArray, String filename) {
 		List<Election> electionArrayList = new ArrayList<Election>();
 
+		/*
+		 * The boolean invalidElection is set to false by default, if an Error occurs in
+		 * the method, the invalidElection will be set to true. If it's false, it will
+		 * return a filled Election[] electionArray. if it's true it will return an
+		 * empty Election[] electionArray.
+		 * 
+		 */
 		boolean invalidElection = false;
 
+		// electionLine points to the Election line.
 		int electionLine = 0;
 
+		// The loop finds all the Elections in the text file.
 		while (electionLine < linesArray.length) {
+
+			/*
+			 * election contains all the 11 elements of the Election (name, startYear,
+			 * startMonth, startDay, endYear, endMonth, endDay, startPostalCode,
+			 * endPostalCode, type, numOptions)
+			 */
 			String[] election = linesArray[electionLine].split("[*]");
 
+			// If election doesn't have all the 11 elements an Error is printed.
 			if (election.length != 11) {
+
+				// The Error prints the line number, file, and the line of the invalid Election.
 				System.err.println(
 						"File Discarded \nPossible Error caused by Bad Formated Election or Invalid Option number for one of the Elections in the file. \nError at line: "
 								+ (electionLine + 1) + " From file: " + filename + "\nLine: \t"
@@ -147,10 +174,21 @@ public class ElectionFileLoader {
 
 			} else {
 				try {
+					/**
+					 * numOfChoices is equal to the last element in the Election which is the
+					 * choice. (e.g. For the following Election: DSU
+					 * Referendum*2017*09*05*2017*09*06*H1A*H2A*Single*2. numOfChoices is equal to
+					 * 2).
+					 */
 					int numOfChoices = Integer.parseInt(election[10]);
 
+					/*
+					 * fistChoices is the first ballot of the Election which is the line under the
+					 * electionLine
+					 */
 					int firstChoice = electionLine + 1;
 
+					// choices contains all the ballots of the Election
 					String[] choices = Arrays.copyOfRange(linesArray, firstChoice, numOfChoices + firstChoice);
 
 					String name = election[0];
@@ -168,8 +206,14 @@ public class ElectionFileLoader {
 							startYear, startMonth, startDay, endYear, endMonth, endDay, startPostal, endPostal,
 							choices);
 
+					/*
+					 * If the electionObj is created it will be added to the ArrayList
+					 * ectionArrayList
+					 * 
+					 */
 					electionArrayList.add(electionObj);
 
+					// electionLine will point to the next Election.
 					electionLine = firstChoice + numOfChoices;
 
 				} catch (Exception e) {
@@ -178,6 +222,8 @@ public class ElectionFileLoader {
 							"File Discarded \nPossible Error caused by Bad Formated Election or Invalid Option number for one of the Elections in the file. \nError at line: "
 									+ (electionLine + 1) + " From file: " + filename + "\nLine: \t"
 									+ linesArray[electionLine]);
+
+					// In addition of the descriptive Error, the exception Error is printed.
 					System.err.println(e.toString());
 					break;
 				}
@@ -197,6 +243,15 @@ public class ElectionFileLoader {
 	 * Space to create private helper methods for Tally
 	 */
 
+	/**
+	 * The createLinesArray method takes a String filename which is the name of the
+	 * text file and return a String[] linesArray contains all the lines of the text
+	 * file without the empty lines.
+	 * 
+	 * @param filename
+	 * @return String[] linesArray
+	 * @throws IOException
+	 */
 	private static String[] createLinesArray(String filename) throws IOException {
 		Path file = Paths.get(filename);
 		Charset uncoding = Charset.forName("UTF-8");
