@@ -22,7 +22,10 @@ import java.util.List;
 public class ListUtilities {
 	private static final Charset CHARACTER_ENCODING = StandardCharsets.UTF_8;
 
-	// TODO constructor here
+	/**
+	 * Default ListUtilities constructor
+	 */
+	private ListUtilities(){}
 
 	/**
 	 * Takes in a list of objects and writes them to a given file. This method
@@ -95,7 +98,7 @@ public class ListUtilities {
 		Files.write(path, toWrite, characterEncoding, StandardOpenOption.WRITE, option);
 	}
 
-	/*
+	/**
 	 * @author Sammy Chaouki
 	 * 
 	 * Sorts a list of objects in ascending natural order using selection sort.
@@ -106,19 +109,9 @@ public class ListUtilities {
 	 *
 	 * @param list A list of objects. Assumes that the list's capacity is equal to
 	 * the list's size.
-	 * 
-	 * @throws IllegalArgumentException if the parameter is not full to capacity.
-	 *
-	 * @throws NullPointerException if the list is null.
 	 */
 	@SuppressWarnings({ "rawtypes", "unchecked" })
-	public static void sort(Comparable[] list) throws IllegalArgumentException, NullPointerException {
-		if (list == null) {
-			throw new NullPointerException("The array that is passed through this method cannot be null referenced");
-		}
-		if (nullRefenreceElements(list)) {
-			throw new IllegalArgumentException("The list array must be filled if you wish to sort it");
-		}
+	public static void sort(Comparable[] list){
 		for (int i = 0; i < list.length - 1; i++) {
 			int smallIndex = i;
 			for (int j = i + 1; j < list.length; j++) {
@@ -132,7 +125,7 @@ public class ListUtilities {
 		}
 
 	}
-	/*
+	/**
 	 * @author - Sammy Chaouki
 	 * 
 	 * Efficiently merges two sorted lists of objects in ascending natural order. If
@@ -151,8 +144,6 @@ public class ListUtilities {
 	 * 
 	 * @param duplicateFileName The name of the file in datafiles\duplicates to
 	 * which duplicate pairs will be appended.
-	 * 
-	 * @throws IllegalArgumentException if either parameter is not full to capacity.
 	 */
 	@SuppressWarnings({ "rawtypes", "unchecked" })
 	public static Comparable[] merge(Comparable[] list1, Comparable[] list2, String duplicateFileName)
@@ -171,21 +162,7 @@ public class ListUtilities {
 		} catch (IOException ioe) {
 			System.err.println("The parent directory doesnt not exist");
 		}
-		if (list1 == null) {
-			throw new IllegalArgumentException(" The list passed as the first parameter cannot be null referenced");
-
-		}
-		if (list2 == null) {
-			throw new IllegalArgumentException(" The list passed as the second parameter cannot be null referenced");
-		}
-		if (nullRefenreceElements(list1)) {
-			throw new IllegalArgumentException(
-					"The first array passed to the merge method " + "must be filled if you wish to sort it");
-		}
-		if (nullRefenreceElements(list2)) {
-			throw new IllegalArgumentException(
-					"The second array passed to the merge method " + " must be filled if you wish to merge it");
-		}
+	
 		if (duplicateFileName == null) {
 			throw new IllegalArgumentException("You may not pass a null referenced path to this file");
 		}
@@ -195,7 +172,7 @@ public class ListUtilities {
 		int indexArrayForList2 = 0; // this variable is used to keep track fo the index for the list2 array
 		int indexArrayDuplicate = 0; // this variable is used to keep track of the index for the duplicate array
 		for (int i = 0; i < list3.length; i++) {
-			/**
+			/*
 			 * This if statement is used to check if the index of the list1 array is equal to its length
 			 * this means that the list1 has been fully filled in the merge method.
 			 * It will just add all the list2 elements to the merge array
@@ -207,7 +184,7 @@ public class ListUtilities {
 				}
 				break;
 			}
-			/**
+			/*
 			 * This if statement is used to check if the index of the list2 array is equal to its length
 			 * this means that the list1 has been fully filled in the merge method.
 			 * It will just add all the list2 elements to the merge array
@@ -219,7 +196,7 @@ public class ListUtilities {
 				}
 				break;
 			}
-			/**
+			/*
 			 * This just compares the element of list1 to list2, 
 			 * and if the list1 element is lower than the element of list2 
 			 * store the element of list1 to the merge array and increment the index for the list1 array
@@ -230,7 +207,7 @@ public class ListUtilities {
 				continue;
 
 			}
-			/**
+			/*
 			 * This just compares the element of list1 to list2, 
 			 * and if the list1 element is greater than the element of list2 
 			 * store the element of list2 to the merge array and increment the index for the list2 array
@@ -240,7 +217,7 @@ public class ListUtilities {
 				indexArrayForList2++;
 				continue;
 			}
-			/**
+			/*
 			 *This will only execute if both elements are the same.
 			 *It will then store the first element to the duplicate array with a message indicating that the first element was merged
 			 *and it will only add one of the elements to the merge array
@@ -256,7 +233,7 @@ public class ListUtilities {
 			}
 
 		}
-		/**
+		/*
 		 * If the size of the duplicate array is not equal 0,
 		 *  this means that the array has duplicates. If true, 
 		 *  it will write the duplicate array in the file passed to the merge method 

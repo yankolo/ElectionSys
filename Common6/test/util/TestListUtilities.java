@@ -17,11 +17,6 @@ public class TestListUtilities {
 		System.out.println("-----------Testing The Generic Sort method-----------");
 		String[] array1 = {"Sammy" , "Mohammed" , "Nikita" , "Yanick" };
 		TestGeneralSortMethod("Case 1 - valid String array should be sorted in alphabetic order", array1, true);
-		String [] array2 = null;
-		TestGeneralSortMethod("Case 2 - invalid String array, should not sort the array and should throw a NullPointerException", array2, false);
-		String [] array3 = {"Sammy" , "Mohammed" , "Nikita" , "Yanick" , null };
-		TestGeneralSortMethod("Case 3 - invalid String array, should not sort the array and should throw a IllegalArgumentException", array3, false);
-
 	}
 
 	public static void TestGeneralSortMethod(String testCase, String[] array, boolean expectValid) {
@@ -63,17 +58,7 @@ public class TestListUtilities {
 		ListUtilities.sort(array1);
 		String[] array2 = {"Lamelo" , "Sammy" , "Mohammed" , "Liangelo" , "Lavar", "Zack" };
 		ListUtilities.sort(array2);
-		TestMergeMethod("Case 1 -- Valid sorted arrays are passed to the merge method -- ", array1, array2, true);
-		String [] array3 = null;
-		String [] array4 = null;
-		TestMergeMethod("Case 2 -- Invalid sorted arrays are passed to the merge method - ( the first array is null referenced) -- ", array3, array2, false);
-		TestMergeMethod("Case 3 -- Invalid sorted arrays are passed to the merge method - ( the second array is null referenced) -- ", array1, array4, false);
-		TestMergeMethod("Case 4 -- Invalid sorted arrays are passed to the merge method - ( the both arrays are null referenced) -- ", array3, array4, false);
-		String [] array5 = {"Sammy" , null , "Nikita" , "Yanick" };
-		TestMergeMethod("Case 5 -- Invalid sorted arrays are passed to the merge method - ( first array contains a null referenced value ) -- ", array5, array2, false);
-		TestMergeMethod("Case 6 -- Invalid sorted arrays are passed to the merge method - ( second array contains a null referenced value ) -- ", array2, array5, false);
-
-		
+		TestMergeMethod("Case 1 -- Valid sorted arrays are passed to the merge method -- ", array1, array2, true);	
 	}
 	public static void TestMergeMethod(String testCase, String[] array1, String [] array2 ,  boolean expectValid) {
 	
@@ -108,9 +93,10 @@ public class TestListUtilities {
 		System.out.println("\n");
 	}
 	
-	/*As it is not possible to use the VoterName and PostalCode comparators - since they are located in ElectionSys -.
-	 *The sort method is test using a custom StringComparator that works in a way similar to the other two Comparator
-	 *only it takes 2 Strings instead of 2 Voters
+	/*
+	 * As it is not possible to use the VoterName and PostalCode comparators - since they are located in ElectionSys -.
+	 * The sort method is test using a custom StringComparator that works in a way similar to the other two Comparator
+	 * only it takes 2 Strings instead of 2 Voters
 	 */
 	public static void testSecondSort(){
 		System.out.println("Testing the second sort method \n");
