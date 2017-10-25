@@ -110,7 +110,7 @@ public class Email implements Serializable, Comparable<Email> {
 		}
 
 		if (!(email.replaceAll("^\\s+|\\s+$", "").matches(
-				"^[\\w_-](?:(?:[\\w_-]|(?:(\\.)(?!\\1))){0,30}[\\w_-])?@\\w(?:[\\w-]{0,30}\\w)?(?:\\.\\w(?:[\\w-]{0,30}\\w)?)*$"))) {
+				"^[a-zA-Z0-9_-](?:(?:[a-zA-Z0-9_-]|(?:(\\.)(?!\\1))){0,30}[a-zA-Z0-9_-])?@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,30}[a-zA-Z0-9])?(?:\\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,30}[a-zA-Z0-9])?)*$"))) {
 			throw new IllegalArgumentException("Email Error - Inavlid email address = " + email);
 		} else {
 			return email.trim();
