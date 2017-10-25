@@ -13,10 +13,10 @@ public class VoterNameComparatorTest {
 	
 	private static void testCompare() {
 		System.out.println("Testing the compare method \n");
-		testCompare("Case 1: equal Voters", "Yanik", "Yanik", "Kolomatski", "Kolomatski", "J4W2Y9", "yan@gmail.com", "yan@gmail.com", 0);
-		testCompare("Case 2: different names, voter1 after voter2", "Yanik", "Sammy", "Kolomatski", "Chaouki", "J4W2Y9", "yan@gmail.com", "yannnn@gmail.com", 1);
-		testCompare("Case 3: different names, voter1 before voter2", "Sammy", "Yanik", "Chaouki", "Kolomatski", "J4W2Y9", "yan@gmail.com", "yannnn@gmail.com", -1);
-		testCompare("Case 4: same names, natural order determined by email", "Yanik", "Yanik", "Kolomatski", "Kolomatski", "J4W2Y9", "yan@gmail.com", "yannnn@gmail.com", -1);
+		testCompare("Case 1: different names, voter1 after voter2", "Yanik", "Sammy", "Kolomatski", "Chaouki", "J4W2Y9", "yan@gmail.com", "yannnn@gmail.com", 1);
+		testCompare("Case 2: different names, voter1 before voter2", "Sammy", "Yanik", "Chaouki", "Kolomatski", "J4W2Y9", "yan@gmail.com", "yannnn@gmail.com", -1);
+		testCompare("Case 3: same names, natural order determined by email", "Yanik", "Yanik", "Kolomatski", "Kolomatski", "J4W2Y9", "yan@gmail.com", "yannnn@gmail.com", -1);
+		testCompare("Case 4: same names, same emails, natural order determined by email", "Yanik", "Yanik", "Kolomatski", "Kolomatski", "J4W2Y9", "yan@gmail.com", "yan@gmail.com", 0);
 	}
 	
 	private static void testCompare(String testCase, String fName, String fNameTwo, String lName, String lNameTwo, String pCode, String eAddress, String eAddressTwo, int expectedResult) {
