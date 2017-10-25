@@ -85,10 +85,12 @@ public class SortMergeApp {
 	private static void createDirectories() {
 		Path sortedDirectoryPath = Paths.get("datafiles/sorted");
 		Path databaseDirectoryPath = Paths.get("datafiles/database");
+		Path duplicateDirectoryPath = Paths.get("datafiles/duplicate");
 		
 		try {
 		Files.createDirectory(sortedDirectoryPath);
 		Files.createDirectory(databaseDirectoryPath);
+		Files.createDirectory(duplicateDirectoryPath);
 		} catch (IOException ioe) {
 			System.out.println(ioe.getMessage());
 		}
