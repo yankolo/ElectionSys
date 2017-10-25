@@ -81,11 +81,11 @@ public class DawsonElection implements Election {
 
 		if (!(isNull(startRange))) {
 			if(startRange.trim().isEmpty())
-			postalCodeStartRange = null;
+			postalCodeStartRange = "A1A 1A1";
 		}
 		if (!(isNull(endRange))) {
 			if(endRange.trim().isEmpty())
-			postalCodeEndRange = null;
+			postalCodeEndRange = "Z9Z 9Z9";
 		}
 
 		if (validDateRange(startYear, startMonth, startDay, endYear, endMonth, endDay)) {
