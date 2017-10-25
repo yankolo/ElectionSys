@@ -97,15 +97,9 @@ public final class Name implements Serializable, Comparable<Name>{
 		if (!(obj instanceof Name))
 			return false;
 		Name other = (Name) obj;
-		if (firstName == null) {
-			if (other.firstName != null)
-				return false;
-		} else if (!firstName.equals(other.firstName))
+		if (!firstName.equals(other.firstName))
 			return false;
-		if (lastName == null) {
-			if (other.lastName != null)
-				return false;
-		} else if (!lastName.equals(other.lastName))
+		if (!lastName.equals(other.lastName))
 			return false;
 		return true;
 	}
