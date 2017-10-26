@@ -71,7 +71,7 @@ public class SortMergeApp {
 		// in filePathsList
 		for (Path file: filesInDirectory) {
 			String filename = file.getFileName().toString();
-			if (filename.matches(name + "[0-9]*") && filename.endsWith(fileExtension))
+			if (filename.matches(name + "[0-9]*" + fileExtension))
 				listOfFilePaths.add(file);
 		}
 		
