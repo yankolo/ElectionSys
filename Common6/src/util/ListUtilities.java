@@ -148,19 +148,6 @@ public class ListUtilities {
 	public static Comparable[] merge(Comparable[] list1, Comparable[] list2, String duplicateFileName)
 			throws IOException , IllegalArgumentException{
 		List<String> duplicateArrayList = new ArrayList<String>();
-		Path dir;
-		String file = "datafiles/duplicate/" + duplicateFileName;
-		try {
-			dir = Paths.get("datafiles/duplicate");
-			if (!Files.exists(dir))
-				Files.createDirectory(dir);
-		} catch (InvalidPathException ipe) {
-			System.err.println("You have entered invalid cahracters as path");
-		} catch (FileAlreadyExistsException faee) {
-			System.err.println("You have entered a path of a directory that already exists");
-		} catch (IOException ioe) {
-			System.err.println("The parent directory doesnt not exist");
-		}
 	
 		if (duplicateFileName == null) {
 			throw new IllegalArgumentException("You may not pass a null referenced path to this file");
@@ -238,7 +225,7 @@ public class ListUtilities {
 		 *  it will write the duplicate array in the file passed to the merge method 
 		 */
 		if (duplicateArrayList.size() != 0) {
-			saveListToTextFile(duplicateArrayList.toArray(), file);
+			saveListToTextFile(duplicateArrayList.toArray(), duplicateFileName);
 		}
 		list3 = Arrays.copyOf(list3, list3.length - indexArrayDuplicate);
 		return list3;
