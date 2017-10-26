@@ -134,6 +134,9 @@ public class ListUtilities {
 	 * Precondition: Assumes that the lists are not null and that both lists contain
 	 * objects that can be compared to each other and are filled to capacity.
 	 * 
+	 * This method will not throw an IO exception. We have decided that throwing an exception in this method
+	 * will result in a problem in any application that expects a merged array to be returned even if the file 
+	 * does not exist or any other reason a IOException is thrown
 	 *
 	 * @param list1 A naturally sorted list of objects. Assumes that the list
 	 * contains no duplicates and that its capacity is equal to its size.
@@ -146,7 +149,7 @@ public class ListUtilities {
 	 */
 	@SuppressWarnings({ "rawtypes", "unchecked" })
 	public static Comparable[] merge(Comparable[] list1, Comparable[] list2, String duplicateFileName)
-			throws IOException , IllegalArgumentException{
+			throws IllegalArgumentException{
 		List<String> duplicateArrayList = new ArrayList<String>();
 	
 		if (duplicateFileName == null) {
@@ -225,7 +228,13 @@ public class ListUtilities {
 		 *  it will write the duplicate array in the file passed to the merge method 
 		 */
 		if (duplicateArrayList.size() != 0) {
-			saveListToTextFile(duplicateArrayList.toArray(), duplicateFileName);
+			try {
+				
+				saveListToTextFile(duplicateArrayList.toArray(), duplicateFileName);
+			}
+			catch(IOException io) {
+				System.err.println("Cannot write duplicate elements to the  " + duplicateFileName + " file ");
+			}
 		}
 		list3 = Arrays.copyOf(list3, list3.length - indexArrayDuplicate);
 		return list3;
