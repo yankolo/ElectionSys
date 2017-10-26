@@ -22,7 +22,7 @@ public class ElectionFileLoader {
 	 * the lines of a text file by calling the createLinesArray method. Then it
 	 * returns the Voter[] that is created and passed by the createVoterArray
 	 * method.
-	 * 
+	 * @author Mohamed
 	 * @param filename
 	 * @return Voter[]
 	 * @throws IOException
@@ -38,7 +38,7 @@ public class ElectionFileLoader {
 	 * the lines of a text file by calling the createLinesArray method. Then it
 	 * returns the Election[] that is created and passed by the createElectionArray
 	 * method.
-	 * 
+	 * @author Mohamed
 	 * @param filename
 	 * @return Election[]
 	 * @throws IOException
@@ -50,13 +50,85 @@ public class ElectionFileLoader {
 	}
 
 	/**
-	 * 
+	 * This method will go through a file and look for any election name and try to match them to 
+	 * one of the elements in the elections array. If one of the elements is matched, it will update the election with its
+	 * corresponding Tally in the file. If it does not match any elements in the elections array, the election's tally will not
+	 * be updated.
+	 * @author Sammy, Mohamed and Yanick
 	 * @param filename
 	 * @param elections
 	 * @throws IOException
 	 */
 	public static void setExistingTallyFromSequentialFile(String filename, Election[] elections) throws IOException {
-		// TODO Code Method
+		String[] tallyFile = createLinesArray(filename);
+		int[][] results;
+
+		int electionLine = 0;
+		int firstResultLine = 0;
+		int numOfResults = 0;
+		while (electionLine < tallyFile.length) {
+			try {
+				// first gets the name of the election that will be stored in the following
+				// variable
+				String[] electionPart = tallyFile[electionLine].split("[*]");
+				// the number of choices will be in the following variable.
+				numOfResults = Integer.parseInt(electionPart[1]);
+				// we need to have a variable that keeps track of the first result line of a
+				// tally
+				firstResultLine = electionLine + 1;
+				// this will contain all the results of a tally
+				String[] resultLines = Arrays.copyOfRange(tallyFile, firstResultLine, firstResultLine + numOfResults);
+				// then we will store each line of the tally, to get each result when we will
+				// split
+				String[][] resultsInString = new String[resultLines.length][];
+				// use split to get each line of result without the asterix
+				for (int i = 0; i < resultLines.length; i++) {
+					resultsInString[i] = resultLines[i].split("[*]");
+				}
+
+				// Transform string[][] to int[][]
+				results = new int[resultsInString.length][];
+				for (int i = 0; i < resultsInString.length; i++) {
+					results[i] = new int[resultsInString[i].length];
+					for (int j = 0; j < resultsInString[i].length; j++) {
+						results[i][j] = Integer.parseInt(resultsInString[i][j]);
+					}
+				}
+				/**
+				 * checks if the name of the tally is in the corresponding the election array
+				 * that is passed to the method if the name is not in the array, it will turn a
+				 * boolean value to true, meaning that the tally was found
+				 */
+
+				boolean tallyFoundInElections = false;
+				Election foundElection = null;
+				for (Election election : elections) {
+					if (electionPart[0].equals(election.getName())) {
+						tallyFoundInElections = true;
+						foundElection = election;
+					}
+				}
+				// if the tally is found then update the election with the corresponding tally
+				// result
+				if (tallyFoundInElections)
+					DawsonElectionFactory.DAWSON_ELECTION.setExistingTally(results, foundElection);
+				// if not found then it will look at the next line after the number of choices
+				// possible
+				else
+					System.err.println(
+							"Cannot have a ellection in the tally file that doesnt correspond to one of the elections passed as an array at line "
+									+ (electionLine + 1) + "/n" + tallyFile[electionLine]);
+				// increment to the next election line
+				electionLine = firstResultLine + numOfResults;
+			} catch (Exception e) {
+				// if any error is caught then increment to the next election line without
+				// updating the election of a tally.
+				System.err.println("Discarded: The tally for the election " + tallyFile[electionLine] + " at line "
+						+ electionLine);
+				electionLine = firstResultLine + numOfResults;
+			}
+
+		}
 	}
 
 	/**
@@ -71,7 +143,7 @@ public class ElectionFileLoader {
 	 * is added to the ArrayList voterArrayList. Finally a Voter[] validVoters is
 	 * created which it's size is equal to the size of the ArrayList voterArrayList.
 	 * The Voter[] validVoters is then returned.
-	 * 
+	 * @author Mohamed
 	 * @param linesArray
 	 * @param filename
 	 * @return Voter[] validVoters
@@ -131,7 +203,7 @@ public class ElectionFileLoader {
 	 * exception, the createElectionArray will return an empty Election[]
 	 * electionArray. Otherwise it will convert the ArrayList electionArrayList to
 	 * Election[] electionArray and return it.
-	 * 
+	 * @author Mohamed
 	 * @param linesArray
 	 * @param filename
 	 * @return Election[] electionArray
@@ -247,7 +319,7 @@ public class ElectionFileLoader {
 	 * The createLinesArray method takes a String filename which is the name of the
 	 * text file and return a String[] linesArray contains all the lines of the text
 	 * file without the empty lines.
-	 * 
+	 * @author Mohamed , Yanick
 	 * @param filename
 	 * @return String[] linesArray
 	 * @throws IOException

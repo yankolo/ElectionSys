@@ -2,6 +2,7 @@ package election.data;
 
 import java.io.IOException;
 
+import election.business.DawsonElectionFactory;
 import election.business.interfaces.Election;
 import election.business.interfaces.Voter;
 
@@ -10,6 +11,7 @@ public class ElectionFileLoaderTest {
 	public static void main(String[] args) {
 		testGetVoterListFromSequentialFile();
 		testGetElectionListFromSequentialFile();
+		testSetExistingTallyFromSequentialFile();
 	}
 
 	private static void testGetVoterListFromSequentialFile() {
@@ -131,5 +133,54 @@ public class ElectionFileLoaderTest {
 		}
 		System.out.println();
 	}
+	private static void testSetExistingTallyFromSequentialFile() {
+		//create 3 different Election some having the same name that is in the file and some that are not similar to the one in the file
+		String s1 = "Brandon";
+		String s2 = "Bob";
+		String s3 = "Jordy";
+		String s4 = "Hello";
+		String s5 = "Hey";
+		String s6 = "Wassup";
+		Election election1 = DawsonElectionFactory.DAWSON_ELECTION.getElectionInstance("Dawson Color Election 2020" , "single", 2016, 12, 2, 2017, 04, 22, null, null, s1,s2,s3,s4,s5,s6);
+		Election election2 = DawsonElectionFactory.DAWSON_ELECTION.getElectionInstance("Brittany independence referendum" , "single", 2016, 12, 2, 2017, 04, 22, null, null, s1,s2);
+		Election election3 = DawsonElectionFactory.DAWSON_ELECTION.getElectionInstance("Oh my life" , "single", 2016, 12, 2, 2017, 04, 22, null, null, s1,s2);
+		Election [] array = {election1 , election2, election3};
+		Election election4 = DawsonElectionFactory.DAWSON_ELECTION.getElectionInstance("Dawson Color Election 2020" , "single", 2016, 12, 2, 2017, 04, 22, null, null, s1,s2,s3,s4,s5,s6);
+		Election [] array1 = {election4};
+		Election election5 = DawsonElectionFactory.DAWSON_ELECTION.getElectionInstance("Brittany independence referendum" , "single", 2016, 12, 2, 2017, 04, 22, null, null, s1,s2);
+		Election [] array2 = {election4 , election5};
+		Election election6 = DawsonElectionFactory.DAWSON_ELECTION.getElectionInstance("Dawson Color Election 2020" , "single", 2016, 12, 2, 2017, 04, 22, null, null, s1,s2,s3,s4,s5,s6);
+		Election election7 = DawsonElectionFactory.DAWSON_ELECTION.getElectionInstance("0*0" , "single", 2016, 12, 2, 2017, 04, 22, null, null, "0*0", "0");
+		Election [] array3 = {election6 , election5,election7};
+		Election [] array4 = {election6 ,election5};
+		testSetExistingTallyFromSequentialFile("Case 1 -- all elements in the elections array correspond to the tallys in the text file ", "./datafiles/unsorted/tally.txt", array, 3);
+		testSetExistingTallyFromSequentialFile("Case 2 -- only one element and the element is invalid since the number of elements is not equal to the one defined in the first line of the file", "./test/election/data/setTestTally/tallyTEST1.txt", array1, 0);
+		testSetExistingTallyFromSequentialFile("Case 3 -- there is two elements, one is valid, the other element is invalid since the number of elements is not equal to the one defined in the first line of the file", "./test/election/data/setTestTally/tallyTEST2.txt", array2, 0);
+		testSetExistingTallyFromSequentialFile("Case 4 -- there is two elements, one is valid, the other element is invalid since the number of elements is not equal to the one defined in the first line of the file", "./test/election/data/setTestTally/tallyTEST3.txt", array4, 0);
+	}
+	private static void testSetExistingTallyFromSequentialFile(String testCase, String filename, Election [] elections ,int numOfValidVoters) {
+		System.out.println("   " + testCase);
+		try {
+
+			ElectionFileLoader.setExistingTallyFromSequentialFile(filename, elections);
+			
+
+			for (int i = 0; i < elections.length; i++) {
+				System.out.println("\t " + elections[i].getTally());
+				if(elections[i].getTally().getVoteBreakdown().length != elections[i].getElectionChoices().length) {
+					
+					System.out.println(" == Error ===");
+				}
+			
+			}
+
+
+		} catch (IOException e) {
+			System.out.println("\t" + e.getMessage());
+		}
+		System.out.println();
+}
+	
+	
 
 }
