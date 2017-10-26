@@ -287,16 +287,13 @@ public class SortMergeApp {
 		// Load the merged elections file to be able to set the tally (a method which accepts an array of elections)
 		try {
 		Election[] mergedElections = ElectionFileLoader.getElectionListFromSequentialFile("datafiles/database/elections.txt");
-		} catch (IOException ioe) {
-			System.out.println(ioe.getMessage());
-		}
 		
 		// Loading all tally files
 		for (int i = 0; i < pathsToAllTallyFiles.length; i++)
-			try {
 			ElectionFileLoader.setExistingTallyFromSequentialFile(pathsToAllTallyFiles[i].toString(), mergedElections);
-			} catch (IOException ioe) {
-				System.out.println(ioe.getMessage());
-			}
+	
+		} catch (IOException ioe) {
+			System.out.println(ioe.getMessage());
+		}
 	}
 }
