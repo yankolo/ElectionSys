@@ -58,7 +58,7 @@ public class SortMergeApp {
 		Path directory = Paths.get(directoryPath);
 		Path[] filesInDirectory;
 		try {
-			filesInDirectory = (Path[]) Files.list(directory).toArray();
+			filesInDirectory = Files.list(directory).toArray(Path[]::new);
 		} catch (IOException ioe) {
 			System.out.println("Couldn't list files in " + directoryPath);
 			return new Path[] {}; // Return empty array
