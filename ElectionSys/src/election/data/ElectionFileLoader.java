@@ -22,6 +22,7 @@ public class ElectionFileLoader {
 	 * the lines of a text file by calling the createLinesArray method. Then it
 	 * returns the Voter[] that is created and passed by the createVoterArray
 	 * method.
+	 * 
 	 * @author Mohamed
 	 * @param filename
 	 * @return Voter[]
@@ -38,6 +39,7 @@ public class ElectionFileLoader {
 	 * the lines of a text file by calling the createLinesArray method. Then it
 	 * returns the Election[] that is created and passed by the createElectionArray
 	 * method.
+	 * 
 	 * @author Mohamed
 	 * @param filename
 	 * @return Election[]
@@ -50,10 +52,12 @@ public class ElectionFileLoader {
 	}
 
 	/**
-	 * This method will go through a file and look for any election name and try to match them to 
-	 * one of the elements in the elections array. If one of the elements is matched, it will update the election with its
-	 * corresponding Tally in the file. If it does not match any elements in the elections array, the election's tally will not
-	 * be updated.
+	 * This method will go through a file and look for any election name and try to
+	 * match them to one of the elements in the elections array. If one of the
+	 * elements is matched, it will update the election with its corresponding Tally
+	 * in the file. If it does not match any elements in the elections array, the
+	 * election's tally will not be updated.
+	 * 
 	 * @author Sammy, Mohamed and Yanick
 	 * @param filename
 	 * @param elections
@@ -116,15 +120,16 @@ public class ElectionFileLoader {
 				// possible
 				else
 					System.err.println(
-							"Cannot have a ellection in the tally file that doesnt correspond to one of the elections passed as an array at line "
-									+ (electionLine + 1) + "/n" + tallyFile[electionLine]);
+							"Error:  Tally not set - Tally's election name not found in election list \n\tIn file: "
+									+ filename + "\n\tAt line " + (electionLine + 1) + ": " + tallyFile[electionLine]);
 				// increment to the next election line
 				electionLine = firstResultLine + numOfResults;
 			} catch (Exception e) {
 				// if any error is caught then increment to the next election line without
 				// updating the election of a tally.
-				System.err.println("Discarded: The tally for the election " + tallyFile[electionLine] + " at line "
-						+ electionLine);
+
+				System.err.println("Error:  Tally not set - Bad Format \n\tIn file: " + filename + "\n\tAt line "
+						+ (electionLine + 1) + ": " + tallyFile[electionLine]);
 				electionLine = firstResultLine + numOfResults;
 			}
 
@@ -143,6 +148,7 @@ public class ElectionFileLoader {
 	 * is added to the ArrayList voterArrayList. Finally a Voter[] validVoters is
 	 * created which it's size is equal to the size of the ArrayList voterArrayList.
 	 * The Voter[] validVoters is then returned.
+	 * 
 	 * @author Mohamed
 	 * @param linesArray
 	 * @param filename
@@ -156,8 +162,8 @@ public class ElectionFileLoader {
 			String[] voter = linesArray[i].split("[*]");
 
 			if (voter.length != 4) {
-				System.err.println(
-						"Format Error - Invalid number of elements at line: " + (i + 1) + " from file: " + filename);
+				System.err.println("Error:  Bad Format - Invalid number of elements \n\tIn file: " + filename
+						+ "\n\tAt line " + (i + 1) + ": " + linesArray[i]);
 			} else {
 				String email = voter[0];
 				String firstName = voter[1];
@@ -171,7 +177,8 @@ public class ElectionFileLoader {
 					voterArrayList.add(newVoters);
 
 				} catch (IllegalArgumentException iae) {
-					System.out.println("\t" + iae.getMessage());
+					System.err.println("Error:  Invalid voter information\n\t" + iae.getMessage() + "\n\tIn file: "
+							+ filename + "\n\tAt line " + (i + 1) + ": " + linesArray[i]);
 				}
 			}
 		}
@@ -203,6 +210,7 @@ public class ElectionFileLoader {
 	 * exception, the createElectionArray will return an empty Election[]
 	 * electionArray. Otherwise it will convert the ArrayList electionArrayList to
 	 * Election[] electionArray and return it.
+	 * 
 	 * @author Mohamed
 	 * @param linesArray
 	 * @param filename
@@ -237,10 +245,10 @@ public class ElectionFileLoader {
 			if (election.length != 11) {
 
 				// The Error prints the line number, file, and the line of the invalid Election.
-				System.err.println(
-						"File Discarded \nPossible Error caused by Bad Formated Election or Invalid Option number for one of the Elections in the file. \nError at line: "
-								+ (electionLine + 1) + " From file: " + filename + "\nLine: \t"
-								+ linesArray[electionLine]);
+
+				System.err.println("Error:  File Discarded: " + filename
+						+ "\n\tPossible Error caused by Bad Formated Election or Invalid Option number for one of the Elections in the file.\n\tAt line "
+						+ (electionLine + 1) + ": " + linesArray[electionLine]);
 				invalidElection = true;
 				break;
 
@@ -290,13 +298,11 @@ public class ElectionFileLoader {
 
 				} catch (Exception e) {
 					invalidElection = true;
-					System.err.println(
-							"File Discarded \nPossible Error caused by Bad Formated Election or Invalid Option number for one of the Elections in the file. \nError at line: "
-									+ (electionLine + 1) + " From file: " + filename + "\nLine: \t"
-									+ linesArray[electionLine]);
-
-					// In addition of the descriptive Error, the exception Error is printed.
-					System.err.println(e.toString());
+					// Same descriptive Error as above but also has the exception Error is printed.
+					System.err.println("Error:  File Discarded: " + filename
+							+ "\n\tPossible Error caused by Bad Formated Election or Invalid Option number for one of the Elections in the file."
+							+ "\n\t" + e.toString() + "\n\tAt line " + (electionLine + 1)
+							+ ": " + linesArray[electionLine]);
 					break;
 				}
 			}
@@ -315,6 +321,7 @@ public class ElectionFileLoader {
 	 * The createLinesArray method takes a String filename which is the name of the
 	 * text file and return a String[] linesArray contains all the lines of the text
 	 * file without the empty lines.
+	 * 
 	 * @author Mohamed , Yanick
 	 * @param filename
 	 * @return String[] linesArray
