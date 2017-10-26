@@ -17,7 +17,6 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-//skeleton provides the imports, plus methods saveListToTextFile and the Comparator sort overload
 
 public class ListUtilities {
 	private static final Charset CHARACTER_ENCODING = StandardCharsets.UTF_8;
