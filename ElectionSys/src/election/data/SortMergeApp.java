@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.io.IOException;
 import java.util.Arrays;
 import java.util.List;
+import java.util.stream.Stream;
 
 import election.business.interfaces.Election;
 import election.business.interfaces.Tally;
