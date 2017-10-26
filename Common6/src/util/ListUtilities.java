@@ -233,7 +233,7 @@ public class ListUtilities {
 				saveListToTextFile(duplicateArrayList.toArray(), duplicateFileName);
 			}
 			catch(IOException io) {
-				System.err.println("Cannot write duplicate elements to the  " + duplicateFileName + " file ");
+				System.err.println("Error:  Cannot write duplicate elements\n\tTo file: " + duplicateFileName  );
 			}
 		}
 		list3 = Arrays.copyOf(list3, list3.length - indexArrayDuplicate);
