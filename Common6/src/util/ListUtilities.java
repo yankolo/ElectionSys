@@ -147,7 +147,7 @@ public class ListUtilities {
 	@SuppressWarnings({ "rawtypes", "unchecked" })
 	public static Comparable[] merge(Comparable[] list1, Comparable[] list2, String duplicateFileName)
 			throws IOException , IllegalArgumentException{
-		List<String> duplicateArray = new ArrayList<String>();
+		List<String> duplicateArrayList = new ArrayList<String>();
 		Path dir;
 		String file = "datafiles/duplicate/" + duplicateFileName;
 		try {
@@ -223,9 +223,9 @@ public class ListUtilities {
 			 */
 			else {
 				list3[i] = list1[indexArrayForList1];
-				duplicateArray.add(indexArrayDuplicate, list1[indexArrayForList1].toString() + " (merged)");
+				duplicateArrayList.add(indexArrayDuplicate, list1[indexArrayForList1].toString() + " (merged)");
 				indexArrayDuplicate++;
-				duplicateArray.add(indexArrayDuplicate, list2[indexArrayForList2].toString());
+				duplicateArrayList.add(indexArrayDuplicate, list2[indexArrayForList2].toString());
 				indexArrayForList1++;
 				indexArrayForList2++;
 				continue;
@@ -237,8 +237,8 @@ public class ListUtilities {
 		 *  this means that the array has duplicates. If true, 
 		 *  it will write the duplicate array in the file passed to the merge method 
 		 */
-		if (duplicateArray.size() != 0) {
-			saveListToTextFile(duplicateArray.toArray(), file);
+		if (duplicateArrayList.size() != 0) {
+			saveListToTextFile(duplicateArrayList.toArray(), file);
 		}
 		list3 = Arrays.copyOf(list3, list3.length - indexArrayDuplicate);
 		return list3;
