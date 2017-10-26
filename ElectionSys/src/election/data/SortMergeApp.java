@@ -60,7 +60,7 @@ public class SortMergeApp {
 		try {
 			filesInDirectory = Files.list(directory).toArray(Path[]::new);
 		} catch (IOException ioe) {
-			System.out.println("Couldn't list files in " + directoryPath);
+			System.err.println("Couldn't list files in " + directoryPath + "\n");
 			return new Path[] {}; // Return empty array
 		}
 		
@@ -84,6 +84,9 @@ public class SortMergeApp {
 	}
 	
 	private static void createDirectories() {
+		System.out.println("--- Creating directories ---\n");
+		System.out.println("Creating all directories...\n");
+		
 		Path sortedDirectoryPath = Paths.get("datafiles/sorted");
 		Path databaseDirectoryPath = Paths.get("datafiles/database");
 		Path duplicateDirectoryPath = Paths.get("datafiles/duplicate");
@@ -93,11 +96,12 @@ public class SortMergeApp {
 		Files.createDirectory(databaseDirectoryPath);
 		Files.createDirectory(duplicateDirectoryPath);
 		} catch (IOException ioe) {
-			System.out.println(ioe.getMessage());
+			System.err.println("Error:  Cannot create directory - Problems creating directory or the directory already exists\n\t" + ioe.getMessage() + "\n");
 		}
 	}
 	
 	private static void sortVoters() {
+		System.out.println("--- Sorting Voters ---\n");
 		// Creating Path[] that contains the paths of all the unsorted voter files. That way
 		// it will be easier to load all the Voter files into one 2D array
 		Path[] pathsToAllVoterFiles = createFilePathsArray("voters", "datafiles/unsorted");
@@ -105,6 +109,7 @@ public class SortMergeApp {
 		// That way, it will be easier to manipulate all the files at once.
 		Voter[][] arraysOfVoters = new Voter[pathsToAllVoterFiles.length][];
 		
+		System.out.println("Loading all voters...\n");
 		// Populating arraysOfVoters with arrays that contain voters from the unsorted Voter files
 		for (int i = 0; i < arraysOfVoters.length; i++)
 			try {
@@ -113,10 +118,12 @@ public class SortMergeApp {
 				System.out.println(ioe.getMessage());
 			}
 		
+		System.out.println("Sorting all voters...\n");
 		// Sorting all the Voter arrays
 		for (int i = 0; i < arraysOfVoters.length; i++)
 			ListUtilities.sort(arraysOfVoters[i]);
 		
+		System.out.println("Writing all sorted voters to files...\n");
 		// Writing the sorted voter arrays to files
 		for (int i = 0; i < arraysOfVoters.length; i++) {
 			// Finding the original name of the voter file to be able to create the file
@@ -124,13 +131,15 @@ public class SortMergeApp {
 			
 			try {
 			ListUtilities.saveListToTextFile(arraysOfVoters[i], "datafiles/sorted/" + filename);
-			} catch (IOException ioe) {
-				System.out.println(ioe.getMessage());
+			} catch (IOException ioe)  {
+				System.out.println("Error:  Cannot write to "+ pathsToAllVoterFiles[i] + "\n\t" + ioe.getMessage() + "\n");
 			}
 		}
 	}
 	
 	private static void mergeVoters() {
+		System.out.println("--- Merging Voters ---\n");
+		
 		// Creating Path[] that contains the paths of all the sorted voter files. That way
 		// it will be easier to load all the Voter files into one 2D array
 		Path[] pathsToAllSortedVoterFiles = createFilePathsArray("voters", "datafiles/sorted");
@@ -138,6 +147,7 @@ public class SortMergeApp {
 		// That way, it will be easier to manipulate all the files at once.
 		Voter[][] arraysOfSortedVoters = new Voter[pathsToAllSortedVoterFiles.length][];
 						
+		System.out.println("Loading all sorted voters...\n");
 		// Populating arraysOfSortedVoters with arrays that contains voters from the sorted Voter files
 		for (int i = 0; i < arraysOfSortedVoters.length; i++)
 			try {
@@ -149,7 +159,8 @@ public class SortMergeApp {
 		// Creating listOfVoterArrays that will be used to merge all the sorted voter arrays
 		List<Comparable[]> listOfVoterArrays = new ArrayList<Comparable[]>();
 		listOfVoterArrays.addAll(Arrays.asList(arraysOfSortedVoters));
-					
+		
+		System.out.println("Merging all sorted voters...\n");
 		/* 
 		 * Merging all the sorted voter arrays. 
 		 * 
@@ -180,16 +191,18 @@ public class SortMergeApp {
 			listOfVoterArrays.remove(0);
 		}
 		Voter[] mergedVoters = (Voter[]) listOfVoterArrays.get(0);
-						
+					
+		System.out.println("Writing merged voters to file...\n");
 		// Writing mergedVoters to file
 		try {
 		ListUtilities.saveListToTextFile(mergedVoters, "datafiles/database/voters.txt");
 		} catch (IOException ioe) {
-			System.out.println(ioe.getMessage());
+			System.out.println("Error:  Cannot write to " + Paths.get("datafiles/database/voters.txt") + "\n\t" + ioe.getMessage() + "\n");
 		}
 	};
 	
 	private static void sortElections() {
+		System.out.println("--- Sorting Elections ---\n");
 		// Creating Path[] that contains the paths of all the unsorted election files. That way
 		// it will be easier to load all the Election files into one 2D array
 		Path[] pathsToAllElectionFiles = createFilePathsArray("elections", "datafiles/unsorted");
@@ -197,6 +210,7 @@ public class SortMergeApp {
 		// That way, it will be easier to manipulate all the files at once.
 		Election[][] arraysOfElections = new Election[pathsToAllElectionFiles.length][];
 		
+		System.out.println("Loading all elections from files...\n");
 		// Populating arraysOfElections with arrays that contain elections from the unsorted Election files
 		for (int i = 0; i < arraysOfElections.length; i++)
 			try {
@@ -205,10 +219,12 @@ public class SortMergeApp {
 				System.out.println(ioe.getMessage());
 			}
 		
+		System.out.println("Sorting all elecitons...\n");
 		// Sorting all the Election arrays
 		for (int i = 0; i < arraysOfElections.length; i++)
 			ListUtilities.sort(arraysOfElections[i]);
 		
+		System.out.println("Writing all sorted elections to files...\n");
 		// Writing the sorted election arrays to files
 		for (int i = 0; i < arraysOfElections.length; i++) {
 			// Finding the original name of the election file to be able to create file
@@ -217,12 +233,14 @@ public class SortMergeApp {
 			try {
 			ListUtilities.saveListToTextFile(arraysOfElections[i], "datafiles/sorted/" + filename);
 			} catch (IOException ioe) {
-				System.out.println(ioe.getMessage());
+				System.out.println("Error:  Cannot write to "+ pathsToAllElectionFiles[i] + "\n\t" + ioe.getMessage() + "\n");
 			}
 		}
 	}
 	
 	private static void mergeElections() {
+		System.out.println("--- Merging Elections ---\n");
+		
 		// Creating Path[] that contains the paths of all the sorted election files. That way
 		// it will be easier to load all the Election files into one 2D array
 		Path[] pathsToAllSortedElectionFiles = createFilePathsArray("elections", "datafiles/sorted");
@@ -230,6 +248,7 @@ public class SortMergeApp {
 		// That way, it will be easier to manipulate all the files at once.
 		Election[][] arraysOfSortedElections = new Election[pathsToAllSortedElectionFiles.length][];
 						
+		System.out.println("Loading all sorted elections from files...\n");
 		// Populating arraysOfSortedElections with arrays that contains elections from the sorted Election files
 		for (int i = 0; i < arraysOfSortedElections.length; i++)
 			try {
@@ -241,7 +260,9 @@ public class SortMergeApp {
 		// Creating listOfElectionArrays that will be used to merge all the sorted election arrays
 		List<Comparable[]> listOfElectionArrays = new ArrayList<Comparable[]>();
 		listOfElectionArrays.addAll(Arrays.asList(arraysOfSortedElections));
-					
+				
+		System.out.println("Merging all sorted elections...\n");
+		
 		/* 
 		 * Merging all the sorted election arrays. 
 		 * 
@@ -273,15 +294,18 @@ public class SortMergeApp {
 		}
 		Election[] mergedElections = (Election[]) listOfElectionArrays.get(0);
 						
+		System.out.println("Writing merged elections to file...\n");
 		// Writing mergedElections to file
 		try {
 		ListUtilities.saveListToTextFile(mergedElections, "datafiles/database/elections.txt");
 		} catch (IOException ioe) {
-			System.out.println(ioe.getMessage());
+			System.out.println("Error:  Cannot write to " + Paths.get("datafiles/database/voters.txt") + "\n\t" + ioe.getMessage() + "\n");
 		}
 	}
 	
 	private static void loadTally () {
+		System.out.println("--- Loading Tallies ---\n");
+		
 		// Creating Path[] that contains the paths of all the tally files. That way
 		// it will be easier to load all the Tally files into one 2D array (incase we'll have more tally files)
 		Path[] pathsToAllTallyFiles = createFilePathsArray("tally", "datafiles/unsorted");
@@ -289,6 +313,7 @@ public class SortMergeApp {
 		try {
 		Election[] mergedElections = ElectionFileLoader.getElectionListFromSequentialFile("datafiles/database/elections.txt");
 		
+		System.out.println("Loading all tallies from files...\n");
 		// Loading all tally files
 		for (int i = 0; i < pathsToAllTallyFiles.length; i++)
 			ElectionFileLoader.setExistingTallyFromSequentialFile(pathsToAllTallyFiles[i].toString(), mergedElections);
