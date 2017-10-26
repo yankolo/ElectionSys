@@ -135,7 +135,7 @@ public class ElectionFileLoader {
 	 * The createVoterArray takes a String[] linesArray which is an array that
 	 * contains all lines of the text file and a String filename which is the name
 	 * of the text file. It creates an empty Voter ArrayList that stores all Voters
-	 * created. The method loops trough each line and splits the line on the
+	 * created. The method loops through each line and splits the line on the
 	 * asterisk, storing all elements in a String[] voter. If the length of String[]
 	 * voter is not equal to 4 (email, first name, last name, postal code), an Error
 	 * is printed with the line number and the filename. Else a Voter is created by
@@ -183,7 +183,7 @@ public class ElectionFileLoader {
 	 * The craeteElectionArray method takes a String[] linesArray which is an array
 	 * that contains all lines of the text file and a String filename which is the
 	 * name of the text file. It creates an empty Election ArrayList that stores all
-	 * Elections created. The method loops trough each election line (int
+	 * Elections created. The method loops through each election line (int
 	 * electionLine) which will always point to the line that contains the election
 	 * and splits the line on the asterisk, storing all elements in a String[]
 	 * election. If the length of String[] election is not equal to 11 (name,
@@ -310,10 +310,6 @@ public class ElectionFileLoader {
 		}
 
 	}
-
-	/*
-	 * Space to create private helper methods for Tally
-	 */
 
 	/**
 	 * The createLinesArray method takes a String filename which is the name of the
