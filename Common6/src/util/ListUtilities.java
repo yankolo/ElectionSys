@@ -255,19 +255,4 @@ public class ListUtilities {
 			 }
 		 }
 	 }
-	 
-	/**
-	 * Checks if an element in an array is null referenced
-	 * @param list
-	 * @return
-	 */
-	@SuppressWarnings({ "rawtypes" })
-	private static boolean nullRefenreceElements(Comparable[] list) {
-		for (Comparable element : list) {
-			if (element == null) {
-				return true;
-			}
-		}
-		return false;
-	}
 }
