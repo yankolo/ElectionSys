@@ -184,7 +184,7 @@ public class SortMergeApp {
 		 * 			mergedVoters --> merged
 		 */
 		while (listOfVoterArrays.size() > 1) {
-			Comparable[] merged = ListUtilities.merge(listOfVoterArrays.get(0), listOfVoterArrays.get(1), "datafiles/sorted/duplicateVoters.txt");
+			Comparable[] merged = ListUtilities.merge(listOfVoterArrays.get(0), listOfVoterArrays.get(1), "datafiles/duplicate/duplicateVoters.txt");
 			
 			// Set index 1 to merged list (of index 0 and 1) and remove index 0 (a neat way to merge all lists with the loop)
 			listOfVoterArrays.set(1, merged);
@@ -286,7 +286,7 @@ public class SortMergeApp {
 		 * 			mergedElections --> merged
 		 */
 		while (listOfElectionArrays.size() > 1) {
-			Comparable[] merged = ListUtilities.merge(listOfElectionArrays.get(0), listOfElectionArrays.get(1), "datafiles\\sorted\\duplicateElections.txt");
+			Comparable[] merged = ListUtilities.merge(listOfElectionArrays.get(0), listOfElectionArrays.get(1), "datafiles\\duplicate\\duplicateElections.txt");
 			
 			// Set index 1 to merged list (of index 0 and 1) and remove index 0 (a neat way to merge all lists with the loop)
 			listOfElectionArrays.set(1, merged);
