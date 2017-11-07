@@ -5,6 +5,9 @@ package election.business;
 
 import java.time.DateTimeException;
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
+
 import election.business.interfaces.Ballot;
 import election.business.interfaces.BallotItem;
 import election.business.interfaces.Election;
@@ -28,7 +31,9 @@ public class DawsonElection implements Election {
 	private Tally tally;
 	private BallotItem[] ballots;
 	private ElectionType electionType;
-
+	private List<Voter> gotBallot;
+	private List<Voter> castBallot;
+	private int invalidVote;
 	/**
 	 * The constructor to create an DawsonElection type object Purpose: The purpose
 	 * of this constructor is to create an object of type DawsonElection that
@@ -124,7 +129,9 @@ public class DawsonElection implements Election {
 		}
 		this.postalCodeEndRange = endRange;
 		this.postalCodeStartRange = startRange;
-
+		gotBallot = new ArrayList<Voter>();
+		castBallot = new ArrayList<Voter>();
+		invalidVote=0;
 	}
 
 	/**
