@@ -13,6 +13,7 @@ import election.business.interfaces.BallotItem;
 import election.business.interfaces.Election;
 import election.business.interfaces.Tally;
 import election.business.interfaces.Voter;
+import util.ListUtilities;
 
 /**
  * 
@@ -305,10 +306,30 @@ public class DawsonElection implements Election {
 	 */
 	@Override
 	public Ballot getBallot(Voter v) {
-		// TODO Auto-generated method stub
+		int placement;
 		if (isNull(v)) {
 			throw new IllegalArgumentException("The voter passed through the getBallot cannot be null referenced ");
 		} else {
+			/**
+			 * Add the following --
+			 * 	 --> validate whether or not a voter is eligible --> USE THE ISELIGIBLE METHOD IN THE VOTER CLASS
+			 *   --> Check if the voter already requested a ballot -- YES -> add them to list gotBallot --> MUST KEEP LIST IN SORTED ORDER
+			 *   ADD THEM IN THE INSERTION POINT RETURNED FROM THE BINARY SEARCH
+			 *   --> NO --> validate whether or not they have already  cast a ballot.
+			 *   --> IF THE VOTER IS NOT ELIGIBLE OR HAS ALREADY CAST A BALLOT --> THROW INVALIDVOTEREXCEPTION WITH MEANINGFUL MESSAGE.
+			 */
+			
+			if(v.isEligible(this)) {
+				placement = ListUtilities.binarySearch(gotBallot, v, 0, gotBallot.size() - 1);
+				if(placement < 0) {
+					
+				}
+			}
+			else {
+				//throw INVALIDVOTEREXCEPTION
+			}
+			
+			
 			BallotItem[] bi = creatBallotArray(this.ballots);
 			Ballot bt = DawsonElectionFactory.DAWSON_ELECTION.getBallot(bi, getElectionType(), this);
 			return bt;
