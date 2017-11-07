@@ -3,6 +3,8 @@ package election.data;
 import java.io.IOException;
 import java.util.List;
 
+import election.business.DawsonElection;
+import election.business.DawsonElectionFactory;
 import election.business.interfaces.ElectionFactory;
 import election.business.interfaces.Voter;
 import election.data.interfaces.InexistentVoterException;
@@ -22,8 +24,9 @@ public class VoterListDB implements VoterDAO {
 	 */
 	
 	public VoterListDB (ListPersistenceObject listPersistenceObject) {
-		
-		
+		this.database = listPersistenceObject.getVoterDatabase();
+		this.listPersistenceObject = listPersistenceObject;
+		this.factory = DawsonElectionFactory.DAWSON_ELECTION;
 	}
 	
 	/**
@@ -33,13 +36,9 @@ public class VoterListDB implements VoterDAO {
 	 */
 	public VoterListDB (ListPersistenceObject listPersistenceObject,
 			ElectionFactory factory) {
-		
-		
-		
-		
-		
-		
-		
+		this.database = listPersistenceObject.getVoterDatabase();
+		this.listPersistenceObject = listPersistenceObject;
+		this.factory = factory;
 	}
 	/**
 	 * 
