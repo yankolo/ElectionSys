@@ -1,8 +1,10 @@
 package util;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Comparator;
+import java.util.List;
 
 public class TestListUtilities {
 
@@ -11,6 +13,7 @@ public class TestListUtilities {
 	TestGeneralSortMethod();
 	TestMergeMethod();
 	testSecondSort();
+	testRecBinarySearch();
 	}
 
 	public static void TestGeneralSortMethod() {
@@ -83,7 +86,7 @@ public class TestListUtilities {
 				System.out.println(" Error! Expected Valid. ====== FAILED TEST =====");
 
 			}
-		} catch (IOException e) {
+		} catch (Exception e) {
 			System.out.println(
 					"\tUNEXPECTED EXCEPTION TYPE!" + e.getClass() + " " + e.getMessage() + "====FAILED TEST====");
 			if (expectValid) {
@@ -138,4 +141,55 @@ public class TestListUtilities {
 	    }
 		System.out.println("\n");
 	}
+	
+	public static void testRecBinarySearch() {
+		System.out.println("Testing the recursive binarySearch method \n");
+		
+		List<String> list = new ArrayList<String>();
+		list.add("a");
+		list.add("b");
+		list.add("c");
+		String key = "b";
+		testRecBinarySearch("Case 1 - look for a valid key in a valid string list", list, key, true);
+		
+		
+	}
+	
+	public static void testRecBinarySearch(String testCase, List<String> list, String key, boolean expectValid) {
+	    System.out.println(testCase);
+		  
+	    try { 
+		   ListUtilities.binarySearch(list, key, 0, list.size());
+		   System.out.print("\t\tThe key was found: " + list.get(ListUtilities.binarySearch(list, key, 0, list.size())));
+		   	    
+		   if (!expectValid)
+		     System.out.print("  Error! Expected Invalid. ==== FAILED TEST ====");
+	    } 
+	    
+	    catch (IllegalArgumentException iae) {
+	    	System.out.println("\t" + iae.getMessage());
+		    if (expectValid)
+		      System.out.println(" Error! Expected Valid. ====== FAILED TEST =====");
+		} 
+	    
+	    catch (NullPointerException npe) {
+		    System.out.println("\t" + npe.getMessage());
+		    if (expectValid)
+		      System.out.println(" Error! Expected Valid. ====== FAILED TEST =====");   
+		} 
+	    
+	    catch (Exception e) {
+		    System.out.println("\tUNEXPECTED EXCEPTION TYPE!" + e.getClass() + " " + e.getMessage() + "====FAILED TEST====");
+		    if (expectValid)
+		      System.out.println("Expected Valid");
+	    }
+		System.out.println("\n");
+	}
+	
+	// ******** space to test the normal binary search method ********
+	//
+	//
+	//
+	//
+	//
 }
