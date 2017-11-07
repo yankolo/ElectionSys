@@ -288,7 +288,15 @@ public class ListUtilities {
 		
 	 }
 	 /**
+	  * @author Nikita
 	  * 
+	  * Recursive version of the binarySearch.
+	  * 
+	  * @param database is a List containing elements of type T
+	  * @param key is object of type T to look for in database
+	  * @param low is lower boundary of the search-portion of the list
+	  * @param high is the higher boundary of the search-portion of the list
+	  * @return int which is position where key is found 
 	  */
 	 public static <T extends Comparable<? super T>> int binarySearch(List<T> database, T key, int low, int high) {
 		 if(low > high)
