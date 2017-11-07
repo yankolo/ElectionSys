@@ -264,4 +264,56 @@ public class ListUtilities {
 			 }
 		 }
 	 }
+	 /**
+	  * 
+	  * 
+	  * 
+	  * 
+	  * 
+	  */
+	 @SuppressWarnings({"unchecked","rawtypes"})
+		public static int binarySearch(Comparable[] database, Comparable key) {
+		 
+		 
+		 
+		 
+		 
+		 
+		 
+		 
+		 
+		 
+		 
+		 
+		
+	 }
+	 /**
+	  * 
+	  * 
+	  * 
+	  * 
+	  * 
+	  * 
+	  * 
+	  */
+	 public static <T extends Comparable<? super T>> int binarySearch(List<T> database, T key, int low, int high) {
+		 
+		 
+		 
+		 
+		 
+		 
+		 
+		 
+		 
+		 
+		 
+		 
+		 
+		 
+		 
+		 
+		 
+	 }
+
 }
