@@ -289,31 +289,17 @@ public class ListUtilities {
 	 }
 	 /**
 	  * 
-	  * 
-	  * 
-	  * 
-	  * 
-	  * 
-	  * 
 	  */
 	 public static <T extends Comparable<? super T>> int binarySearch(List<T> database, T key, int low, int high) {
+		 if(low > high)
+			 return (-low - 1);
 		 
-		 
-		 
-		 
-		 
-		 
-		 
-		 
-		 
-		 
-		 
-		 
-		 
-		 
-		 
-		 
-		 
+		 int midpoint = (low + high) / 2;
+		 if(database.get(midpoint).compareTo(key) == 0)
+			 return midpoint;
+		 else if(database.get(midpoint).compareTo(key) > 0)
+			 return binarySearch(database, key, low, midpoint-1);
+		 else 
+			 return binarySearch(database, key, midpoint+1, high); 	 
 	 }
-
 }
