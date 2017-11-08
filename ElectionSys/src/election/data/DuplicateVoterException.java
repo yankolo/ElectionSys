@@ -10,7 +10,7 @@ public class DuplicateVoterException extends Exception {
 	private static final long  serialVersionUID = 42031768871L;
 	
 	public DuplicateVoterException(){
-		super("The provided Email address is associated with an existing voter.");
+		super("The provided Email address is associated with an already existing voter in the database.");
 	}
 
 	public DuplicateVoterException(String message) {
