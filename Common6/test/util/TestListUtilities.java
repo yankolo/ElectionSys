@@ -13,6 +13,7 @@ public class TestListUtilities {
 	TestGeneralSortMethod();
 	TestMergeMethod();
 	testSecondSort();
+	testBinarySearch();
 	testRecBinarySearch();
 	}
 
@@ -142,6 +143,47 @@ public class TestListUtilities {
 		System.out.println("\n");
 	}
 	
+	public static void testBinarySearch() {
+		System.out.println("Testing the recursive binarySearch method \n");
+		
+		Comparable[] array = {"a", "b", "c"};
+		String key = "b";
+		testBinarySearch("Case 1 - look for a valid key in a valid string array", array, key, true);
+		
+		
+	}
+	
+	public static void testBinarySearch(String testCase, Comparable[] array, String key, boolean expectValid) {
+	    System.out.println(testCase);
+		  
+	    try { 
+		   ListUtilities.binarySearch(array, key);
+		   System.out.print("\t\tThe key was found: " + array[ListUtilities.binarySearch(array, key)]);
+		   	    
+		   if (!expectValid)
+		     System.out.print("  Error! Expected Invalid. ==== FAILED TEST ====");
+	    } 
+	    
+	    catch (IllegalArgumentException iae) {
+	    	System.out.println("\t" + iae.getMessage());
+		    if (expectValid)
+		      System.out.println(" Error! Expected Valid. ====== FAILED TEST =====");
+		} 
+	    
+	    catch (NullPointerException npe) {
+		    System.out.println("\t" + npe.getMessage());
+		    if (expectValid)
+		      System.out.println(" Error! Expected Valid. ====== FAILED TEST =====");   
+		} 
+	    
+	    catch (Exception e) {
+		    System.out.println("\tUNEXPECTED EXCEPTION TYPE!" + e.getClass() + " " + e.getMessage() + "====FAILED TEST====");
+		    if (expectValid)
+		      System.out.println("Expected Valid");
+	    }
+		System.out.println("\n");
+	}
+	
 	public static void testRecBinarySearch() {
 		System.out.println("Testing the recursive binarySearch method \n");
 		
@@ -185,11 +227,4 @@ public class TestListUtilities {
 	    }
 		System.out.println("\n");
 	}
-	
-	// ******** space to test the normal binary search method ********
-	//
-	//
-	//
-	//
-	//
 }
