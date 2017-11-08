@@ -93,7 +93,7 @@ public class DawsonElection implements Election {
 					"The dates that you have entered to create an Election object are invalid please try again ");
 		}
 		if (validStartDateAndEndDate(startYear, startMonth, startDay, endYear, endMonth, endDay)) {
-			startDate = LocalDate.of(startYear, startMonth, startMonth);
+			startDate = LocalDate.of(startYear, startMonth, startDay);
 			endDate = LocalDate.of(endYear, endMonth, endDay);
 		} else {
 			throw new IllegalArgumentException(
