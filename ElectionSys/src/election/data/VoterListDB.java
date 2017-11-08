@@ -99,8 +99,12 @@ public class VoterListDB implements VoterDAO {
 	 */
 	@Override
 	public String toString() {
+		String voterListDB = "Number of voters in database: " + database.size(); 
 		
+		for(Voter voter : database) 
+			voterListDB += "\n" + voter;
 		
+		return voterListDB;
 	}
 
 
