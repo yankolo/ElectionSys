@@ -10,8 +10,9 @@ public class InvalidVoterException extends RuntimeException {
 	
 	
 	public InvalidVoterException() {
-		super("The current voter is not allowed to either get or cast a ballot for an election that is not in progress"
-				+ ", or for which this voter is not eligible, or for which this voter has already voted.");
+		super("The voter might have tried to get or cast aballot for an election that is not"
+				+ " is not in progress, the voter might not be eligible to vote for the election, or "
+				+ " the voter might have already voted for the election");
 	}
 	
 	public InvalidVoterException(String message) {
