@@ -185,7 +185,7 @@ public class TestListUtilities {
 	}
 	
 	public static void testRecBinarySearch() {
-		System.out.println("Testing the recursive binarySearch method \n");
+		System.out.println("Testing the binarySearch method \n");
 		
 		List<String> list = new ArrayList<String>();
 		list.add("a");
