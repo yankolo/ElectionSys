@@ -12,6 +12,7 @@ import election.data.interfaces.ListPersistenceObject;
 import election.data.interfaces.VoterDAO;
 import lib.Email;
 import lib.PostalCode;
+import util.ListUtilities;
 
 public class VoterListDB implements VoterDAO {
 	private List<Voter> database;
@@ -68,8 +69,19 @@ public class VoterListDB implements VoterDAO {
 	 */
 	@Override
 	public Voter getVoter(String email) throws InexistentVoterException {
-		// TODO Auto-generated method stub
-		return null;
+		if(database.size() == 0) {
+			throw new InexistentVoterException("The Voter with the email " + email + " does not exist in the database");
+		}
+		
+		Voter dummyVoter = factory.getVoterInstance(database.get(0).getName().getFirstName(), database.get(0).getName().getLastName(), email, database.get(0).getPostalCode().getCode());
+		int indexOfVoter = ListUtilities.binarySearch(database, dummyVoter, 0, database.size()-1);
+		
+		if(indexOfVoter < 0) {
+			throw new InexistentVoterException("The Voter with the email " + email + " does not exist in the database");
+		}
+		
+		
+		return database.get(indexOfVoter);
 	}
 	/**
 	 * 
