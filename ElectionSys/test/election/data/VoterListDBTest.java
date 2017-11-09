@@ -9,6 +9,7 @@ import java.nio.file.NoSuchFileException;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 
+import election.business.DawsonElectionFactory;
 import election.business.interfaces.*;
 import util.ListUtilities;
 
@@ -17,6 +18,7 @@ public class VoterListDBTest {
 	public static void main(String[] args) {
 		testGetVoter();
 		testToString();
+		testUpdate();
 	}
 	
 	private static void setup()
@@ -171,6 +173,69 @@ public class VoterListDBTest {
 			System.out.println("SUCCESS: Correct toString");
 		else
 			System.out.println("FAILING TEST CASE: wrong toString");
+		
+		teardown();
+	}
+	
+	private static void testUpdate() {
+		setup();
+		SequentialTextFileList file = new SequentialTextFileList
+				("datafiles/testfiles/testVoters.txt", "datafiles/testfiles/testElections.txt",
+						"datafiles/testfiles/testTally.txt");
+		VoterListDB db = new VoterListDB(file);
+		
+		System.out.println("\n** test update ** ");
+		System.out.println("\nTest case 1: Voter in database (raj@test.ru, J4W2Y9)");
+		try {
+			lib.Email email = new lib.Email("raj@test.ru");
+			lib.PostalCode code = new lib.PostalCode("J4W2Y9");
+			db.update(email, code);
+			if (db.getVoter("raj@test.ru").getPostalCode().equals(code))
+				System.out.println("SUCCESS: Voter postal code changed");
+			else
+				System.out.println("FAILING TEST CASE: Voter postal code not changed");
+		} catch (InexistentVoterException e) {
+			System.out.println("FAILING TEST CASE: Voter not found");
+		}
+		
+		System.out.println("\nTest case 2: Voter in database (callmepeggy@gmail.com, J4W2Y9)");
+		try {
+			lib.Email email = new lib.Email("callmepeggy@gmail.com");
+			lib.PostalCode code = new lib.PostalCode("J4W2Y9");
+			db.update(email, code);
+			if (db.getVoter("callmepeggy@gmail.com").getPostalCode().equals(code))
+				System.out.println("SUCCESS: Voter postal code changed");
+			else
+				System.out.println("FAILING TEST CASE: Voter postal code not changed");
+		} catch (InexistentVoterException e) {
+			System.out.println("FAILING TEST CASE: Voter not found");
+		}
+		
+		System.out.println("\nTest case 3: Voter in database (jacques.smith@gmail.com, J4W2Y9)");
+		try {
+			lib.Email email = new lib.Email("jacques.smith@gmail.com");
+			lib.PostalCode code = new lib.PostalCode("J4W2Y9");
+			db.update(email, code);
+			if (db.getVoter("jacques.smith@gmail.com").getPostalCode().equals(code))
+				System.out.println("SUCCESS: Voter postal code changed");
+			else
+				System.out.println("FAILING TEST CASE: Voter postal code not changed");
+		} catch (InexistentVoterException e) {
+			System.out.println("FAILING TEST CASE: Voter not found");
+		}
+		
+		System.out.println("\nTest case 4: Voter not in database (yankolo1234@gmail.com, J4W2Y9)");
+		try {
+			lib.Email email = new lib.Email("yankolo1234@gmail.com");
+			lib.PostalCode code = new lib.PostalCode("J4W2Y9");
+			db.update(email, code);
+			if (db.getVoter("yankolo1234@gmail.com").getPostalCode().equals(code))
+				System.out.println("FAILING TEST CAS: Voter postal code changed");
+			else
+				System.out.println("FAILING TEST CASE: Voter postal code not changed");
+		} catch (InexistentVoterException e) {
+			System.out.println("SUCCESS: Voter not found");
+		}
 		
 		teardown();
 	}

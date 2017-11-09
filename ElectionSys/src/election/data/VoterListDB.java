@@ -91,8 +91,8 @@ public class VoterListDB implements VoterDAO {
 	 */
 	@Override
 	public void update(Email email, PostalCode postalCode) throws InexistentVoterException {
-		// TODO Auto-generated method stub
-		
+		Voter voter = this.getVoter(email.toString());
+		voter.setPostalCode(postalCode);
 	}
 	/**
 	 * 
