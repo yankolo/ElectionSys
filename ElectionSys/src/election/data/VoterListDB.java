@@ -63,8 +63,7 @@ public class VoterListDB implements VoterDAO {
 
 	@Override
 	public void disconnect() throws IOException {
-		// TODO Auto-generated method stub
-		
+		listPersistenceObject.saveVoterDatabase(database);
 	}
 	/**
 	 * 

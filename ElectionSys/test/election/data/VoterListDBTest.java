@@ -20,6 +20,7 @@ public class VoterListDBTest {
 		testToString();
 		testUpdate();
 		testAdd();
+		testDisconnect();
 	}
 	
 	private static void setup()
@@ -296,6 +297,42 @@ public class VoterListDBTest {
 			System.out.println("FAILING TEST CASE: Voter not added");
 		}
 		
+		teardown();
+	}
+	
+	private static void testDisconnect() {
+		setup();
+		SequentialTextFileList file = new SequentialTextFileList
+				("datafiles/testfiles/testVoters.txt", "datafiles/testfiles/testElections.txt",
+						"datafiles/testfiles/testTally.txt");
+		
+		System.out.println("\n** test disconnect ** ");
+		VoterListDB db = new VoterListDB(file);
+		try {
+		db.add(DawsonElectionFactory.DAWSON_ELECTION.getVoterInstance("mohamed", "hamza", "moe@gmail.com", "H3Z1A4"));
+		db.add(DawsonElectionFactory.DAWSON_ELECTION.getVoterInstance("sammy", "chaouki", "sammy@gmail.com", "H3Z1A4"));
+		db.add(DawsonElectionFactory.DAWSON_ELECTION.getVoterInstance("Daniel", "Rafail", "yankolo1234@gmail.com", "H3W1N9"));
+		} catch (DuplicateVoterException e) {
+		System.out.println("Voter is already in the database");
+		}
+		
+		try {
+		db.disconnect();
+		}  catch (IOException e) {
+			System.out.println("FAILING TEST CASE: Unable to write to file");
+		}
+		
+		db = new VoterListDB(file);
+		
+		try {
+			db.getVoter("moe@gmail.com");
+			db.getVoter("sammy@gmail.com");
+			db.getVoter("yankolo1234@gmail.com");
+			System.out.println("Success: File saved");
+		} catch (InexistentVoterException e) {
+			System.out.println("FAILING TEST CASE: File not saved");
+		}
+
 		teardown();
 	}
 
