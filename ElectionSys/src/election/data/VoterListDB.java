@@ -48,8 +48,13 @@ public class VoterListDB implements VoterDAO {
 	 */
 	@Override
 	public void add(Voter voter) throws DuplicateVoterException {
-		// TODO Auto-generated method stub
+		int insertionIndex = ListUtilities.binarySearch(database, voter, 0, database.size()-1);
+		if (insertionIndex >= 0) 
+			throw new DuplicateVoterException("The provided Voter is already in the database");
 		
+		insertionIndex = (insertionIndex * -1) - 1;
+
+		database.add(insertionIndex, factory.getVoterInstance(voter));
 	}
 	/**
 	 * 

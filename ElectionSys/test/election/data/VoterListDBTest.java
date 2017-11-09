@@ -19,6 +19,7 @@ public class VoterListDBTest {
 		testGetVoter();
 		testToString();
 		testUpdate();
+		testAdd();
 	}
 	
 	private static void setup()
@@ -235,6 +236,64 @@ public class VoterListDBTest {
 				System.out.println("FAILING TEST CASE: Voter postal code not changed");
 		} catch (InexistentVoterException e) {
 			System.out.println("SUCCESS: Voter not found");
+		}
+		
+		teardown();
+	}
+	private static void testAdd() {
+		setup();
+		SequentialTextFileList file = new SequentialTextFileList
+				("datafiles/testfiles/testVoters.txt", "datafiles/testfiles/testElections.txt",
+						"datafiles/testfiles/testTally.txt");
+		VoterListDB db = new VoterListDB(file);
+		
+		System.out.println("\n** test add ** ");
+		System.out.println("\nTest case 1: Voter not in database (yankolo1234@gmail.com)");
+		try {
+			Voter voter = DawsonElectionFactory.DAWSON_ELECTION.getVoterInstance("yanik", "kolomatski", "yankolo1234@gmail.com", "J4W2Y9");
+			db.add(voter);
+			db.getVoter(voter.getEmail().toString());
+			System.out.println("SUCCESS: Voter added");
+		} catch (DuplicateVoterException e) {
+			System.out.println("FAILING TEST CASE: Voter is already in the database");
+		} catch (InexistentVoterException e) {
+			System.out.println("FAILING TEST CASE: Voter not added");
+		}
+		
+		System.out.println("\nTest case 2: Voter not in database (moe@gmail.com)");
+		try {
+			Voter voter = DawsonElectionFactory.DAWSON_ELECTION.getVoterInstance("mohamed", "hamza", "moe@gmail.com", "H3Z1A4");
+			db.add(voter);
+			db.getVoter(voter.getEmail().toString());
+			System.out.println("SUCCESS: Voter added");
+		} catch (DuplicateVoterException e) {
+			System.out.println("FAILING TEST CASE: Voter is already in the database");
+		} catch (InexistentVoterException e) {
+			System.out.println("FAILING TEST CASE: Voter not added");
+		}
+		
+		System.out.println("\nTest case 3: Voter not in database (sammy@gmail.com)");
+		try {
+			Voter voter = DawsonElectionFactory.DAWSON_ELECTION.getVoterInstance("sammy", "chaouki", "sammy@gmail.com", "H3Z1A4");
+			db.add(voter);
+			db.getVoter(voter.getEmail().toString());
+			System.out.println("SUCCESS: Voter added");
+		} catch (DuplicateVoterException e) {
+			System.out.println("FAILING TEST CASE: Voter is already in the database");
+		} catch (InexistentVoterException e) {
+			System.out.println("FAILING TEST CASE: Voter not added");
+		}
+		
+		System.out.println("\nTest case 4: Voter already in database (daniel.rafail@gmail.com)");
+		try {
+			Voter voter = DawsonElectionFactory.DAWSON_ELECTION.getVoterInstance("Daniel", "Rafail", "daniel.rafail@gmail.com", "H3W1N9");
+			db.add(voter);
+			db.getVoter(voter.getEmail().toString());
+			System.out.println("FAILING TEST CASE: Voter added");
+		} catch (DuplicateVoterException e) {
+			System.out.println("SUCCESS: Voter is already in the database");
+		} catch (InexistentVoterException e) {
+			System.out.println("FAILING TEST CASE: Voter not added");
 		}
 		
 		teardown();
