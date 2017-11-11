@@ -407,25 +407,25 @@ public class DawsonElection implements Election {
 					+ "\n \tis not eligible for this eleciton: " + this.getName());
 		}
 	}
+
 	/**
 	 * Returns the number of cast ballots for this election
+	 * 
 	 * @return castBallot.size()
 	 */
 	@Override
 	public int getTotalVotesCast() {
 		return castBallot.size();
 	}
-	
 
 	/**
-	 * I have yet to fully code this method If this method is called it should just
-	 * throw a exception
+	 * Returns the number of invalid votes that occurred during an election
+	 * 
+	 * @return invalidVote -- which represents the number of invalid vote attempts
 	 */
 	@Override
 	public int getInvalidVoteAttempts() {
-		throw new UnsupportedOperationException(
-				"This method ( -- getInvalidVoteAttempts() -- ) have yet to be implemented and used during this phase, should throw exception"
-						+ " of type UnsupportedOperationException");
+		return invalidVote;
 	}
 
 	/**
