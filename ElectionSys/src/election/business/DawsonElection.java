@@ -317,7 +317,7 @@ public class DawsonElection implements Election {
 	 */
 
 	@Override
-	public Ballot getBallot(Voter v) {
+	public Ballot getBallot(Voter v) throws InvalidVoterException , IllegalArgumentException {
 		int placementGotBallot;
 		int placementCastBallot;
 		if (isNull(v)) {
