@@ -638,6 +638,8 @@ public class DawsonElectionTest {
 		testSetTally(
 				"Case 3 - Should throw an exception since the tally objec that is passed in the parameter is null referenced ",
 				null, false);
+		System.out.println();
+
 	}
 
 	private static void testSetTally(String testCase, Tally tal, boolean expectValid) {
@@ -680,25 +682,52 @@ public class DawsonElectionTest {
 
 	private static void testGetBallot() {
 		System.out.println("---------- TESTING THE GET_BALLOT ----------");
-		Voter v = null;
-		testGetBallot("Case 1 -- Pass a null referenced voter object - should throw an exception", v, false);
+		DawsonVoter dv = new DawsonVoter("Sammy", "Chaouki", "sammychaouki@gmail.com", "J4Y2N3");
+		DawsonVoter dv2 = new DawsonVoter("Mohamed", "Hamza", "mohamza@gmail.com", "J4Y2N4");
+		DawsonVoter dv3 = new DawsonVoter("Yanik", "Kolomatski", "yanikolo@gmail.com", "J4Y2N5");
+		DawsonVoter dv4 = new DawsonVoter("Nikita", "Slavin", "nikitaSlavin@gmail.com", "J4Y2N6");
+		DawsonVoter dv5 = new DawsonVoter("Bob", "Bobson", "bob@gmail.com", "J4Y2N9");
+		DawsonVoter dvNull = null;
+		String s1 = "Brandon";
+		String s2 = "Bob";
+		String s3 = "Jordy";
+		DawsonTally dt = new DawsonTally(3, "Hello World");
+		DawsonElection d1 = new DawsonElection("Hello World", "single", 2016, 12, 2, 2018, 04, 22, "J4Y2N1", "J4Y2N8",
+				dt, s1, s2, s3);
+		testGetBallot("Case 1 -- pass a voter that has yet to request a ballot", dv, d1, true);
+		System.out.println("\tThe following voters have requested a ballot: \n"
+				+ "\t- Mohamed Hamza -- mohamza@gmail.com -- J4Y2N4 \n"
+				+ "\t- Yanik Kolomatski -- yanikolo@gmail.com -- J4Y2N5 \n"
+				+ "\t- Nikita Slavin -- nikitaSlavin@gmail.com -- J4Y2N6\n");
+		Ballot sb1 = d1.getBallot(dv2);
+		Ballot sb2 = d1.getBallot(dv3);
+		Ballot sb3 = d1.getBallot(dv4);
+		testGetBallot("Case 2 -- pass a null referenced voter" , dvNull , d1 , false);
+		System.out.println("\n \t--- The Following voter has casted a ballot: " + dv2.toString() + "\n");
+		// d1.castBallot(sb1, dv2);
+		// testGetBallot("Case 3 -- pass a voter that has already to request a ballot
+		// and has casted his ballot", dv2, d1,
+		// false);
+		testGetBallot("Case 4 -- pass a voter that is not eligible for the election", dv5, d1, false);
+		System.out.println();
+
 	}
 
-	private static void testGetBallot(String testCase, Voter v, boolean expectValid) {
+	private static void testGetBallot(String testCase, Voter v, DawsonElection d1, boolean expectValid) {
 		System.out.println("   " + testCase);
 		try {
-			String s1 = "Brandon";
-			String s2 = "Bob";
-			String s3 = "Jordy";
-			DawsonTally dt = new DawsonTally(3, "Hello World");
-			DawsonElection d1 = new DawsonElection("Hello World", "single", 2016, 12, 2, 2017, 04, 22, null, null, dt,
-					s1, s2, s3);
 
 			Ballot sb = d1.getBallot(v);
 			if (!expectValid)
 				System.out.print("  Error! Expected Invalid. ==== FAILED TEST ==== ");
-
+			System.out.println("\tPassed -- Test --- the following Voter : " + v.toString()
+					+ " has successfuly requested a ballot for this election : " + d1.getName());
 			System.out.println("\n");
+		} catch (InvalidVoterException ive) {
+			System.out.println("\t" + ive.getMessage());
+			if (expectValid) {
+				System.out.println(" Error! Expected Valid. ====== FAILED TEST =====");
+			}
 		} catch (IllegalArgumentException iae) {
 			System.out.println("\t" + iae.getMessage());
 			if (expectValid) {

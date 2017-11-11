@@ -35,6 +35,7 @@ public class DawsonElection implements Election {
 	private List<Voter> gotBallot;
 	private List<Voter> castBallot;
 	private int invalidVote;
+
 	/**
 	 * The constructor to create an DawsonElection type object Purpose: The purpose
 	 * of this constructor is to create an object of type DawsonElection that
@@ -86,12 +87,12 @@ public class DawsonElection implements Election {
 		}
 
 		if (!(isNull(startRange))) {
-			if(startRange.trim().isEmpty())
-			postalCodeStartRange = "A1A 1A1";
+			if (startRange.trim().isEmpty())
+				postalCodeStartRange = "A1A 1A1";
 		}
 		if (!(isNull(endRange))) {
-			if(endRange.trim().isEmpty())
-			postalCodeEndRange = "Z9Z 9Z9";
+			if (endRange.trim().isEmpty())
+				postalCodeEndRange = "Z9Z 9Z9";
 		}
 
 		if (validDateRange(startYear, startMonth, startDay, endYear, endMonth, endDay)) {
@@ -132,7 +133,7 @@ public class DawsonElection implements Election {
 		this.postalCodeStartRange = startRange;
 		gotBallot = new ArrayList<Voter>();
 		castBallot = new ArrayList<Voter>();
-		invalidVote=0;
+		invalidVote = 0;
 	}
 
 	/**
@@ -296,40 +297,50 @@ public class DawsonElection implements Election {
 	}
 
 	/**
-	 * This method is a simple get method that returns a ballot object that actually
-	 * contains a stub ballot object.
+	 * The getBallot method will check if the voter that is being passed is eligible
+	 * for the current election. If it is eligible, it will check if the voter has
+	 * requested a ballot previously. If not it will be added to a list of all
+	 * voters who have requested a a ballot. If the voter has previously asked a
+	 * ballot, it will check if the voter has already casted a ballot. It will then
+	 * return a ballot object
 	 * 
-	 * @param v
+	 * @author Sammy Chaouki
+	 * @param Voter
+	 *            v
 	 * @throws IllegalArgumentException
-	 *             - if Voter v is null referenced
-	 * @return sb
+	 *             -- If the voter that is passed to this method is null referenced
+	 * @throws InvalidVoterException
+	 *             -- If the voter is not eligible for this election
+	 * @throws InvalidVoterException
+	 *             -- If the voter that is passed through has already cast a ballot
+	 * @return bt
 	 */
+
 	@Override
 	public Ballot getBallot(Voter v) {
-		int placement;
+		int placementGotBallot;
+		int placementCastBallot;
 		if (isNull(v)) {
 			throw new IllegalArgumentException("The voter passed through the getBallot cannot be null referenced ");
 		} else {
-			/**
-			 * Add the following --
-			 * 	 --> validate whether or not a voter is eligible --> USE THE ISELIGIBLE METHOD IN THE VOTER CLASS
-			 *   --> Check if the voter already requested a ballot -- YES -> add them to list gotBallot --> MUST KEEP LIST IN SORTED ORDER
-			 *   ADD THEM IN THE INSERTION POINT RETURNED FROM THE BINARY SEARCH
-			 *   --> NO --> validate whether or not they have already  cast a ballot.
-			 *   --> IF THE VOTER IS NOT ELIGIBLE OR HAS ALREADY CAST A BALLOT --> THROW INVALIDVOTEREXCEPTION WITH MEANINGFUL MESSAGE.
-			 */
-			
-			if(v.isEligible(this)) {
-				placement = ListUtilities.binarySearch(gotBallot, v, 0, gotBallot.size() - 1);
-				if(placement < 0) {
-					
+
+			if (v.isEligible(this)) {
+				placementGotBallot = ListUtilities.binarySearch(gotBallot, v, 0, gotBallot.size() - 1);
+				if (!gotBallot(placementGotBallot)) {
+					placementGotBallot = (placementGotBallot * -1) - 1;
+					gotBallot.add(placementGotBallot, v);
+				} else {
+					placementCastBallot = ListUtilities.binarySearch(castBallot, v, 0, castBallot.size() - 1);
+					if (ballotCasted(placementCastBallot)) {
+						throw new InvalidVoterException("The following voter " + v.toString()
+								+ ": has already cast a ballot for this eleciton: " + this.getName());
+					}
 				}
+			} else {
+				throw new InvalidVoterException("The following voter " + v.toString()
+						+ ": is not eligible for this eleciton: " + this.getName());
 			}
-			else {
-				//throw INVALIDVOTEREXCEPTION
-			}
-			
-			
+
 			BallotItem[] bi = creatBallotArray(this.ballots);
 			Ballot bt = DawsonElectionFactory.DAWSON_ELECTION.getBallot(bi, getElectionType(), this);
 			return bt;
@@ -579,6 +590,38 @@ public class DawsonElection implements Election {
 			return false;
 		}
 
+	}
+
+	/**
+	 * Returns true if the user has yet to cast his ballot Returns false if he has
+	 * cast his ballot
+	 * 
+	 * @param placementCastBallot
+	 * @param v
+	 * @return
+	 */
+	private boolean ballotCasted(int placementCastBallot) {
+		if (placementCastBallot >= 0) {
+			return true;
+		} else {
+			return false;
+		}
+	}
+
+	/**
+	 * Return true if the voter has not requested a ballot Return false if the voter
+	 * has already requested a ballot
+	 * 
+	 * @param placementGotBallot
+	 * @param v
+	 * @return
+	 */
+	private boolean gotBallot(int placementGotBallot) {
+		if (placementGotBallot >= 0) {
+			return true;
+		} else {
+			return false;
+		}
 	}
 
 }
