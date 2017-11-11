@@ -317,7 +317,7 @@ public class DawsonElection implements Election {
 	 */
 
 	@Override
-	public Ballot getBallot(Voter v) throws InvalidVoterException , IllegalArgumentException {
+	public Ballot getBallot(Voter v) throws InvalidVoterException, IllegalArgumentException {
 		int placementGotBallot;
 		int placementCastBallot;
 		if (isNull(v)) {
@@ -349,31 +349,62 @@ public class DawsonElection implements Election {
 	}
 
 	/**
-	 * { BallotItem[] bi = creatBallotArray(this.ballots); StubBallot sb = new
-	 * StubBallot(bi, this); return sb; } /** }
-	 * 
-	 * /** This method is used to update the tally object depending on the ballot
-	 * parameter. If the ballot is a valid selection, then tally is updated
+	 * The castBallot method will check if a voter and their corresponding ballot
+	 * are valid for cast. For the voter to be able to cast his ballot, he must be
+	 * eligible for this election and have requested a ballot before casting their
+	 * vote. If the voter has already cast his ballot and tries to recast, it will
+	 * result to a invalid vote attempt. This concept is applied each time a
+	 * InvalidVoterException is thrown.
 	 * 
 	 * @param b
 	 * @param v
+	 * @throws InvalidVoterException
 	 * @throws IllegalArgumentException
-	 *             if the parameter Ballot b or Voter v is null referenced
 	 */
+
 	@Override
-	public void castBallot(Ballot b, Voter v) throws IllegalArgumentException {
-		// TODO Auto-generated method stub
+	public void castBallot(Ballot b, Voter v) throws InvalidVoterException, IllegalArgumentException {
+		int placementGotBallot;
+		int placementCastBallot;
 		if (isNull(v)) {
 			throw new IllegalArgumentException("Voter v cannot be null referenced - castBallot");
 		}
 		if (v.isEligible(this)) {
 			if (isNull(b)) {
 				throw new IllegalArgumentException(
-						"In the castBallot method a ballout passed through the parameters cannot be null referenced");
+						"In the castBallot method a ballot passed through the parameters cannot be null referenced");
 			}
-			if (b.validateSelections()) {
-				this.tally.update(b);
+
+			placementGotBallot = ListUtilities.binarySearch(gotBallot, v, 0, gotBallot.size() - 1);
+			if (gotBallot(placementGotBallot)) {
+				placementCastBallot = ListUtilities.binarySearch(castBallot, v, 0, castBallot.size() - 1);
+				if (ballotCasted(placementCastBallot)) {
+					invalidVote++;
+					throw new InvalidVoterException("The following voter \n " + "\t" + v.toString() + " \n \t"
+							+ "has already cast a ballot in the following election: " + this.getName());
+				} else {
+					placementCastBallot = (placementCastBallot * -1) - 1;
+					castBallot.add(placementCastBallot, v);
+					if (b.validateSelections()) {
+						this.tally.update(b);
+					} else {
+
+						throw new IllegalArgumentException("The ballot of the following voter \n" + "\t" + v.toString()
+								+ " \n \t"
+								+ "is not filled correctly, making it a invalid ballot. The tally will not be updated");
+					}
+				}
+
+			} else {
+				invalidVote++;
+				throw new InvalidVoterException("The following voter \n " + "\t" + v.toString()
+						+ "\n \thas not requested a ballot for this eleciton: " + this.getName());
 			}
+
+		} else {
+			invalidVote++;
+			throw new InvalidVoterException("The following voter \n " + "\t" + v.toString()
+					+ "\n \tis not eligible for this eleciton: " + this.getName());
 		}
 	}
 
