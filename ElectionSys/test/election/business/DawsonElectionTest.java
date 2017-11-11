@@ -39,6 +39,7 @@ public class DawsonElectionTest {
 		testEquals();
 		testHashCode();
 		toStringTest();
+		testGetTotalVotesCast();
 	}
 
 	private static void testTheTweelveParameterConstructor() {
@@ -971,6 +972,93 @@ public class DawsonElectionTest {
 				.println("Case 2 - A DawsonElection object that has a postal code range and has 2 ballot item choices");
 		System.out.println(de1.toString());
 
+	}
+	private static void testGetTotalVotesCast() {
+		System.out.println("---------- TESTING GET_TOTAL_VOTES_CAST_METHOD ----------");
+		DawsonBallotItem dbe = new DawsonBallotItem("Nikita", 20);
+		dbe.setValue(2);
+		DawsonBallotItem dbe1 = new DawsonBallotItem("Yanik", 21);
+		DawsonBallotItem dbe2 = new DawsonBallotItem("Mohamed", 22);
+		DawsonBallotItem dbe3 = new DawsonBallotItem("Sammy", 23);
+		DawsonBallotItem[] dbeArray = new DawsonBallotItem[4];
+		dbeArray[0] = dbe;
+		dbeArray[1] = dbe1;
+		dbeArray[2] = dbe2;
+		dbeArray[3] = dbe3;
+		String s1 = "Nikita";
+		String s2 = "Yanik";
+		String s3 = "Mohammed";
+		String s4 = "Sammy";
+		DawsonTally st = new DawsonTally(4, "Hello World");
+		DawsonVoter dv = new DawsonVoter("Ahmed", "Mo", "moe@gmail.com", "J4W2Y8");
+		DawsonVoter dv1 = new DawsonVoter("Momo", "Hello", "m@gmail.com", "J4W2Y9");
+		DawsonVoter dvNull = null;
+		DawsonElection de = new DawsonElection("Hello World", "single", 2016, 12, 2, 2017, 12, 30, "J4W2Y3", "J4W2Y9", st, s1,
+				s2, s3,s4);
+		de.getBallot(dv);
+		int validVotesCast = 1;
+		Ballot sb = DawsonElectionFactory.DAWSON_ELECTION.getBallot(dbeArray, de.getElectionType(), de);
+		Ballot sbNull = null;
+		System.out.println("\n---------- GENERATING VALID AND INVALID BALLOT CASTS FOR TOTAL VOTES CAST METHOD ----------\n");
+		testGetTotalVotesCast("Case 1 - Pass a valid Ballot object and voter to a Single Ranked Election", sb, de, dv, validVotesCast ,true);
+		de.getBallot(dv1);
+		validVotesCast++;
+		testGetTotalVotesCast("Case 2 - Pass a valid Ballot object and voter to a Single Ranked Election", sb, de, dv1, validVotesCast,true);
+		testGetTotalVotesCast("Case 3 - Pass a null voter to the cast ballot method." ,sb , de ,dvNull, validVotesCast,false);
+		DawsonVoter dvNotEligible = new  DawsonVoter("Sam" , "Hello" , "sammy@gmail.com" , "J4W2Y2");
+		testGetTotalVotesCast("Case 4 - Pass a voter that is not eligible for the election to the cast ballot method", sb , de ,dvNotEligible, validVotesCast, false);
+		testGetTotalVotesCast("Case 5 - Pass a null referenced ballot to the cast ballot method" , sbNull , de , dv , validVotesCast,false);
+		DawsonVoter dv2 = new DawsonVoter("Sammy", "Chaouki", "sammychaouki@gmail.com", "J4W2Y4");
+		testGetTotalVotesCast("Case 6 - Pass a voter that has yet to request a ballot to the cast ballot method" , sb , de ,dv2,validVotesCast , false);
+		testGetTotalVotesCast("Case 7 - Pass a voter that has already casted his vote to the cast ballot method" , sb , de , dv ,validVotesCast, false);
+		dbe2.setValue(4);
+		de.getBallot(dv2);
+		validVotesCast++;
+		testGetTotalVotesCast("Case 8 - Pass a ballot that is not filled correctly to the cast ballot method" , sb , de, dv2, validVotesCast, false);
+		
+		
+	}
+	
+	private static void testGetTotalVotesCast(String testCase, Ballot sb, Election de, Voter v, int totalVotesCast ,boolean expectValid) {
+		System.out.println("   " + testCase);
+		try {
+
+			de.castBallot(sb, v);
+			System.out.println("\t"
+					+ "The following  voter: "+v.getName() +" has successfuly casted his ballot");
+			if (!expectValid) {
+				System.out.println(" Error! Expected InValid. ====== FAILED TEST =====");
+			}
+		} catch (InvalidVoterException ive) {
+			System.out.println("\t" + ive.getMessage());
+			if (expectValid) {
+				System.out.println(" Error! Expected Valid. ====== FAILED TEST =====");
+			}
+		} catch (IllegalArgumentException iae) {
+			System.out.println("\t" + iae.getMessage());
+			if (expectValid) {
+				System.out.println(" Error! Expected Valid. ====== FAILED TEST =====");
+			}
+
+		} catch (Exception e) {
+			System.out.println(
+					"\tUNEXPECTED EXCEPTION TYPE!" + e.getClass() + " " + e.getMessage() + "====FAILED TEST====");
+			if (expectValid) {
+				System.out.println("Expected Valid");
+			}
+
+			System.out.println("\n");
+
+		}
+		
+		if(totalVotesCast != de.getTotalVotesCast()) {
+			System.out.println("\tError. The number of totalVotesCast should be the same as the integer returned by the getTotalVotesCast() ====== FAILED TEST ===== \n");	
+		}
+		else {
+			System.out.println("\tPASSED TEST -- The number of total Votes cast is equal to the integer returned by the getTotalVotesCast() \n");
+		}
+		
+		
 	}
 
 }
