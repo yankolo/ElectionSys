@@ -279,7 +279,7 @@ public class ListUtilities {
 		 int low = 0;
 		 int mid = (low + high) / 2;
 		 
-		 while(high > low) {
+		 while(high >= low) {
 			 if(database[mid].compareTo(key) == 0)
 				 return mid;
 			 else if(database[mid].compareTo(key) > 0)

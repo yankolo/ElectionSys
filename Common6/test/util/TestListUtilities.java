@@ -144,21 +144,24 @@ public class TestListUtilities {
 	}
 	
 	public static void testBinarySearch() {
-		System.out.println("Testing the recursive binarySearch method \n");
+		System.out.println("Testing the binarySearch method \n");
 		
-		Comparable[] array = {"a", "b", "c"};
+		Comparable[] array = {"a", "b", "c", "d", "e"};
 		String key = "b";
+		String invalidKey = "f";
 		testBinarySearch("Case 1 - look for a valid key in a valid string array", array, key, true);
-		
-		
+		testBinarySearch("Case 2 - look for an invalid key in a valid string array", array, invalidKey, false);		
 	}
 	
 	public static void testBinarySearch(String testCase, Comparable[] array, String key, boolean expectValid) {
 	    System.out.println(testCase);
-		  
 	    try { 
 		   ListUtilities.binarySearch(array, key);
-		   System.out.print("\t\tThe key was found: " + array[ListUtilities.binarySearch(array, key)]);
+		   if(expectValid == true)
+			   System.out.print("\t\tThe key was found: " + array[ListUtilities.binarySearch(array, key)]);
+		   
+		   else
+			   System.out.println("\t\tAs expected, the key " + key + " was not found");
 		   	    
 		   if (!expectValid)
 		     System.out.print("  Error! Expected Invalid. ==== FAILED TEST ====");
@@ -185,16 +188,18 @@ public class TestListUtilities {
 	}
 	
 	public static void testRecBinarySearch() {
-		System.out.println("Testing the binarySearch method \n");
+		System.out.println("Testing the recursive binarySearch method \n");
 		
 		List<String> list = new ArrayList<String>();
 		list.add("a");
 		list.add("b");
 		list.add("c");
+		list.add("d");
+		list.add("e");
 		String key = "b";
+		String invalidKey = "f";
 		testRecBinarySearch("Case 1 - look for a valid key in a valid string list", list, key, true);
-		
-		
+		testRecBinarySearch("Case 2 - look for an invalid key in a valid string list", list, invalidKey, false);	
 	}
 	
 	public static void testRecBinarySearch(String testCase, List<String> list, String key, boolean expectValid) {
@@ -202,7 +207,11 @@ public class TestListUtilities {
 		  
 	    try { 
 		   ListUtilities.binarySearch(list, key, 0, list.size());
-		   System.out.print("\t\tThe key was found: " + list.get(ListUtilities.binarySearch(list, key, 0, list.size())));
+		   if(expectValid == true)
+			   System.out.print("\t\tThe key was found: " + list.get(ListUtilities.binarySearch(list, key, 0, list.size())));
+		   
+		   else
+			   System.out.println("\t\tAs expected, the key " + key + " was not found");
 		   	    
 		   if (!expectValid)
 		     System.out.print("  Error! Expected Invalid. ==== FAILED TEST ====");
