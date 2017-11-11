@@ -26,7 +26,7 @@ public class ElectionListDBTest {
 	 */
 	public static void main(String[] args) {
 		testGetElection();
-
+		testToString();
 	}
 
 	private static void setup() {
@@ -140,6 +140,38 @@ public class ElectionListDBTest {
 			System.out.println("FAILING TEST CASE: Election should be found");
 		}
 		
+		teardown();
+	}
+	
+	private static void testToString() {
+		setup();
+		
+		SequentialTextFileList file = new SequentialTextFileList("datafiles/testfiles/testVoters.txt", "datafiles/testfiles/testElections.txt",
+				"datafiles/testfiles/testTally.txt");
+		ElectionListDB db = new ElectionListDB(file);
+		
+		String dbStringToCompare = null;
+		try {
+			Election[] listOfElections = ElectionFileLoader.getElectionListFromSequentialFile("datafiles/testfiles/testElections.txt");
+			dbStringToCompare = "Number of elections in the database: " + listOfElections.length;
+			for(Election election : listOfElections) {
+				dbStringToCompare += "\n" + election;
+			}
+		}catch(IOException e) {
+			System.out.println("Can't read from datafiles/testfiles/testElections.txt");
+		}
+		
+		System.out.println("\n** test toString **");
+		System.out.println("\nTest case 1: toString output of ElectionListDB from datafiles/testfiles/testElections.txt");
+		System.out.println(db.toString());
+		
+		System.out.println("\nTest case 2: toString of ElectionListDB from datafiles/testfiles/testElections.txt");
+		if(db.toString().equals(dbStringToCompare)) {
+			System.out.println("SUCCESS: Correct toString");
+		}
+		else {
+			System.out.println("FAILING TEST CASE: wrong toString");
+		}
 		teardown();
 	}
 }

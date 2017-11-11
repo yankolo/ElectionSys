@@ -73,4 +73,13 @@ public class ElectionListDB implements ElectionDAO {
 		}
 		return database.get(indexOfElection);
 	}
+	
+	@Override
+	public String toString() {
+		String electionListDB = "Number of elections in the database: " + database.size();
+		for(Election election : database) {
+			electionListDB += "\n" + election;
+		}
+		return electionListDB;
+	}
 }
