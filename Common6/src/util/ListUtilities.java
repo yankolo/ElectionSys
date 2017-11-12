@@ -277,9 +277,10 @@ public class ListUtilities {
 	 public static int binarySearch(Comparable[] database, Comparable key) {
 		 int high = database.length - 1;
 		 int low = 0;
-		 int mid = (low + high) / 2;
+		 int mid;
 		 
 		 while(high >= low) {
+			 mid = (low + high) / 2;
 			 if(database[mid].compareTo(key) == 0)
 				 return mid;
 			 else if(database[mid].compareTo(key) > 0)

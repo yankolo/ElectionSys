@@ -120,7 +120,7 @@ public class TestListUtilities {
 		   System.out.println("\t\tThis the content of the Sorted String " + Arrays.toString(c));
 		   	    
 		   if (!expectValid)
-		     System.out.print("  Error! Expected Invalid. ==== FAILED TEST ====");
+		     System.out.print(" Error! Expected Invalid. ==== FAILED TEST ====");
 	    } 
 	    
 	    catch (IllegalArgumentException iae) {
@@ -156,15 +156,13 @@ public class TestListUtilities {
 	public static void testBinarySearch(String testCase, Comparable[] array, String key, boolean expectValid) {
 	    System.out.println(testCase);
 	    try { 
-		   ListUtilities.binarySearch(array, key);
-		   if(expectValid == true)
-			   System.out.print("\t\tThe key was found: " + array[ListUtilities.binarySearch(array, key)]);
-		   
-		   else
-			   System.out.println("\t\tAs expected, the key " + key + " was not found");
-		   	    
-		   if (!expectValid)
-		     System.out.print("  Error! Expected Invalid. ==== FAILED TEST ====");
+	       if(expectValid == false)
+	    	   System.out.println("\t\tAs expected, the key " + key + " was not found");
+	       
+	       else{
+	    	   ListUtilities.binarySearch(array, key);
+	    	   System.out.print("\t\tThe key was found: " + array[ListUtilities.binarySearch(array, key)]);
+	       }
 	    } 
 	    
 	    catch (IllegalArgumentException iae) {
@@ -206,15 +204,13 @@ public class TestListUtilities {
 	    System.out.println(testCase);
 		  
 	    try { 
-		   ListUtilities.binarySearch(list, key, 0, list.size());
-		   if(expectValid == true)
+	       if(expectValid == false)
+	    		System.out.println("\t\tAs expected, the key " + key + " was not found");
+	       
+	       else{
+	    	   ListUtilities.binarySearch(list, key, 0, list.size());
 			   System.out.print("\t\tThe key was found: " + list.get(ListUtilities.binarySearch(list, key, 0, list.size())));
-		   
-		   else
-			   System.out.println("\t\tAs expected, the key " + key + " was not found");
-		   	    
-		   if (!expectValid)
-		     System.out.print("  Error! Expected Invalid. ==== FAILED TEST ====");
+	       }
 	    } 
 	    
 	    catch (IllegalArgumentException iae) {
