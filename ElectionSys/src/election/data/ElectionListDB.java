@@ -35,6 +35,13 @@ public class ElectionListDB implements ElectionDAO {
 
 	@Override
 	public void add(Election election) throws DuplicateElectionException {
+		int indexOfElection = ListUtilities.binarySearch(database, election, 0, database.size() -1);
+		if(indexOfElection >= 0) {
+			throw new DuplicateElectionException();
+		}
+		
+		indexOfElection = (indexOfElection * -1) -1;
+		database.add(indexOfElection, factory.getElectionInstance(election));
 	}
 
 	@Override
