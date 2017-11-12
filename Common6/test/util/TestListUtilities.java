@@ -1,8 +1,10 @@
 package util;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Comparator;
+import java.util.List;
 
 public class TestListUtilities {
 
@@ -11,6 +13,8 @@ public class TestListUtilities {
 	TestGeneralSortMethod();
 	TestMergeMethod();
 	testSecondSort();
+	testBinarySearch();
+	testRecBinarySearch();
 	}
 
 	public static void TestGeneralSortMethod() {
@@ -83,7 +87,7 @@ public class TestListUtilities {
 				System.out.println(" Error! Expected Valid. ====== FAILED TEST =====");
 
 			}
-		} catch (IOException e) {
+		} catch (Exception e) {
 			System.out.println(
 					"\tUNEXPECTED EXCEPTION TYPE!" + e.getClass() + " " + e.getMessage() + "====FAILED TEST====");
 			if (expectValid) {
@@ -116,7 +120,99 @@ public class TestListUtilities {
 		   System.out.println("\t\tThis the content of the Sorted String " + Arrays.toString(c));
 		   	    
 		   if (!expectValid)
-		     System.out.print("  Error! Expected Invalid. ==== FAILED TEST ====");
+		     System.out.print(" Error! Expected Invalid. ==== FAILED TEST ====");
+	    } 
+	    
+	    catch (IllegalArgumentException iae) {
+	    	System.out.println("\t" + iae.getMessage());
+		    if (expectValid)
+		      System.out.println(" Error! Expected Valid. ====== FAILED TEST =====");
+		} 
+	    
+	    catch (NullPointerException npe) {
+		    System.out.println("\t" + npe.getMessage());
+		    if (expectValid)
+		      System.out.println(" Error! Expected Valid. ====== FAILED TEST =====");   
+		} 
+	    
+	    catch (Exception e) {
+		    System.out.println("\tUNEXPECTED EXCEPTION TYPE!" + e.getClass() + " " + e.getMessage() + "====FAILED TEST====");
+		    if (expectValid)
+		      System.out.println("Expected Valid");
+	    }
+		System.out.println("\n");
+	}
+	
+	public static void testBinarySearch() {
+		System.out.println("Testing the binarySearch method \n");
+		
+		Comparable[] array = {"a", "b", "c", "d", "e"};
+		String key = "d";
+		String invalidKey = "f";
+		testBinarySearch("Case 1 - look for a valid key (" + key + ") in a valid string array {a, b, c, d, e}", array, key, true);
+		testBinarySearch("Case 2 - look for an invalid key (" + invalidKey + ") in a valid string array {a, b, c, d, e}", array, invalidKey, false);		
+	}
+	
+	public static void testBinarySearch(String testCase, Comparable[] array, String key, boolean expectValid) {
+	    System.out.println(testCase);
+	    try { 
+	       if(expectValid == false){
+	    	   System.out.println("\t\tTest Passed! As expected, the key (" + key + ") was not found");
+	    	   System.out.println("\t\tReturn: " + ListUtilities.binarySearch(array, key));
+	       }
+	       else{
+	    	   ListUtilities.binarySearch(array, key);
+	    	   System.out.print("\t\tTest Passed! The key (" + array[ListUtilities.binarySearch(array, key)] + ") was found at index " + ListUtilities.binarySearch(array, key));
+	       }
+	    } 
+	    
+	    catch (IllegalArgumentException iae) {
+	    	System.out.println("\t" + iae.getMessage());
+		    if (expectValid)
+		      System.out.println(" Error! Expected Valid. ====== FAILED TEST =====");
+		} 
+	    
+	    catch (NullPointerException npe) {
+		    System.out.println("\t" + npe.getMessage());
+		    if (expectValid)
+		      System.out.println(" Error! Expected Valid. ====== FAILED TEST =====");   
+		} 
+	    
+	    catch (Exception e) {
+		    System.out.println("\tUNEXPECTED EXCEPTION TYPE!" + e.getClass() + " " + e.getMessage() + "====FAILED TEST====");
+		    if (expectValid)
+		      System.out.println("Expected Valid");
+	    }
+		System.out.println("\n");
+	}
+	
+	public static void testRecBinarySearch() {
+		System.out.println("Testing the recursive binarySearch method \n");
+		
+		List<String> list = new ArrayList<String>();
+		list.add("a");
+		list.add("b");
+		list.add("c");
+		list.add("d");
+		list.add("e");
+		String key = "b";
+		String invalidKey = "f";
+		testRecBinarySearch("Case 1 - look for a valid key (" + key + ") in a valid string list {a, b, c, d, e}", list, key, true);
+		testRecBinarySearch("Case 2 - look for an invalid key (" + invalidKey + ") in a valid string list {a, b, c, d, e}", list, invalidKey, false);	
+	}
+	
+	public static void testRecBinarySearch(String testCase, List<String> list, String key, boolean expectValid) {
+	    System.out.println(testCase);
+		  
+	    try { 
+	       if(expectValid == false){
+	    		System.out.println("\t\tTest Passed! As expected, the key (" + key + ") was not found");
+	    		System.out.println("\t\tReturn: " + ListUtilities.binarySearch(list, key, 0, list.size() - 1));
+	       }	       
+	       else{
+	    	   ListUtilities.binarySearch(list, key, 0, list.size() - 1);
+			   System.out.print("\t\tTest Passed! The key (" + list.get(ListUtilities.binarySearch(list, key, 0, list.size() - 1)) + ") was found at index " + ListUtilities.binarySearch(list, key, 0, list.size() - 1));
+	       }
 	    } 
 	    
 	    catch (IllegalArgumentException iae) {
