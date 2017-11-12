@@ -271,7 +271,7 @@ public class ListUtilities {
 	  * 
 	  * @param database is an array of Comparables
 	  * @param key is object of type Comparable to look for in database
-	  * @return int index at which key is found
+	  * @return int index at which key is found, else if not found, return (-low - 1)
 	  */
 	 @SuppressWarnings({"unchecked","rawtypes"})
 	 public static int binarySearch(Comparable[] database, Comparable key) {
@@ -300,8 +300,8 @@ public class ListUtilities {
 	  * @param database is a List containing elements of type T
 	  * @param key is object of type T to look for in database
 	  * @param low is lower boundary of the search-portion of the list
-	  * @param high is the higher boundary of the search-portion of the list
-	  * @return int index at which key is found 
+	  * @param high is the higher boundary of the search-portion of the list (i.e. it's size - 1)
+	  * @return int index at which key is found, else if not found, return (-low - 1)
 	  */
 	 public static <T extends Comparable<? super T>> int binarySearch(List<T> database, T key, int low, int high) {
 		 if(low > high)
