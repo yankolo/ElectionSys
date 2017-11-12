@@ -35,18 +35,18 @@ public class ElectionListDB implements ElectionDAO {
 
 	@Override
 	public void add(Election election) throws DuplicateElectionException {
-		int indexOfElection = ListUtilities.binarySearch(database, election, 0, database.size() -1);
-		if(indexOfElection >= 0) {
+		int indexOfElection = ListUtilities.binarySearch(database, election, 0, database.size() - 1);
+		if (indexOfElection >= 0) {
 			throw new DuplicateElectionException();
 		}
-		
-		indexOfElection = (indexOfElection * -1) -1;
+
+		indexOfElection = (indexOfElection * -1) - 1;
 		database.add(indexOfElection, factory.getElectionInstance(election));
 	}
 
 	@Override
 	public void disconnect() throws IOException {
-		// TODO Auto-generated method stub
+		listPersistenceObject.saveElectionDatabase(database);
 
 	}
 
@@ -80,11 +80,11 @@ public class ElectionListDB implements ElectionDAO {
 		}
 		return database.get(indexOfElection);
 	}
-	
+
 	@Override
 	public String toString() {
 		String electionListDB = "Number of elections in the database: " + database.size();
-		for(Election election : database) {
+		for (Election election : database) {
 			electionListDB += "\n" + election;
 		}
 		return electionListDB;

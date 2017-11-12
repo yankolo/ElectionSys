@@ -29,6 +29,7 @@ public class ElectionListDBTest {
 		testGetElection();
 		testToString();
 		testAdd();
+		testDisconnect();
 	}
 
 	private static void setup() {
@@ -252,4 +253,48 @@ public class ElectionListDBTest {
 		}
 		teardown();
 	}
+
+	private static void testDisconnect() {
+		setup();
+		SequentialTextFileList file = new SequentialTextFileList("datafiles/testfiles/testVoters.txt",
+				"datafiles/testfiles/testElections.txt", "datafiles/testfiles/testTally.txt");
+		ElectionListDB db = new ElectionListDB(file);
+
+		System.out.println("\n** test disconnect **");
+
+		try {
+			String[] choices = { "White", "Black" };
+			Election election1 = DawsonElectionFactory.DAWSON_ELECTION.getElectionInstance("Favorite color", "single",
+					2017, 9, 6, 2018, 8, 5, "H3A", "M1Z", choices);
+			Election election2 = DawsonElectionFactory.DAWSON_ELECTION.getElectionInstance("Best color", "single", 2020,
+					11, 1, 2020, 11, 1, null, null, choices);
+			Election election3 = DawsonElectionFactory.DAWSON_ELECTION.getElectionInstance("Color choice", "single",
+					2017, 9, 5, 2017, 9, 6, "H1A", "H2A", choices);
+
+			db.add(election1);
+			db.add(election2);
+			db.add(election3);
+
+		} catch (DuplicateElectionException dee) {
+			System.out.println("Election is already in the database");
+		}
+
+		try {
+			db.disconnect();
+		} catch (IOException e) {
+			System.out.println("FAILING TEST CASE: Unable to write to file");
+		}
+
+		db = new ElectionListDB(file);
+		try {
+			db.getElection("Favorite color");
+			db.getElection("Best color");
+			db.getElection("Color choice");
+			System.out.println("SUCCESS: File saved");
+		} catch (InexistentElectionException iee) {
+			System.out.println("FAILING TEST CASE: File not saved");
+		}
+		teardown();
+	}
+
 }
