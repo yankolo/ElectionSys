@@ -7,7 +7,7 @@ import election.business.DawsonElection;
 import election.business.DawsonElectionFactory;
 import election.business.interfaces.ElectionFactory;
 import election.business.interfaces.Voter;
-import election.data.interfaces.InexistentVoterException;
+import election.data.InexistentVoterException;
 import election.data.interfaces.ListPersistenceObject;
 import election.data.interfaces.VoterDAO;
 import lib.Email;
@@ -64,7 +64,7 @@ public class VoterListDB implements VoterDAO {
 	public void add(Voter voter) throws DuplicateVoterException {
 		int insertionIndex = ListUtilities.binarySearch(database, voter, 0, database.size()-1);
 		if (insertionIndex >= 0) 
-			throw new DuplicateVoterException("The provided Voter is already in the database");
+			throw new DuplicateVoterException("The Voter " + voter + " is already in the database");
 		
 		insertionIndex = (insertionIndex * -1) - 1;
 
