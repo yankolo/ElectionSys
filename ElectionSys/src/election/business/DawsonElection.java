@@ -300,7 +300,7 @@ public class DawsonElection implements Election {
 	 * The getBallot method will check if the voter that is being passed is eligible
 	 * for the current election. If it is eligible, it will check if the voter has
 	 * requested a ballot previously. If not it will be added to a list of all
-	 * voters who have requested a a ballot. If the voter has previously asked a
+	 * voters who have requested a ballot. If the voter has previously asked a
 	 * ballot, it will check if the voter has already casted a ballot. It will then
 	 * return a ballot object
 	 * 
