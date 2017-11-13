@@ -14,14 +14,23 @@ import lib.Email;
 import lib.PostalCode;
 import util.ListUtilities;
 
+/**
+ * Class that holds the Voter Database
+ * Implements VoterDAO
+ * 
+ * @author Yanik Kolomatski
+ * @author Mohamed Hamza
+ *
+ */
 public class VoterListDB implements VoterDAO {
 	private List<Voter> database;
 	private final ListPersistenceObject listPersistenceObject;
 	private final ElectionFactory factory;
 	
 	/**
+	 * Initializes the database using a ListPersistenceObject
 	 * 
-	 * @param listPersistenceObject
+	 * @param listPersistenceObject The object that holds the file paths (for the databases)
 	 */
 	
 	public VoterListDB (ListPersistenceObject listPersistenceObject) {
@@ -31,9 +40,11 @@ public class VoterListDB implements VoterDAO {
 	}
 	
 	/**
+	 * Initializes the database using a ListPersistenceObject and sets a 
+	 * different ElectionFactory (factory class used to initialize objects)
 	 * 
-	 * @param listPersistenceObject
-	 * @param factory
+	 * @param listPersistenceObject The object that holds the file paths (for the databases)
+	 * @param factory Factory class used to initialize objects
 	 */
 	public VoterListDB (ListPersistenceObject listPersistenceObject,
 			ElectionFactory factory) {
@@ -42,9 +53,12 @@ public class VoterListDB implements VoterDAO {
 		this.factory = factory;
 	}
 	/**
+	 * Adds a voter to the database. The voter is added in
+	 * natural sort order to keep the database sorted.
+	 * Only one customer can be inserted for an email address.
 	 * 
-	 * @param voter
-	 * @throws DuplicateVoterException
+	 * @param voter The voter to add to the database.
+	 * @throws DuplicateVoterException The voter already exists. 
 	 */
 	@Override
 	public void add(Voter voter) throws DuplicateVoterException {
@@ -56,20 +70,23 @@ public class VoterListDB implements VoterDAO {
 
 		database.add(insertionIndex, factory.getVoterInstance(voter));
 	}
+	
 	/**
+	 * Saves the list of voters and disconnects from the database. 
 	 * 
-	 * @throws IOException
+	 * @throws IOException Problems saving or disconnecting from database.
 	 */
-
 	@Override
 	public void disconnect() throws IOException {
 		listPersistenceObject.saveVoterDatabase(database);
 	}
+	
 	/**
+	 * Returns the voter with the specified email address. 
 	 * 
-	 * @param email
-	 * @return
-	 * @throws InexistentVoterException
+	 * @param email The email of the requested voter.
+	 * @return The voter with the specified email.
+	 * @throws InexistentVoterException If there is no voter with the specified email. 
 	 */
 	@Override
 	public Voter getVoter(String email) throws InexistentVoterException {
@@ -87,19 +104,22 @@ public class VoterListDB implements VoterDAO {
 		
 		return database.get(indexOfVoter);
 	}
+	
 	/**
+	 * Modifies a voter's postal code. 
 	 * 
-	 * @param email
-	 * @param postalCode
-	 * @throws InexistentVoterException
+	 * @param email The email of the voter to be updated
+	 * @param postalCode The new postal code
+	 * @throws InexistentVoterException The voter is not in database.
 	 */
 	@Override
 	public void update(Email email, PostalCode postalCode) throws InexistentVoterException {
 		Voter voter = this.getVoter(email.toString());
 		voter.setPostalCode(postalCode);
 	}
+	
 	/**
-	 * 
+	 * @return The string representation of the voter database
 	 */
 	@Override
 	public String toString() {
