@@ -22,6 +22,7 @@ public class ElectionListDB implements ElectionDAO {
 	private final ElectionFactory factory;
 
 	/**
+	 * Initializes the database using a ListPersistenceObject
 	 * 
 	 * @param listPersistenceObject
 	 */
@@ -32,9 +33,13 @@ public class ElectionListDB implements ElectionDAO {
 	}
 
 	/**
+	 * Initializes the database using a ListPersistenceObject and sets a different
+	 * ElectionFactory (factory class used to initialize objects)
 	 * 
 	 * @param listPersistenceObject
+	 *            The object that holds the file paths (for the databases)
 	 * @param factory
+	 *            Factory class used to initialize objects
 	 */
 	public ElectionListDB(ListPersistenceObject listPersistenceObject, ElectionFactory factory) {
 		this.database = listPersistenceObject.getElectionDatabase();
@@ -93,7 +98,6 @@ public class ElectionListDB implements ElectionDAO {
 					"The Election with the name " + name + " does not exist in the databse");
 		}
 		Election firstElection = database.get(0);
-		String dummyName = name;
 		String type = firstElection.getElectionType().toString();
 		int startYear = firstElection.getStartDate().getYear();
 		int startMonth = firstElection.getStartDate().getMonthValue();
@@ -105,7 +109,7 @@ public class ElectionListDB implements ElectionDAO {
 		String endRange = firstElection.getPostalRangeEnd();
 		String[] choices = firstElection.getElectionChoices();
 
-		Election dummyElection = factory.getElectionInstance(dummyName, type, startYear, startMonth, startDay, endYear,
+		Election dummyElection = factory.getElectionInstance(name, type, startYear, startMonth, startDay, endYear,
 				endMonth, endDay, startRange, endRange, choices);
 
 		int indexOfElection = ListUtilities.binarySearch(database, dummyElection, 0, database.size() - 1);
