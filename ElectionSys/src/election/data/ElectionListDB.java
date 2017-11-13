@@ -21,18 +21,37 @@ public class ElectionListDB implements ElectionDAO {
 	private final ListPersistenceObject listPersistenceObject;
 	private final ElectionFactory factory;
 
+	/**
+	 * 
+	 * @param listPersistenceObject
+	 */
 	public ElectionListDB(ListPersistenceObject listPersistenceObject) {
 		this.database = listPersistenceObject.getElectionDatabase();
 		this.listPersistenceObject = listPersistenceObject;
 		this.factory = DawsonElectionFactory.DAWSON_ELECTION;
 	}
 
+	/**
+	 * 
+	 * @param listPersistenceObject
+	 * @param factory
+	 */
 	public ElectionListDB(ListPersistenceObject listPersistenceObject, ElectionFactory factory) {
 		this.database = listPersistenceObject.getElectionDatabase();
 		this.listPersistenceObject = listPersistenceObject;
 		this.factory = factory;
 	}
 
+	/**
+	 * Adds an election to the database. The election is added in natural sort order
+	 * to keep the database sorted. Only one election can be inserted for a given
+	 * name string.
+	 * 
+	 * @param election
+	 *            The election to add to the database.
+	 * @throws DuplicateElectionException;
+	 *             The election's name already exists.
+	 */
 	@Override
 	public void add(Election election) throws DuplicateElectionException {
 		int indexOfElection = ListUtilities.binarySearch(database, election, 0, database.size() - 1);
@@ -44,12 +63,29 @@ public class ElectionListDB implements ElectionDAO {
 		database.add(indexOfElection, factory.getElectionInstance(election));
 	}
 
+	/**
+	 * Saves the list of elections and disconnects from the database.
+	 * 
+	 * @throws IOException
+	 *             Problems saving or disconnecting from database.
+	 */
 	@Override
 	public void disconnect() throws IOException {
 		listPersistenceObject.saveElectionDatabase(database);
 
 	}
 
+	/**
+	 * Returns the election with the specified name.
+	 * 
+	 * @param name
+	 *            The name of the requested election.
+	 *
+	 * @return The election with the specified name.
+	 *
+	 * @throws InexistentElectionException
+	 *             If there is no election with the specified name.
+	 */
 	@Override
 	public Election getElection(String name) throws InexistentElectionException {
 		if (database.size() == 0) {
@@ -81,6 +117,10 @@ public class ElectionListDB implements ElectionDAO {
 		return database.get(indexOfElection);
 	}
 
+	/**
+	 * @return It returns a String with the number of ELections in the database and
+	 *         the Elections.
+	 */
 	@Override
 	public String toString() {
 		String electionListDB = "Number of elections in the database: " + database.size();
