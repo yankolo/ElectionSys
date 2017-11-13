@@ -240,7 +240,7 @@ public class ElectionListDBTest {
 		System.out.println("\nTest case 4: election already in the database");
 
 		try {
-			String[] choices = { "Yes, I want classes on friday", "NNo, I don't want classes on friday" };
+			String[] choices = { "Yes, I want classes on friday", "No, I don't want classes on friday" };
 			Election election = DawsonElectionFactory.DAWSON_ELECTION.getElectionInstance("DSU Referendum", "single",
 					2017, 9, 5, 2017, 9, 6, "H1A", "H2A", choices);
 			db.add(election);

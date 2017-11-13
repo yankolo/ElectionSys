@@ -13,7 +13,9 @@ import util.ListUtilities;
 /**
  * 
  * @author Mohamed Hamza
- *
+ * 
+ * ElectionListDB works with a database of Elections. It retrieves or
+ * adds Elections to the database.
  */
 public class ElectionListDB implements ElectionDAO {
 
