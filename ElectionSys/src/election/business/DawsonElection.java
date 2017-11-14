@@ -326,7 +326,7 @@ public class DawsonElection implements Election {
 
 			if (v.isEligible(this)) {
 				placementGotBallot = ListUtilities.binarySearch(gotBallot, v, 0, gotBallot.size() - 1);
-				if (!gotBallot(placementGotBallot)) {
+				if (!hasBallot(placementGotBallot)) {
 					placementGotBallot = (placementGotBallot * -1) - 1;
 					gotBallot.add(placementGotBallot, v);
 				} else {
@@ -376,7 +376,7 @@ public class DawsonElection implements Election {
 			}
 
 			placementGotBallot = ListUtilities.binarySearch(gotBallot, v, 0, gotBallot.size() - 1);
-			if (gotBallot(placementGotBallot)) {
+			if (hasBallot(placementGotBallot)) {
 				placementCastBallot = ListUtilities.binarySearch(castBallot, v, 0, castBallot.size() - 1);
 				if (ballotCasted(placementCastBallot)) {
 					invalidVote++;
@@ -645,7 +645,7 @@ public class DawsonElection implements Election {
 	 * @param v
 	 * @return
 	 */
-	private boolean gotBallot(int placementGotBallot) {
+	private boolean hasBallot(int placementGotBallot) {
 		if (placementGotBallot >= 0) {
 			return true;
 		} else {
