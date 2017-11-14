@@ -62,6 +62,7 @@ public class EmailTest {
 				"Case 25 - Invalid email. The length of a single segment of a host name is greater than 32 characters \n   (moe@qwertyuiopasdfghjklzxcvbnmqwertyu)",
 				"moe@qwertyuiopasdfghjklzxcvbnmqwertyu", false);
 		testTheConstructor("Case 26 - Invalid email. Null email (null)", null, false);
+		testTheConstructor("Case 27 - Invalid Email. Underscore in the host name (moe@gmail_a.com)", "moe@gmail_a.com", false);
 		
 
 	}
