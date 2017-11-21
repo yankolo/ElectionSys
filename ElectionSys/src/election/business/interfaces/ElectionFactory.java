@@ -93,7 +93,11 @@ public interface ElectionFactory extends Serializable {
 	 */
 	BallotItem getBallotItem(BallotItem tally);
 	
-	//Added in Phase 4
+	/**
+	Instantiates an appropriate ElectionPolicy for a given election
+	@Param election
+	@return
+	*/
 	ElectionPolicy getElectionPolicy(Election e);
 }
 
