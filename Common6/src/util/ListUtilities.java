@@ -264,4 +264,55 @@ public class ListUtilities {
 			 }
 		 }
 	 }
+	 /**
+	  * @author Nikita
+	  * 
+	  * Goes through an array of Comparables and looks for the key using a binary search algorithm
+	  * 
+	  * @param database is an array of Comparables
+	  * @param key is object of type Comparable to look for in database
+	  * @return int index at which key is found, else if not found, return (-low - 1)
+	  */
+	 @SuppressWarnings({"unchecked","rawtypes"})
+	 public static int binarySearch(Comparable[] database, Comparable key) {
+		 int high = database.length - 1;
+		 int low = 0;
+		 int mid;
+		 
+		 while(high >= low) {
+			 mid = (low + high) / 2;
+			 if(database[mid].compareTo(key) == 0)
+				 return mid;
+			 else if(database[mid].compareTo(key) > 0)
+				 high = mid - 1;
+			 else
+				 low = mid + 1;
+		 }
+		 
+		 return (-low - 1);
+	 }
+	 
+	 /**
+	  * @author Nikita
+	  * 
+	  * Recursive version of the binarySearch.
+	  * 
+	  * @param database is a List containing elements of type T
+	  * @param key is object of type T to look for in database
+	  * @param low is lower boundary of the search-portion of the list
+	  * @param high is the higher boundary of the search-portion of the list (i.e. it's size - 1)
+	  * @return int index at which key is found, else if not found, return (-low - 1)
+	  */
+	 public static <T extends Comparable<? super T>> int binarySearch(List<T> database, T key, int low, int high) {
+		 if(low > high)
+			 return (-low - 1);
+		 
+		 int midpoint = (low + high) / 2;
+		 if(database.get(midpoint).compareTo(key) == 0)
+			 return midpoint;
+		 else if(database.get(midpoint).compareTo(key) > 0)
+			 return binarySearch(database, key, low, midpoint-1);
+		 else 
+			 return binarySearch(database, key, midpoint+1, high); 	 
+	 }
 }
