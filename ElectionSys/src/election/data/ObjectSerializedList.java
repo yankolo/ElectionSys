@@ -16,6 +16,14 @@ import election.data.interfaces.ListPersistenceObject;
  */
 public class ObjectSerializedList implements ListPersistenceObject {
 
+	private final String voterFilename;
+	private final String electionFilename;
+
+	public ObjectSerializedList(String voterFilename, String electionFilename) {
+		this.voterFilename = voterFilename;
+		this.electionFilename = electionFilename;
+	}
+
 	@Override
 	public List<Voter> getVoterDatabase() {
 		// TODO Auto-generated method stub
@@ -31,13 +39,13 @@ public class ObjectSerializedList implements ListPersistenceObject {
 	@Override
 	public void saveVoterDatabase(List<Voter> voters) throws IOException {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	@Override
 	public void saveElectionDatabase(List<Election> elections) throws IOException {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 }
