@@ -42,8 +42,15 @@ public class ObjectSerializedList implements ListPersistenceObject {
 
 	@Override
 	public List<Election> getElectionDatabase() {
-		// TODO Auto-generated method stub
-		return null;
+		List<Election> elections = new ArrayList<>();
+		
+		try {
+			elections = (List<Election>) util.Utilities.deserializeObject(electionFilename);
+		} catch (IOException | ClassNotFoundException e) {
+			System.err.println(e.getMessage());
+		} 
+		
+		return elections;
 	}
 
 	@Override
@@ -53,7 +60,7 @@ public class ObjectSerializedList implements ListPersistenceObject {
 
 	@Override
 	public void saveElectionDatabase(List<Election> elections) throws IOException {
-		// TODO Auto-generated method stub
+		util.Utilities.serializeObject(elections, electionFilename);
 
 	}
 
