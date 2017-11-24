@@ -4,7 +4,10 @@
 package election.data;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
+
+import com.sun.webkit.Utilities;
 
 import election.business.interfaces.Election;
 import election.business.interfaces.Voter;
@@ -26,8 +29,15 @@ public class ObjectSerializedList implements ListPersistenceObject {
 
 	@Override
 	public List<Voter> getVoterDatabase() {
-		// TODO Auto-generated method stub
-		return null;
+		List<Voter> voters = new ArrayList<>();
+		
+		try {
+			voters = (List<Voter>) util.Utilities.deserializeObject(voterFilename);
+		} catch (IOException | ClassNotFoundException e) {
+			System.err.println(e.getMessage());
+		} 
+		
+		return voters;
 	}
 
 	@Override
@@ -38,8 +48,7 @@ public class ObjectSerializedList implements ListPersistenceObject {
 
 	@Override
 	public void saveVoterDatabase(List<Voter> voters) throws IOException {
-		// TODO Auto-generated method stub
-
+		util.Utilities.serializeObject(voters, voterFilename);
 	}
 
 	@Override
