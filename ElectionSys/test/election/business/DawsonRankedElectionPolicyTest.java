@@ -105,10 +105,8 @@ public class DawsonRankedElectionPolicyTest {
 
 		try {
 			DawsonRankedElectionPolicy drep = new DawsonRankedElectionPolicy(eldb.getElection("Dawson College Student Union Election"));
-			System.out.print("\tA DawsonRankedElectionPolicy instance was created");
+			System.out.print("\nA DawsonRankedElectionPolicy instance was created");
 			List<String> list = drep.getWinner();
-			for(String u : list)
-			System.out.println("\n" + u); 
 		} 
 		catch (IllegalArgumentException iae) {
 			System.out.println(iae.getMessage());

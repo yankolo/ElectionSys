@@ -39,15 +39,22 @@ public class DawsonRankedElectionPolicy implements ElectionPolicy{
 		
 		List<String> winnerList = new ArrayList<String>();
 		int[][] rankedChoices = election.getTally().getVoteBreakdown();
+		System.out.println("\nlength: " + rankedChoices.length);
+		for(int s = 0; s < rankedChoices.length; s++) {
+			System.out.println("\n");
+			for(int x = 0; x < rankedChoices[s].length; x++) {
+				System.out.print(rankedChoices[s][x]);
+			}
+		}
 		int winnerIndex = 0;
 		int max = 0;
 		
 		for(int i = 0; i < rankedChoices.length; i++) {
-			if((rankedChoices[i][0] * 5) + (rankedChoices[i][1] * 2) > max) {
-				max = (rankedChoices[i][0] * 5) + (rankedChoices[i][1] * 2);
+			if((rankedChoices[i][0]) + (rankedChoices[i][1] * 2) > max) {
+				max = (rankedChoices[i][0] * 5) + (rankedChoices[i][1] * 2);			
 				winnerIndex = i;
 			}		
-		}
+		}		
 		
 		winnerList.add(rankedChoices[winnerIndex].toString());
 		
