@@ -24,6 +24,7 @@ import util.ListUtilities;
  */
 public class DawsonRankedElectionPolicyTest {
 	public static void main(String[] args) {
+		teardown();
 		testGetWinner();
 	}
 	
@@ -41,22 +42,23 @@ public class DawsonRankedElectionPolicyTest {
 		voters[8] = "joe.mancini@mail.me*Joe*Mancini*H3C4B7";
 		voters[9] = "raj@test.ru*Raj*Wong*H3E1B4";
 
-		String[] elecs = new String[5];
-		elecs[0] = "Brittany independence referendum*2017*9*6*2018*8*5*H3A*M1Z*single*2" + "\nYes, I want independence"
-				+ "\nNo, I do not want independence";
-		elecs[1] = "Dawson College Student Union Election*2017*9*10*2017*9*14***ranked*4" + "\nJonathan Pesce"
+		String[] elecs = new String[4];
+
+		elecs[0] = "DSU Election*2017*9*10*2017*9*14***ranked*4" + "\nJonathan Pesce"
 				+ "\nNicholas Apanian" + "\nNiv Abecassis" + "\nAnh Quan Nguyen";
-		elecs[2] = "DSU Referendum*2017*9*5*2017*9*6*H1A*H2A*single*2" + "\nYes, I want classes on friday"
-				+ "\nNo, I don't want classes on friday";
-		elecs[3] = "Favourite program*2018*5*1*2019*5*31*H4G*H4G*single*2" + "\nGame of Thrones" + "\nNarcos";
-		elecs[4] = "Presidental race*2020*10*1*2020*11*1***single*2" + "\nDonald Trump" + "\nAnyone Else";
-	
+		elecs[1] = "MTL Election*2017*9*10*2017*9*14***ranked*4" + "\nJonathan Pesce"
+				+ "\nNicholas Apanian" + "\nNiv Abecassis" + "\nAnh Quan Nguyen";
+		elecs[2] = "WorldWide Election*2018*9*10*2018*9*14***ranked*4" + "\nJonathan Pesce"
+				+ "\nNicholas Apanian" + "\nNiv Abecassis" + "\nAnh Quan Nguyen";
+		elecs[3] = "Best Show*2018*5*1*2019*5*31*H4G*H4G*single*2" + "\nGame of Thrones" + "\nNarcos";
 
-		String[] tallies = new String[2];
-		tallies[0] = "Presidental race*2" + "\n100*0" + "\n0*102";
-		tallies[1] = "Favourite program*2" + "\n1000*0" + "\n0*560";
 
-		// make the testfiles directory
+		String[] tallies = new String[4];
+		tallies[0] = "DSU Election*4" + "\n2*3*0*0" + "\n10*1*0*0" + "\n1*0*0*0" + "\n1*10*0*0";
+		tallies[1] = "MTL Election*4" + "\n2*3*0*0" + "\n4*1*0*0" + "\n5*0*0*0" + "\n1*10*0*0";
+		tallies[2] = "WorldWide Election*4" + "\n2*3*0*0" + "\n10*1*0*0" + "\n5*0*0*0" + "\n1*10*0*0";
+		tallies[3] = "Best Show*2" + "\n1000*0" + "\n0*560";
+
 		Path dir;
 		try {
 			dir = Paths.get("datafiles/testfiles");
@@ -97,25 +99,66 @@ public class DawsonRankedElectionPolicyTest {
 	}
 	
 	private static void testGetWinner() {
-		System.out.println("Testing the getWinner \n");
-		System.out.println("Case: Complete Election");
+		System.out.println("Testing the getWinner method\n");
+		System.out.println("Case 1: Complete Election with 1 winner");
 		setup();
 		SequentialTextFileList file = new SequentialTextFileList ("datafiles/testfiles/testVoters.txt", "datafiles/testfiles/testElections.txt", "datafiles/testfiles/testTally.txt");
 		ElectionListDB eldb = new ElectionListDB(file);
 
 		try {
-			DawsonRankedElectionPolicy drep = new DawsonRankedElectionPolicy(eldb.getElection("Dawson College Student Union Election"));
-			System.out.print("\nA DawsonRankedElectionPolicy instance was created");
-			List<String> list = drep.getWinner();
+			DawsonRankedElectionPolicy drep1Winner = new DawsonRankedElectionPolicy(eldb.getElection("DSU Election"));
+			System.out.print("\tA DawsonRankedElectionPolicy instance was created");
+			System.out.println("\n\tTest Passed... There is only " + drep1Winner.getWinner().size() + " winner.");
+
 		} 
-		catch (IllegalArgumentException iae) {
-			System.out.println(iae.getMessage());
-			System.out.println("Error! Expected Invalid. ==== FAILED TEST ====");
+		catch (Exception e) { 
+			System.out.println("UNEXPECTED EXCEPTION TYPE!" + e.getClass() + " " + e.getMessage() + "====FAILED TEST====");
+		}
+		
+		//--------------------------------------------------------- Case 2 ---------------------------------------------------------
+		
+		System.out.println("\n\nCase 2: Complete Election with multiple winners (tie)");
+		
+		try {
+			DawsonRankedElectionPolicy drepTie = new DawsonRankedElectionPolicy(eldb.getElection("MTL Election"));
+			System.out.print("\tA DawsonRankedElectionPolicy instance was created");
+			System.out.println("\n\tTest Passed... There are " + drepTie.getWinner().size() + " winners. It is a draw.");
 		} 
 		catch (Exception e) {
 			System.out.println("UNEXPECTED EXCEPTION TYPE!" + e.getClass() + " " + e.getMessage() + "====FAILED TEST====");
 		}
-		System.out.println("\n");
+		
+		//--------------------------------------------------------- Case 3 ---------------------------------------------------------
+		
+		System.out.println("\n\nCase 3: Incomplete Election (Should throw iee)");
+		
+		try {
+			DawsonRankedElectionPolicy drepIncompleteElec = new DawsonRankedElectionPolicy(eldb.getElection("WorldWide Election"));
+			drepIncompleteElec.getWinner();
+		} 
+		catch(IncompleteElectionException iee) {
+			System.out.println("\tTest passed... The IncompleteElectionException with the following message was thrown:");
+			System.out.print("\t" + iee.getMessage());
+		}
+		catch (Exception e) {
+			System.out.println("UNEXPECTED EXCEPTION TYPE!" + e.getClass() + " " + e.getMessage() + "====FAILED TEST====");
+		}
+		
+		//--------------------------------------------------------- Case 4 ---------------------------------------------------------
+		
+		System.out.println("\n\n\nCase 4: Single Election Type (Should throw iae)");
+		
+		try {
+			DawsonRankedElectionPolicy drepSingleElec = new DawsonRankedElectionPolicy(eldb.getElection("Best Show"));
+			drepSingleElec.getWinner();
+		} 
+		catch (IllegalArgumentException iae) {
+			System.out.println("Test passed... The IllegalArgumentException with the following message was thrown: \t");
+			System.out.println(iae.getMessage());
+		} 
+		catch (Exception e) {
+			System.out.println("UNEXPECTED EXCEPTION TYPE!" + e.getClass() + " " + e.getMessage() + "====FAILED TEST====");
+		}
 		
 		teardown();
 	}
