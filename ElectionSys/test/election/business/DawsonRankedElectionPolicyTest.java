@@ -110,7 +110,8 @@ public class DawsonRankedElectionPolicyTest {
 		try {
 			DawsonRankedElectionPolicy drep1Winner = new DawsonRankedElectionPolicy(eldb.getElection("DSU Election"));
 			System.out.print("\tA DawsonRankedElectionPolicy instance was created");
-			System.out.println("\n\tTest Passed... There is only " + drep1Winner.getWinner().size() + " winner.");
+			List<String> winner = drep1Winner.getWinner();
+			System.out.println("\n\tTest Passed... There is only " + winner.size() + " winner: " + winner.get(0) + ".");
 
 		} 
 		catch (Exception e) { 
@@ -124,7 +125,8 @@ public class DawsonRankedElectionPolicyTest {
 		try {
 			DawsonRankedElectionPolicy drepTie = new DawsonRankedElectionPolicy(eldb.getElection("MTL Election"));
 			System.out.print("\tA DawsonRankedElectionPolicy instance was created");
-			System.out.println("\n\tTest Passed... There are " + drepTie.getWinner().size() + " winners. It is a draw.");
+			List<String> winners = drepTie.getWinner();
+			System.out.println("\n\tTest Passed... There are " + winners.size() + " winners (" + winners.get(0) + " and " + winners.get(1) + "). It is a draw.");
 		} 
 		catch (Exception e) {
 			System.out.println("UNEXPECTED EXCEPTION TYPE!" + e.getClass() + " " + e.getMessage() + "====FAILED TEST====");
@@ -140,7 +142,7 @@ public class DawsonRankedElectionPolicyTest {
 		} 
 		catch(IncompleteElectionException iee) {
 			System.out.println("\tTest passed... The IncompleteElectionException with the following message was thrown:");
-			System.out.print("\t" + iee.getMessage());
+			System.out.print("\n\t" + iee.getMessage());
 		}
 		catch (Exception e) {
 			System.out.println("UNEXPECTED EXCEPTION TYPE!" + e.getClass() + " " + e.getMessage() + "====FAILED TEST====");
@@ -156,7 +158,7 @@ public class DawsonRankedElectionPolicyTest {
 		} 
 		catch (IllegalArgumentException iae) {
 			System.out.println("\tTest passed... The IllegalArgumentException with the following message was thrown: \t");
-			System.out.println("\t" + iae.getMessage());
+			System.out.println("\n\t" + iae.getMessage());
 		} 
 		catch (Exception e) {
 			System.out.println("UNEXPECTED EXCEPTION TYPE!" + e.getClass() + " " + e.getMessage() + "====FAILED TEST====");

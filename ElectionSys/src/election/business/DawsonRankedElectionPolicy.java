@@ -19,8 +19,9 @@ public class DawsonRankedElectionPolicy implements ElectionPolicy{
 	private static final long serialVersionUID = 42031768871L;
 	
 	public DawsonRankedElectionPolicy(Election elec) {
-		if(!elec.getElectionType().toString().equalsIgnoreCase("Ranked"))
-			throw new IllegalArgumentException("The given election has to be ranked, not single.");
+		if(!elec.getElectionType().equals(ElectionType.RANKED))
+			throw new IllegalArgumentException("The election \"" + elec.getName() + "\" is of type \'" 
+					+ elec.getElectionType() + "\'. Only ranked elections are valid.");
 		election = elec;
 	}
 	
@@ -33,8 +34,12 @@ public class DawsonRankedElectionPolicy implements ElectionPolicy{
 	 */
 	@Override
 	public List<String> getWinner() throws IncompleteElectionException{
+		//Don't be afraid of that long print statement. It is just a beautiful exception message :)
 		if(election.getEndDate().isAfter(LocalDate.now())) {
-			throw new IncompleteElectionException();
+			throw new IncompleteElectionException( "Please, be patient. The election \"" + election.getName() + "\" has not yet ended, " + 
+					"\n\tso a winner cannot be determined as of the " + LocalDate.now().getMonth().toString().toLowerCase() + " " + LocalDate.now().getDayOfMonth() + ", " + 
+						LocalDate.now().getYear() + ". This election ends on " + election.getEndDate().getMonth().toString().toLowerCase() + " " + election.getEndDate().getDayOfMonth() + 
+							", " + election.getEndDate().getYear() + ".");
 		}
 		
 		List<String> winnerList = new ArrayList<String>();
@@ -49,11 +54,11 @@ public class DawsonRankedElectionPolicy implements ElectionPolicy{
 			}		
 		}		
 		
-		winnerList.add(rankedChoices[winnerIndex].toString());
+		winnerList.add(election.getElectionChoices()[winnerIndex] );
 		
 		for(int i = 0; i < rankedChoices.length; i++) {
-			if(i != winnerIndex && ((rankedChoices[i][0] * 5) + (rankedChoices[i][1] * 2) == max))
-				winnerList.add(rankedChoices[winnerIndex].toString());
+			if((i != winnerIndex) && ((rankedChoices[i][0] * 5) + (rankedChoices[i][1] * 2) == max))
+				winnerList.add(election.getElectionChoices()[i] );
 		}
 		
 		return winnerList;
