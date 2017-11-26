@@ -17,7 +17,7 @@ public class DawsonSingleElectionTest {
 	public static void main(String[] args) {
 
 		testConstructor();
-		
+		testGetWinner();
 
 	}
 
@@ -105,5 +105,53 @@ public class DawsonSingleElectionTest {
 			}
 		}
 		System.out.println();
+	}
+
+	public static void testGetWinner() {
+		setup();
+		SequentialTextFileList file = new SequentialTextFileList(null, "datafiles/testfiles/testElections.txt",
+				"datafiles/testfiles/testTally.txt");
+		Election de1 = file.getElectionDatabase().get(0);
+		Election de2 = file.getElectionDatabase().get(1);
+		Election de3 = file.getElectionDatabase().get(2);
+		DawsonSingleElectionPolicy dsep1 = new DawsonSingleElectionPolicy(de1);
+		DawsonSingleElectionPolicy dsep2 = new DawsonSingleElectionPolicy(de2);
+		DawsonSingleElectionPolicy dsep3 = new DawsonSingleElectionPolicy(de3);
+		System.out.println("-------- TEST THE GET WINNER METHOD IN THE DAWSON SINGLE ELECTION POLICY CLASS --------");
+		try {
+			System.out.println("\t Testing for the following election : " + de1.getName());
+			System.out.println("\t \t Getting the winner from an election that has ended and has a winner");
+			System.out.println("\t \t --- The winner of the following election: " + de1.getName() + " is "
+					+ dsep1.getWinner().get(0));
+		} catch (IncompleteElectionException iee) {
+			System.out.println("\t \t --- " + iee.getMessage());
+		}
+
+		// Need to test when the current date is before the end date
+		try {
+			System.out.println("\t Testing for the following election : " + de2.getName());
+			System.out
+					.println("\t \t Getting the winner from an election when the current date is before the end date");
+			System.out.println("\t \t --- The winner of the following election: " + de2.getName() + " is "
+					+ dsep2.getWinner().get(0));
+		} catch (IncompleteElectionException iee) {
+			System.out.println("\t \t --- " + iee.getMessage());
+		}
+		// Need to test when the election has no winners
+		try {
+			System.out.println("\t Testing for the following election : " + de3.getName());
+			System.out.println("\t \t Getting the winner from an election that has ended and has a winner");
+			if (dsep3.getWinner().size() == 0) {
+				System.out.println(
+						"\t \t --- PASSED --- The get winner method has returned a list with a size of 0, meaning there is no winner");
+			} else {
+				System.out.print("\t \t --- Error! --- Expected to have a list of size 0. ==== FAILED TEST ====");
+			}
+		} catch (IncompleteElectionException iee) {
+			System.out.println("\t \t --- " + iee.getMessage());
+		}
+
+		teardown();
+
 	}
 }

@@ -1,9 +1,10 @@
 package election.business;
 
+import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 
-import election.business.interfaces.Election;
-import election.business.interfaces.ElectionPolicy;
+import election.business.interfaces.*;
 
 public class DawsonSingleElectionPolicy implements ElectionPolicy {
 
@@ -20,9 +21,23 @@ public class DawsonSingleElectionPolicy implements ElectionPolicy {
 	
 	
 	@Override
-	public List<String> getWinner() {
-		// TODO Auto-generated method stub
-		return null;
+	public List<String> getWinner() throws IncompleteElectionException {
+		if (election.getEndDate().isAfter(LocalDate.now())) {
+			throw new IncompleteElectionException(
+					"The following election: " + election.getName() + " has yet to end, so a winner cannot"
+							+ " be determined until it ends. " + "This election end on: " + election.getEndDate());
+		}
+		List<String> winnerList = new ArrayList<String>();
+		int castVoters = (election.getTotalVotesCast() / 2) + 1;
+		String winner = null;
+		for (int i = 0; i < election.getTally().getVoteBreakdown().length; i++) {
+			if (election.getTally().getVoteBreakdown()[i][i] >= castVoters) {
+				winner = election.getElectionChoices()[i];
+			}
+		}
+		winnerList.add(winner);
+		return winnerList;
 	}
+
 
 }
