@@ -13,9 +13,9 @@ import election.data.*;
 import election.data.interfaces.*;
 
 /**
+ * Provides useful methods to manage the election process.
  * 
  * @author Nikita
- *
  */
 public class DawsonElectionOffice extends Observable implements ElectionOffice, Serializable{
 	
@@ -24,14 +24,14 @@ public class DawsonElectionOffice extends Observable implements ElectionOffice, 
 	 private final VoterDAO voters;
 	 private static final long serialVersionUID = 42031768871L;
 	 
+	 /**
+	  * Constructor initializes all private attributes
+	  * 
+	  * @param factory
+	  * @param elections
+	  * @param voters
+	  */
 	 public DawsonElectionOffice (ElectionFactory factory, ElectionDAO elections, VoterDAO voters) {
-		 if(factory == null)
-			 throw new IllegalArgumentException("factory cannot be null.");
-		 if(elections == null)
-			 throw new IllegalArgumentException("elections cannot be null.");
-		 if(voters == null)
-			 throw new IllegalArgumentException("voters cannot be null.");
-		 
 		 this.factory = factory;
 		 this.elections = elections;
 		 this.voters = voters;
