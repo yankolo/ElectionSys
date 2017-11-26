@@ -11,9 +11,11 @@ import java.nio.file.InvalidPathException;
 import java.nio.file.NoSuchFileException;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.List;
 
 import election.business.DawsonElectionFactory;
 import election.business.interfaces.Election;
+import election.business.interfaces.Voter;
 import util.ListUtilities;
 
 /**
@@ -68,6 +70,15 @@ public class ElectionListDBTest {
 			ListUtilities.saveListToTextFile(voters, "datafiles/testfiles/testVoters.txt");
 			ListUtilities.saveListToTextFile(elecs, "datafiles/testfiles/testElections.txt");
 			ListUtilities.saveListToTextFile(tallies, "datafiles/testfiles/testTally.txt");
+			
+			SequentialTextFileList file = new SequentialTextFileList("datafiles/testfiles/testVoters.txt",
+					"datafiles/testfiles/testElections.txt", "datafiles/testfiles/testTally.txt");
+			
+			List<Voter> voterList = file.getVoterDatabase();
+			List<Election> electionList = file.getElectionDatabase();
+			
+			util.Utilities.serializeObject(voterList, "datafiles/testfiles/testVoters.ser");
+			util.Utilities.serializeObject(electionList, "datafiles/testfiles/testElections.ser");
 		} catch (InvalidPathException e) {
 			System.err.println("could not create testfiles directory " + e.getMessage());
 		} catch (FileAlreadyExistsException e) {
@@ -87,6 +98,10 @@ public class ElectionListDBTest {
 			Files.deleteIfExists(file);
 			file = Paths.get("datafiles/testfiles/testTally.txt");
 			Files.deleteIfExists(file);
+			file = Paths.get("datafiles/testfiles/testVoters.ser");
+			Files.deleteIfExists(file);
+			file = Paths.get("datafiles/testfiles/testElections.ser");
+			Files.deleteIfExists(file);
 		} catch (InvalidPathException e) {
 			System.err.println("could not delete test files " + e.getMessage());
 		} catch (NoSuchFileException e) {
@@ -101,9 +116,9 @@ public class ElectionListDBTest {
 
 	private static void testGetElection() {
 		setup();
-		SequentialTextFileList file = new SequentialTextFileList("datafiles/testfiles/testVoters.txt",
-				"datafiles/testfiles/testElections.txt", "datafiles/testfiles/testTally.txt");
-		ElectionListDB db = new ElectionListDB(file);
+		ObjectSerializedList serialized = new ObjectSerializedList("datafiles/testfiles/testVoters.ser",
+				"datafiles/testfiles/testElections.ser");
+		ElectionListDB db = new ElectionListDB(serialized);
 
 		System.out.println("\n** test getElection **");
 		System.out.println("\nTest case 1: Election in the database (Favourite program)");
@@ -153,9 +168,9 @@ public class ElectionListDBTest {
 	private static void testToString() {
 		setup();
 
-		SequentialTextFileList file = new SequentialTextFileList("datafiles/testfiles/testVoters.txt",
-				"datafiles/testfiles/testElections.txt", "datafiles/testfiles/testTally.txt");
-		ElectionListDB db = new ElectionListDB(file);
+		ObjectSerializedList serialized = new ObjectSerializedList("datafiles/testfiles/testVoters.ser",
+				"datafiles/testfiles/testElections.ser");
+		ElectionListDB db = new ElectionListDB(serialized);
 
 		String dbStringToCompare = null;
 		try {
@@ -185,9 +200,9 @@ public class ElectionListDBTest {
 
 	private static void testAdd() {
 		setup();
-		SequentialTextFileList file = new SequentialTextFileList("datafiles/testfiles/testVoters.txt",
-				"datafiles/testfiles/testElections.txt", "datafiles/testfiles/testTally.txt");
-		ElectionListDB db = new ElectionListDB(file);
+		ObjectSerializedList serialized = new ObjectSerializedList("datafiles/testfiles/testVoters.ser",
+				"datafiles/testfiles/testElections.ser");
+		ElectionListDB db = new ElectionListDB(serialized);
 
 		System.out.println("\n** test Add **");
 		System.out.println("\nTest case 1: election not in the database (Favorite color)");
@@ -256,9 +271,9 @@ public class ElectionListDBTest {
 
 	private static void testDisconnect() {
 		setup();
-		SequentialTextFileList file = new SequentialTextFileList("datafiles/testfiles/testVoters.txt",
-				"datafiles/testfiles/testElections.txt", "datafiles/testfiles/testTally.txt");
-		ElectionListDB db = new ElectionListDB(file);
+		ObjectSerializedList serialized = new ObjectSerializedList("datafiles/testfiles/testVoters.ser",
+				"datafiles/testfiles/testElections.ser");
+		ElectionListDB db = new ElectionListDB(serialized);
 
 		System.out.println("\n** test disconnect **");
 
@@ -285,7 +300,7 @@ public class ElectionListDBTest {
 			System.out.println("FAILING TEST CASE: Unable to write to file");
 		}
 
-		db = new ElectionListDB(file);
+		db = new ElectionListDB(serialized);
 		try {
 			db.getElection("Favorite color");
 			db.getElection("Best color");
