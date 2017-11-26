@@ -47,12 +47,8 @@ public class DawsonElectionOffice extends Observable implements ElectionOffice, 
 	  */
 	  @Override
 	  public Ballot getBallot(Voter voter, Election election) throws InvalidVoterException{
-		  try {
-			  return election.getBallot(voter);
-		  }
-		  catch (InvalidVoterException ive) {
-			  System.out.println("");
-		  }
+		  return election.getBallot(voter);
+	  }
 	 
 	 /**
 	  * Enable a given voter to cast a given ballot
@@ -72,11 +68,8 @@ public class DawsonElectionOffice extends Observable implements ElectionOffice, 
 	  */
 	  @Override
 	  public void closeOffice() throws IOException{
-		  try {
 			  elections.disconnect();
 			  voters.disconnect();
-		  }
-		  catch()
 	  }
 
 	 /**
@@ -111,13 +104,7 @@ public class DawsonElectionOffice extends Observable implements ElectionOffice, 
 	  */
 	  @Override
 	  public List<String> getWinner(Election election) {
-		  try {
-			  return getWinner(election);
-		  }
-		  catch (IncompleteElectionException iee){
-			  System.out.println("");
-		  }
-		  return null;
+		  return factory.getElectionPolicy(election).getWinner();
 	  }
 	  
 	 /**
@@ -156,6 +143,6 @@ public class DawsonElectionOffice extends Observable implements ElectionOffice, 
 	  */
 	  @Override
 	  public Voter findVoter (String email)throws InexistentVoterException{
-		return voters.getVoter(email);
+		  return voters.getVoter(email);
 	  }
 }
