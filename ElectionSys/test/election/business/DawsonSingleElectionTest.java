@@ -79,8 +79,8 @@ public class DawsonSingleElectionTest {
 		Election de1 = file.getElectionDatabase().get(0);
 		Election de2 = file.getElectionDatabase().get(3);
 		System.out.println("-------- TEST THE CONSTRUCTOR FOR THE DAWSON SINGLE ELECTION POLICY CLASS --------");
-		testConstructor("Case 1 - Pass a valid Election: A election which its type is single", de1, true);
-		testConstructor("Case 2 - Pass a valid election but its election type is Ranked and not single", de2, false);
+		testConstructor("Case 1 - Pass a valid Election: A election which its type is single (" + de1.getName() + ")", de1, true);
+		testConstructor("Case 2 - Pass a valid election but its election type is Ranked and not single (" + de2.getName() + ")", de2, false);
 
 	}
 
