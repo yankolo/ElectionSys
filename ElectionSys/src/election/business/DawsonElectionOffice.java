@@ -47,8 +47,12 @@ public class DawsonElectionOffice extends Observable implements ElectionOffice, 
 	  */
 	  @Override
 	  public Ballot getBallot(Voter voter, Election election) throws InvalidVoterException{
-		  return election.getBallot(voter);
-	  }
+		  try {
+			  return election.getBallot(voter);
+		  }
+		  catch (InvalidVoterException ive) {
+			  System.out.println("");
+		  }
 	 
 	 /**
 	  * Enable a given voter to cast a given ballot
@@ -68,9 +72,11 @@ public class DawsonElectionOffice extends Observable implements ElectionOffice, 
 	  */
 	  @Override
 	  public void closeOffice() throws IOException{
-		  ObjectSerializedList osl = new ObjectSerializedList("voters", "elections");
-		  osl.saveElectionDatabase(osl.getElectionDatabase());
-		  osl.saveVoterDatabase(osl.getVoterDatabase());
+		  try {
+			  elections.disconnect();
+			  voters.disconnect();
+		  }
+		  catch()
 	  }
 
 	 /**
@@ -105,7 +111,13 @@ public class DawsonElectionOffice extends Observable implements ElectionOffice, 
 	  */
 	  @Override
 	  public List<String> getWinner(Election election) {
-		 return null;	 
+		  try {
+			  return getWinner(election);
+		  }
+		  catch (IncompleteElectionException iee){
+			  System.out.println("");
+		  }
+		  return null;
 	  }
 	  
 	 /**
