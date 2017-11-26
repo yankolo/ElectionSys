@@ -103,7 +103,7 @@ public class DawsonElectionOffice extends Observable implements ElectionOffice, 
 	  * @throws IncompleteElectionException if the election is ongoing
 	  */
 	  @Override
-	  public List<String> getWinner(Election election) {
+	  public List<String> getWinner(Election election) throws IncompleteElectionException {
 		  return factory.getElectionPolicy(election).getWinner();
 	  }
 	  
@@ -119,6 +119,7 @@ public class DawsonElectionOffice extends Observable implements ElectionOffice, 
 	  */
 	  @Override
 	  public Voter registerVoter(String firstName, String lastName, String email, String postalcode) throws DuplicateVoterException {
+		  voters.add(factory.getVoterInstance(firstName, lastName, email, postalcode));
 		  return factory.getVoterInstance(firstName, lastName, email, postalcode);
 	  }
 	 
