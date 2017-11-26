@@ -43,21 +43,23 @@ public class DawsonRankedElectionPolicyTest {
 		voters[9] = "raj@test.ru*Raj*Wong*H3E1B4";
 
 		String[] elecs = new String[4];
-
-		elecs[0] = "DSU Election*2017*9*10*2017*9*14***ranked*4" + "\nJonathan Pesce"
+		
+		elecs[0] = "Best Show*2018*5*1*2019*5*31*H4G*H4G*single*2" + "\nGame of Thrones" + "\nNarcos";
+		elecs[1] = "DSU Election*2017*9*10*2017*9*14***ranked*4" + "\nJonathan Pesce"
 				+ "\nNicholas Apanian" + "\nNiv Abecassis" + "\nAnh Quan Nguyen";
-		elecs[1] = "MTL Election*2017*9*10*2017*9*14***ranked*4" + "\nJonathan Pesce"
+		elecs[2] = "MTL Election*2017*9*10*2017*9*14***ranked*4" + "\nJonathan Pesce"
 				+ "\nNicholas Apanian" + "\nNiv Abecassis" + "\nAnh Quan Nguyen";
-		elecs[2] = "WorldWide Election*2018*9*10*2018*9*14***ranked*4" + "\nJonathan Pesce"
+		elecs[3] = "WorldWide Election*2018*9*10*2018*9*14***ranked*4" + "\nJonathan Pesce"
 				+ "\nNicholas Apanian" + "\nNiv Abecassis" + "\nAnh Quan Nguyen";
-		elecs[3] = "Best Show*2018*5*1*2019*5*31*H4G*H4G*single*2" + "\nGame of Thrones" + "\nNarcos";
+		
 
 
 		String[] tallies = new String[4];
-		tallies[0] = "DSU Election*4" + "\n2*3*0*0" + "\n10*1*0*0" + "\n1*0*0*0" + "\n1*10*0*0";
-		tallies[1] = "MTL Election*4" + "\n2*3*0*0" + "\n4*1*0*0" + "\n5*0*0*0" + "\n1*10*0*0";
-		tallies[2] = "WorldWide Election*4" + "\n2*3*0*0" + "\n10*1*0*0" + "\n5*0*0*0" + "\n1*10*0*0";
-		tallies[3] = "Best Show*2" + "\n1000*0" + "\n0*560";
+		tallies[0] = "Best Show*2" + "\n1000*0" + "\n0*560";
+		tallies[1] = "DSU Election*4" + "\n2*3*0*0" + "\n10*1*0*0" + "\n1*0*0*0" + "\n1*10*0*0";
+		tallies[2] = "MTL Election*4" + "\n2*3*0*0" + "\n4*1*0*0" + "\n5*0*0*0" + "\n1*10*0*0";
+		tallies[3] = "WorldWide Election*4" + "\n2*3*0*0" + "\n10*1*0*0" + "\n5*0*0*0" + "\n1*10*0*0";
+		
 
 		Path dir;
 		try {
@@ -153,8 +155,8 @@ public class DawsonRankedElectionPolicyTest {
 			drepSingleElec.getWinner();
 		} 
 		catch (IllegalArgumentException iae) {
-			System.out.println("Test passed... The IllegalArgumentException with the following message was thrown: \t");
-			System.out.println(iae.getMessage());
+			System.out.println("\tTest passed... The IllegalArgumentException with the following message was thrown: \t");
+			System.out.println("\t" + iae.getMessage());
 		} 
 		catch (Exception e) {
 			System.out.println("UNEXPECTED EXCEPTION TYPE!" + e.getClass() + " " + e.getMessage() + "====FAILED TEST====");
