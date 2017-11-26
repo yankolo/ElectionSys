@@ -14,6 +14,13 @@ import java.io.ObjectOutputStream;
  *
  */
 public class Utilities {
+	/**
+	 * Serializes an object to the specified file
+	 * 
+	 * @param object The object to serialize
+	 * @param fileSpecification The path of the file to which serialize the object
+	 * @throws IOException Throws exception if there is a problem writing to the file
+	 */
 	public static void serializeObject(Object object, String fileSpecification) throws IOException {
 		ObjectOutputStream out = null;
 		try {
@@ -30,6 +37,14 @@ public class Utilities {
 		}
 	}
 
+	/**
+	 * Deserializes an object from a file
+	 * 
+	 * @param fileSpecification The path of the file to deserialize
+	 * @return The deserialized object
+	 * @throws IOException Throws exception if there is a problem reading the file
+	 * @throws ClassNotFoundException Throws exception if there is no class that represents the object
+	 */
 	public static Object deserializeObject(String fileSpecification) throws IOException, ClassNotFoundException {
 
 		ObjectInputStream in = null;
