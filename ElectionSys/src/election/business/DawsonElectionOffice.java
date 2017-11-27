@@ -119,8 +119,9 @@ public class DawsonElectionOffice extends Observable implements ElectionOffice, 
 	  */
 	  @Override
 	  public Voter registerVoter(String firstName, String lastName, String email, String postalcode) throws DuplicateVoterException {
-		  voters.add(factory.getVoterInstance(firstName, lastName, email, postalcode));
-		  return factory.getVoterInstance(firstName, lastName, email, postalcode);
+		  Voter newVoter = factory.getVoterInstance(firstName, lastName, email, postalcode);
+		  voters.add(newVoter);
+		  return newVoter;
 	  }
 	 
 	 /**
