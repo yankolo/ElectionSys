@@ -20,7 +20,6 @@ import util.ListUtilities;
  * Test class of the VoterNameComparator class
  * 
  * @author Nikita
- * @version 13.10.2017
  */
 public class DawsonRankedElectionPolicyTest {
 	public static void main(String[] args) {
@@ -134,7 +133,7 @@ public class DawsonRankedElectionPolicyTest {
 		
 		//--------------------------------------------------------- Case 3 ---------------------------------------------------------
 		
-		System.out.println("\n\nCase 3: Incomplete Election (Should throw iee)");
+		System.out.println("\n\nCase 3: Incomplete Election (Should throw IncompleteElectionException)");
 		
 		try {
 			DawsonRankedElectionPolicy drepIncompleteElec = new DawsonRankedElectionPolicy(eldb.getElection("WorldWide Election"));
@@ -150,7 +149,7 @@ public class DawsonRankedElectionPolicyTest {
 		
 		//--------------------------------------------------------- Case 4 ---------------------------------------------------------
 		
-		System.out.println("\n\n\nCase 4: Single Election Type (Should throw iae)");
+		System.out.println("\n\n\nCase 4: Single Election Type (Should throw IllegalArgumentException)");
 		
 		try {
 			DawsonRankedElectionPolicy drepSingleElec = new DawsonRankedElectionPolicy(eldb.getElection("Best Show"));
