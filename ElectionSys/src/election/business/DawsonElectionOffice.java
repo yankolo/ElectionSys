@@ -155,6 +155,14 @@ public class DawsonElectionOffice extends Observable implements ElectionOffice, 
 		  notifyObservers( voters.getVoter(email));
 		  return voters.getVoter(email);
 	  }
+
+	@Override
+	public Voter findVoter(String email, boolean notify) throws InexistentVoterException {
+		if(notify)
+			return findVoter(email);
+		else
+			return voters.getVoter(email);
+	}
 	  
 	  
 }

@@ -96,5 +96,14 @@ public interface ElectionOffice {
  Voter findVoter (String email)
   throws InexistentVoterException;
  
+ /**
+	 * Finds a voter with a given email
+	 * @param email of the voter
+	 * @param notify observers if true
+	 * @return
+	 * @throws InexistentVoterException
+	 */
+	Voter findVoter (String email, boolean notify) throws InexistentVoterException;
+
 }
 
