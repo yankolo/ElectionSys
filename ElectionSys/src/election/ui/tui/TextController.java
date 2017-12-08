@@ -74,7 +74,13 @@ public class TextController {
 			return model.findVoter(email);
 		}
 		catch(InexistentVoterException ive) {
+			System.out.println();
 			System.out.println(ive.getMessage());
+			return null;
+		}
+		catch(Exception e) {
+			System.out.println();
+			System.out.println(e.getMessage());
 			return null;
 		}
 	}
@@ -85,15 +91,20 @@ public class TextController {
 	// helpful.
 	private void newVoter(Scanner keyboard) {
 		keyboard.nextLine (); //consume any previous value
-		String fName = getInput(keyboard, "Please enter the first name: ");
-		String lName = getInput(keyboard, "Please enter the last name: ");
+		String fName = getFirstName(keyboard);
+		String lName = getLastName(keyboard);
 		String email = getEmail(keyboard);
 		String postalcode = getPostalcode(keyboard);
 		try {
 			model.registerVoter(fName, lName, email, postalcode);
 		}
 		catch(DuplicateVoterException dve) {
+			System.out.println();
 			System.out.println(dve.getMessage());
+		}
+		catch(Exception e) {
+			System.out.println();
+			System.out.println(e.getMessage());
 		}
 
 	}
@@ -109,7 +120,12 @@ public class TextController {
 			model.getWinner(model.findElection(elecName));
 		}
 		catch(InexistentElectionException iee) {
+			System.out.println();
 			System.out.println(iee.getMessage());
+		}
+		catch(Exception e) {
+			System.out.println();
+			System.out.println(e.getMessage());
 		}
 	}
 	
@@ -162,7 +178,7 @@ public class TextController {
 				Email emailObj = new Email(email);
 			}
 			catch (IllegalArgumentException e){
-				System.out.println ("Invalid email!" + e.getMessage());
+				System.out.println ("Invalid email! " + e.getMessage());
 				System.out.print("Please try again: ");
 
 				invalid = true;
@@ -189,7 +205,7 @@ public class TextController {
 				PostalCode postalCodeObj = new PostalCode(postalCode);
 			}
 			catch (IllegalArgumentException e){
-				System.out.println ("Invalid postal code!" + e.getMessage());
+				System.out.println ("Invalid postal code! " + e.getMessage());
 				System.out.print("Please try again: ");
 
 				invalid = true;
@@ -198,6 +214,60 @@ public class TextController {
 		while (invalid);
 		return postalCode;
 	}
+	
+		//Private helper method to ask for a first name string.
+		//Invokes the Name constructor for validation. If the
+		//string is invalid, it repeatedly asks the user
+		private String getFirstName(Scanner keyboard) {
+			boolean invalid;
+
+			String name;
+
+			do
+			{
+				invalid = false;
+				name = getInput(keyboard, "Please enter the first name: ");
+				try {
+					@SuppressWarnings("unused")
+					Name nameObj = new Name(name, name);
+				}
+				catch (IllegalArgumentException e){
+					System.out.println ("Invalid First Name! " + e.getMessage());
+					System.out.print("Please try again: ");
+
+					invalid = true;
+				}
+			}
+			while (invalid);
+			return name;
+		}
+		
+		//Private helper method to ask for a last name string.
+		//Invokes the Name constructor for validation. If the
+		//string is invalid, it repeatedly asks the user
+		private String getLastName(Scanner keyboard) {
+			boolean invalid;
+	
+			String name;
+	
+			do
+			{
+				invalid = false;
+				name = getInput(keyboard, "Please enter the last name: ");
+				try {
+					@SuppressWarnings("unused")
+					Name nameObj = new Name(name, name);
+				}
+				catch (IllegalArgumentException e){
+					System.out.println ("Invalid Last Name! " + e.getMessage());
+					System.out.print("Please try again: ");
+	
+					invalid = true;
+				}
+			}
+			while (invalid);
+			return name;
+		}
 
 	//Helper method for string input
 	private String getInput(Scanner keyboard, String message) {
