@@ -59,19 +59,24 @@ public class TextController {
 			this.model.closeOffice();
 		}
 		catch (IOException ioe) {
-			System.out.println("An error occured when closing the database.");
+			System.out.println("An error occured when closing the database.d");
 		}
 	}
 
-	//Private method used to retrieve a voter from the model based on their
+	// Private method used to retrieve a voter from the model based on their
 	// email.
 	// Note that there are other private methods below that can be 
 	// helpful.
 	private Voter voterInfo(Scanner keyboard) {
 		keyboard.nextLine (); //consume any previous value   
-				
-		//TODO
-
+		String email = getEmail(keyboard);
+		try {
+			return model.findVoter(email);
+		}
+		catch(InexistentVoterException ive) {
+			System.out.println(ive.getMessage());
+			return null;
+		}
 	}
 	
     // Private method that is invoked to create a new Voter object and
@@ -80,8 +85,16 @@ public class TextController {
 	// helpful.
 	private void newVoter(Scanner keyboard) {
 		keyboard.nextLine (); //consume any previous value
-		
-		//TODO
+		String fName = getInput(keyboard, "Please enter the first name: ");
+		String lName = getInput(keyboard, "Please enter the last name: ");
+		String email = getEmail(keyboard);
+		String postalcode = getPostalcode(keyboard);
+		try {
+			model.registerVoter(fName, lName, email, postalcode);
+		}
+		catch(DuplicateVoterException dve) {
+			System.out.println(dve.getMessage());
+		}
 
 	}
 	
@@ -91,9 +104,13 @@ public class TextController {
 	// helpful.
 	private void getWinner(Scanner keyboard) {
 		keyboard.nextLine (); //consume any previous value   
-		
-		//TODO
-
+		String elecName = getInput(keyboard, "Please enter the name of the election: ");
+		try {
+			model.getWinner(model.findElection(elecName));
+		}
+		catch(InexistentElectionException iee) {
+			System.out.println(iee.getMessage());
+		}
 	}
 	
 	//Private method used to ask the user for the name of an election
@@ -159,7 +176,27 @@ public class TextController {
 	//Invokes the PostalCode constructor for validation. If the
 	//string is invalid, it repeatedly asks the user
 	private String getPostalcode(Scanner keyboard) {
-		//TODO
+		boolean invalid;
+
+		String postalCode;
+
+		do
+		{
+			invalid = false;
+			postalCode = getInput(keyboard, "Please enter the postal code: ");
+			try {
+				@SuppressWarnings("unused")
+				PostalCode postalCodeObj = new PostalCode(postalCode);
+			}
+			catch (IllegalArgumentException e){
+				System.out.println ("Invalid postal code!" + e.getMessage());
+				System.out.print("Please try again: ");
+
+				invalid = true;
+			}
+		}
+		while (invalid);
+		return postalCode;
 	}
 
 	//Helper method for string input

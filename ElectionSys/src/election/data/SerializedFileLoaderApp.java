@@ -24,8 +24,8 @@ public class SerializedFileLoaderApp {
 	 */
 	public static void main(String[] args) {
 		try {
-			SequentialTextFileList file = new SequentialTextFileList("datafiles/databse/voters.txt",
-					"datafiles/databse/elections.txt", "datafiles/databse/tally.txt");
+			SequentialTextFileList file = new SequentialTextFileList("datafiles/database/voters.txt",
+					"datafiles/database/elections.txt", "datafiles/database/tally.txt");
 
 			List<Voter> voterList = file.getVoterDatabase();
 			List<Election> electionList = file.getElectionDatabase();

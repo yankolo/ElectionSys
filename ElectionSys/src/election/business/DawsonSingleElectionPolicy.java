@@ -49,7 +49,8 @@ public class DawsonSingleElectionPolicy implements ElectionPolicy {
 				winner = election.getElectionChoices()[i];
 			}
 		}
-		winnerList.add(winner);
+		if(winner != null)
+			winnerList.add(winner);
 		return winnerList;
 	}
 

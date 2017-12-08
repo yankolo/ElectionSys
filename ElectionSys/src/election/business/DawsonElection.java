@@ -153,7 +153,7 @@ public class DawsonElection implements Election {
 			throw new IllegalArgumentException(
 					"In the compareTo method, the parameter passed cannot be null referenced");
 		}
-		return this.name.compareToIgnoreCase(o.getName());
+		return this.name.compareTo(o.getName());
 	}
 
 	/**
