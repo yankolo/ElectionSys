@@ -104,6 +104,8 @@ public class DawsonElectionOffice extends Observable implements ElectionOffice, 
 	  */
 	  @Override
 	  public List<String> getWinner(Election election) throws IncompleteElectionException {
+		  setChanged();
+		  notifyObservers(factory.getElectionPolicy(election).getWinner());
 		  return factory.getElectionPolicy(election).getWinner();
 	  }
 	  
@@ -121,6 +123,8 @@ public class DawsonElectionOffice extends Observable implements ElectionOffice, 
 	  public Voter registerVoter(String firstName, String lastName, String email, String postalcode) throws DuplicateVoterException {
 		  Voter newVoter = factory.getVoterInstance(firstName, lastName, email, postalcode);
 		  voters.add(newVoter);
+		  setChanged();
+		  notifyObservers(newVoter);
 		  return newVoter;
 	  }
 	 
@@ -133,6 +137,8 @@ public class DawsonElectionOffice extends Observable implements ElectionOffice, 
 	  */
 	  @Override
 	  public Election findElection(String name) throws InexistentElectionException{
+		  setChanged();
+		  notifyObservers(elections.getElection(name));
 		  return elections.getElection(name);
 	  }
 	   
@@ -145,6 +151,10 @@ public class DawsonElectionOffice extends Observable implements ElectionOffice, 
 	  */
 	  @Override
 	  public Voter findVoter (String email)throws InexistentVoterException{
+		  setChanged();
+		  notifyObservers( voters.getVoter(email));
 		  return voters.getVoter(email);
 	  }
+	  
+	  
 }
