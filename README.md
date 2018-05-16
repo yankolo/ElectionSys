@@ -1,2 +1,1 @@
-# team06
-team06 Election System
+This project was an assignment in the second course of Java in Dawson College. The goal of the assignment was to create an election system following design principles in an object oriented way in teams of 4 during the whole duration of the semester. One of the objectives of this assignment was to get accustomed to using a version control system. I was in charge of many classes, including many of data manipulation and election system classes.
